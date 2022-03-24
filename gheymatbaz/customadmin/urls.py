@@ -1,6 +1,6 @@
 from django.urls import path
-from customadmin.views import customadmin
+from customadmin.views import insert_product
 
 urlpatterns = [
-    path('', customadmin)
+    path('', insert_product)
 ]
