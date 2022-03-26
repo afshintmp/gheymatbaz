@@ -1,0 +1,24 @@
+@mixin grayscale_element($value) {
+  -webkit-filter: #{"grayscale(#{$value})"};
+  -moz-filter: #{"grayscale(#{$value})"};
+  filter:#{"grayscale(#{$value})"};
+}
+@mixin animation($name , $duration , $timing-function , $iteration-count , $direction) {
+  -webkit-animation-name: $name;
+  -webkit-animation-duration: $duration;
+  -webkit-animation-timing-function: $timing-function;
+  -webkit-animation-iteration-count: $iteration-count;
+  -webkit-animation-direction: $direction;
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-timing-function: $timing-function;
+  animation-iteration-count: $iteration-count;
+  animation-direction: $direction;
+}
+@mixin filter($value) {
+  filter: $value;
+  -webkit-filter: $value;
+  -moz-filter: $value;
+  -ms-filter: $value;
+  -o-filter: $value;
+}

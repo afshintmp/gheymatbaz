@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'shop/assets/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/swiper/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/Select2/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/mCustomScrollbar/jquery.mCustomScrollbar.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/renge-slider/renge-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/rate/jquery.rateyo.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/fancybox/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/style.css' %}">
+</head>
+<body>
+
+{% include 'partials/header.html' %}
+
+{% block content %}{% endblock %}
+
+{% include 'partials/footer.html' %}
+
+</body>
+</html>

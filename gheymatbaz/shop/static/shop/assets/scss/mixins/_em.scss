@@ -1,0 +1,11 @@
+@function em($pxval, $base: 16) {
+  @if (unitless($pxval)) {
+    $pxval: $pxval * 1px;
+  }
+
+  @if (unitless($base)) {
+    $base: $base * 1px;
+  }
+
+  @return $pxval / $base * 1em;
+}

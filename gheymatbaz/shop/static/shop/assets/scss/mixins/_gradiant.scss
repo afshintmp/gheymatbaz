@@ -1,0 +1,27 @@
+@mixin linear-gradient($direction , $color-stop1 , $color-stop2) {
+  background-image: -o-linear-gradient($direction , $color-stop1 , $color-stop2);
+  background-image: -moz-linear-gradient($direction , $color-stop1 , $color-stop2);
+  background-image: -webkit-linear-gradient($direction , $color-stop1 , $color-stop2);
+  background-image: linear-gradient($direction , $color-stop1 , $color-stop2);
+}
+@mixin transition($transition-property) {
+  -moz-transition: $transition-property;
+  -webkit-transition: $transition-property;
+  -o-transition: $transition-property;
+  -ms-transition: $transition-property;
+  transition: $transition-property;
+}
+@mixin Flip($scale , $filter) {
+  -moz-transform: $scale;
+  -o-transform: $scale;
+  -webkit-transform: $scale;
+  transform: $scale;
+  filter: $filter;
+  -ms-filter: $filter;
+}
+
+@mixin rotate($angle) {
+  -ms-transform: rotate($angle); /* IE 9 */
+  -webkit-transform: rotate($angle); /* Chrome, Safari, Opera */
+  transform: rotate($angle);
+}
