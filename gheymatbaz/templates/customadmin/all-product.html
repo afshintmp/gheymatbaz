@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load admin_tags %}
+
+
+
+{% block content %}
+
+
+    <!--START-MAIN-->
+    <main>
+        <ul>
+            <li>
+                <a href="{{ product }}">
+                    همه ی محصولات
+                </a>
+            </li>
+            <li></li>
+            <li></li>
+        </ul>
+        <table style="width: 70%">
+
+            <tr>
+                <th>عنوان</th>
+            </tr>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.title }}</td>
+                    <td>
+                        <a href="">ویرایش</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </main>
+    <!--END-MAIN-->
+{% endblock %}
+
+{% block title %}
+    test heed
+{% endblock %}

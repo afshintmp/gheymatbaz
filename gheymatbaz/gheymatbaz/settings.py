@@ -59,6 +59,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'admin_tags': 'customadmin.templatetags.admin_tags',
+
+            }
         },
     },
 ]

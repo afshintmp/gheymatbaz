@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 
 
 # Create your models here.
@@ -22,6 +23,7 @@ class Brand(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=32, blank=False, null=False)
     parent = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
+    slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
 
     def __str__(self):
         return self.name
@@ -29,6 +31,9 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'categories'
         verbose_name_plural = 'categories'
+
+    def get_absolute_url(self):
+        return reverse('category-archive', args=[self.slug])
 
 
 class CategoryAttribute(models.Model):
@@ -54,7 +59,7 @@ class Product(models.Model):
     )
 
     title = models.CharField(max_length=32, blank=False, null=False)
-    slug = models.SlugField(max_length=200, allow_unicode=True, null=True, blank=True)
+    slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
     published_at = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -73,13 +78,10 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        from django.urls import reverse
         return reverse('single-product', args=[self.slug])
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super(Product, self).save(*args, **kwargs)
+    def get_add_product_url(self):
+        return reverse('admin-add-product', args=[self.slug])
 
     @property
     def get_photo_url(self):
@@ -95,8 +97,8 @@ class ProductGallery(models.Model):
 
     slug = models.SlugField(max_length=200, null=True, blank=True)
 
-    def __str__(self):
-        return self.product_id
+    # def __str__(self):
+    #     return self.product_id
 
     # def save(self, *args, **kwargs):
     #     if not self.slug:

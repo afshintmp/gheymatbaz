@@ -1,0 +1,728 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>index</title>
+    <link rel="stylesheet" href="{% static 'shop/assets/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/swiper/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/Select2/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/mCustomScrollbar/jquery.mCustomScrollbar.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/assets/css/style.css' %}">
+</head>
+<body>
+
+
+<!--START-SEARCH-POPUP-->
+<div class="search-popup">
+    <div class="top-bar">
+        <a href="" class="brand">
+            <img src="assets/img/logo.webp" alt="">
+        </a>
+        <button class="btn btn-close">
+            بستن
+        </button>
+    </div>
+    <form action="">
+        <div class="position-relative">
+            <div class="form-group">
+                <input type="text" placeholder="جستجو در قیمت ...">
+            </div>
+            <button class="btn btn-search">
+                <i class="icon-u-search">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+            </button>
+        </div>
+        <div class="swiper-container swiper-search-results">
+            <div class="swiper-wrapper">
+                <a href="#" class="swiper-slide item">
+                    <img src="assets/img/mobile.png" alt="">
+                    گوشی شیائومی Redmi Note 10
+                </a>
+                <a href="#" class="swiper-slide item">
+                    <img src="assets/img/mobile.png" alt="">
+                    گوشی شیائومی Redmi Note 10
+                </a>
+                <a href="#" class="swiper-slide item">
+                    <img src="assets/img/mobile.png" alt="">
+                    گوشی شیائومی Redmi Note 10
+                </a>
+                <a href="#" class="swiper-slide item">
+                    <img src="assets/img/mobile.png" alt="">
+                    گوشی شیائومی Redmi Note 10
+                </a>
+            </div>
+        </div>
+        <ul class="search-result">
+            <li>
+                <a href="">
+                    <i class="icon-u-category">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                    محصولات دسته بندی
+                    <span class="blue">
+                                موبایل و تبلت
+                            </span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="icon-u-category">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                    محصولات برند
+                    <span class="blue">
+                                شیائومی
+                            </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="">
+                    <i class="icon-u-search">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                    گوشی موبایل شیائومی مدل POCO X3 M200
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="icon-u-search">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                    گوشی موبایل شیائومی مدل POCO X3 M200
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="icon-u-search">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                    گوشی موبایل شیائومی مدل Redmi 9 M2004J19G
+                </a>
+            </li>
+        </ul>
+    </form>
+</div>
+<!--END-SEARCH-POPUP-->
+
+<!--START-CATEGORY-POPUP-->
+<div class="category-popup">
+    <div class="main">
+        <div class="top-bar">
+            <div class="text">
+                <i class="icon-u-user">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                سلام ,
+                <a href="">وارد شوید</a>
+            </div>
+            <button class="btn btn-close">
+                <i class="icon-close"></i>
+            </button>
+        </div>
+        <div class="main-bar">
+            <div class="scroll">
+                <span class="title peyda">
+                    <i class="icon-smartphone1"></i>
+                    موبایل و تبلت
+                </span>
+                <ul class="nav nav-menu">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            گوشی موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            تبلت
+                        </a>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            هدفون , هدست و هندزفری
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            لواز جانبی
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            قطعات موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            لوازم الکترونیکی همراه
+                        </a>
+                    </li>
+                </ul>
+                <a href="" class="show-more">
+                    مشاهده همه
+                    <i class="icon-down-chevron"></i>
+                </a>
+                <div class="line"></div>
+                <span class="title peyda">
+                    <i class="icon-imac"></i>
+                    لپ تاپ و کامپیوتر
+                </span>
+                <ul class="nav nav-menu">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            گوشی موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            تبلت
+                        </a>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            هدفون , هدست و هندزفری
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            لواز جانبی
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            قطعات موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            لوازم الکترونیکی همراه
+                        </a>
+                    </li>
+                </ul>
+                <a href="" class="show-more">
+                    مشاهده همه
+                    <i class="icon-down-chevron"></i>
+                </a>
+                <div class="line"></div>
+                <span class="title peyda">
+                    <i class="icon-imac"></i>
+                    لپ تاپ و کامپیوتر
+                </span>
+                <ul class="nav nav-menu">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            گوشی موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            تبلت
+                        </a>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            هدفون , هدست و هندزفری
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            لواز جانبی
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            قطعات موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            لوازم الکترونیکی همراه
+                        </a>
+                    </li>
+                </ul>
+                <a href="" class="show-more">
+                    مشاهده همه
+                    <i class="icon-down-chevron"></i>
+                </a>
+                <div class="line"></div>
+                <span class="title peyda">
+                    <i class="icon-imac"></i>
+                    لپ تاپ و کامپیوتر
+                </span>
+                <ul class="nav nav-menu">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            گوشی موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            تبلت
+                        </a>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            هدفون , هدست و هندزفری
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            لواز جانبی
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            قطعات موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            لوازم الکترونیکی همراه
+                        </a>
+                    </li>
+                </ul>
+                <a href="" class="show-more">
+                    مشاهده همه
+                    <i class="icon-down-chevron"></i>
+                </a>
+                <div class="line"></div>
+                <span class="title peyda">
+                    <i class="icon-imac"></i>
+                    لپ تاپ و کامپیوتر
+                </span>
+                <ul class="nav nav-menu">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            گوشی موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            تبلت
+                        </a>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            هدفون , هدست و هندزفری
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item drop-down">
+                        <a class="nav-link drop-down-toggle">
+                            لواز جانبی
+                        </a>
+                        <div class="drop-down-menu">
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                            <a href="" class="drop-down-item">
+                                تست
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            قطعات موبایل
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            لوازم الکترونیکی همراه
+                        </a>
+                    </li>
+                </ul>
+                <a href="" class="show-more">
+                    مشاهده همه
+                    <i class="icon-down-chevron"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-CATEGORY-POPUP-->
+
+<!--START-HOME-PAGE-->
+<div class="home-page" style="background-image: url({% static 'shop/assets/img/bg-home-page.webp' %})">
+
+    <div class="container shape-before">
+        <svg class="" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#359ebc"
+                  d="M40.8,-72.2C53.5,-63.4,64.7,-53.6,70.7,-41.4C76.6,-29.2,77.2,-14.6,76.3,-0.5C75.3,13.5,72.9,27.1,66.4,38.4C60,49.7,49.5,58.7,37.8,62.4C26.1,66,13,64.3,-0.2,64.7C-13.5,65.1,-27,67.6,-36.8,62.8C-46.6,58,-52.6,46,-59.4,34.3C-66.1,22.6,-73.5,11.3,-74.7,-0.7C-75.8,-12.6,-70.7,-25.3,-62.7,-34.7C-54.7,-44.2,-43.7,-50.5,-32.8,-60.3C-21.8,-70.1,-10.9,-83.5,1.6,-86.2C14.1,-88.9,28.1,-81,40.8,-72.2Z"
+                  transform="translate(100 100)"/>
+        </svg>
+    </div>
+    <div class="top-bar  d-none d-md-block">
+        <div class="container">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link btn-show-category">
+                        <i class="icon-u-category">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                        دسته بندی ها
+                    </a>
+                </li>
+                <li class="nav-item blue-theme">
+                    <a href="" class="nav-link">
+                        <i class="icon-u-user">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                        ورود کاربران
+                    </a>
+                </li>
+                <li class="nav-item white-theme">
+                    <a href="" class="nav-link">
+                        <i class="icon-u-bag">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                        ساخت فروشگاه
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="top-bar-mobile d-block d-md-none">
+        <div class="container">
+            <a href="" class="brand">
+                <img src="assets/img/logo.webp" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="main-bar">
+        <div class="container">
+            <a href="" class="brand d-none d-md-block">
+                <img src="assets/img/logo.webp" alt="">
+            </a>
+            <form action="">
+                <div class="form-group">
+                    <input class="show-result d-none d-md-block" type="text"
+                           placeholder="نام محصول یا دسته بندی مورد نظر را وارد نمایید . . .">
+                    <input class="show-result-mobile d-block d-md-none" type="text"
+                           placeholder="نام محصول را وارد نمایید . . ." readonly>
+                </div>
+                <div class="icon">
+                    <i class="icon-u-search">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </div>
+                <button class="btn btn-submit">
+                    <span class="d-lg-block d-none">
+                        قیمت کن
+                    </span>
+                    <i class="icon-u-search d-block d-lg-none">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </button>
+
+
+                <ul class="search-result">
+                    <li>
+                        <a href="">
+                            <i class="icon-u-category">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                            محصولات دسته بندی
+                            <span class="blue">
+                                موبایل و تبلت
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-u-category">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                            محصولات برند
+                            <span class="blue">
+                                شیائومی
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-u-search">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                            گوشی موبایل شیائومی مدل POCO X3 M200
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-u-search">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                            گوشی موبایل شیائومی مدل POCO X3 M200
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-u-search">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                            گوشی موبایل شیائومی مدل Redmi 9 M2004J19G
+                        </a>
+                    </li>
+                </ul>
+            </form>
+            <div class="swiper-container swiper-category">
+                <div class="swiper-wrapper">
+                    {% for category in categories %}
+                        {% if not category.parent %}
+                            <a href="{{ category.get_absolute_url }}" class="swiper-slide item">
+                                <div class="circle">
+                                    <i class="icon-smartphone1"></i>
+                                </div>
+                                {{ category.name }}
+                            </a>
+                        {% endif %}
+
+                    {% endfor %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-bar d-none d-md-block">
+        <div class="container">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        درباره ما
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        قوانین و مقررات
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        پرسش های متداول
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        وبلاگ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        تماس با ما
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="bottom-bar-mobile d-block d-md-none">
+        <div class="container">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link show-result-mobile">
+                        <i class="icon-u-search">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                        جستجو
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link btn-show-category">
+                        <span class="circle">
+                            <i class="icon-u-category">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        دسته بندی
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="icon-u-user">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                        پروفایل
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="clear-fix d-block d-md-none">
+
+    </div>
+    <svg class="shape-after" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#359ebc"
+              d="M38,-69.9C48.4,-59.9,55.3,-47.9,61.7,-35.9C68.2,-23.9,74.2,-12,73.1,-0.6C72,10.7,63.8,21.4,57.1,33.1C50.5,44.8,45.5,57.4,36.3,67.8C27,78.1,13.5,86,0,86.1C-13.5,86.1,-27.1,78.3,-38.3,69C-49.4,59.8,-58.2,49.3,-67.1,37.5C-75.9,25.8,-84.8,12.9,-82.7,1.2C-80.6,-10.5,-67.5,-20.9,-58.6,-32.6C-49.7,-44.2,-45,-57,-35.9,-67.7C-26.9,-78.4,-13.4,-87,0.2,-87.3C13.8,-87.7,27.7,-79.8,38,-69.9Z"
+              transform="translate(100 100)"/>
+    </svg>
+</div>
+<!--END-HOME-PAGE-->
+
+<textarea onclick="this.focus();this.select()" style="width: 100%;height: 500px">
+  {% filter force_escape %}
+      {% debug %}
+  {% endfilter %}
+</textarea>
+<script src="{% static 'shop/assets/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'shop/assets/js/Bootstrap/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'shop/assets/js/swiper/swiper.min.js' %}"></script>
+<script src="{% static 'shop/assets/js/Select2/select2.min.js' %}"></script>
+<script src="{% static 'shop/assets/js/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script src="{% static 'shop/assets/js/custom.js' %}"></script>
+</body>
+</html>
