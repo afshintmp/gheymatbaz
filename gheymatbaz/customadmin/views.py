@@ -15,7 +15,7 @@ from shop.models import Category, Product
 def admin_product(request):
     context = dict()
     context['products'] = Product.objects.all()
-    return HttpResponse('admin product')
+    return render(request, "customadmin/all-product.html", context=context)
 
 
 @login_required(login_url='/admin/login')
