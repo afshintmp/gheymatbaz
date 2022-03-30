@@ -46,7 +46,7 @@ class CategoryAttribute(models.Model):
 
 class CategoryAttributeValue(models.Model):
     attribute_value = models.CharField(max_length=32, null=False, blank=False)
-    parent_attribute_id = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE, name='parent_attribute')
+    parent_attribute_id = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE, name='category_attribute')
 
     def __str__(self):
         return self.attribute_value

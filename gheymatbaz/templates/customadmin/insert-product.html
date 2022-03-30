@@ -4,6 +4,45 @@
     <!--START-MAIN-->
     <main>
 
+        <form method="post" action="{% url 'create-product' %}">
+            {% csrf_token %}
+            <p>
+                <label for="">عنوان</label>
+                <input type="text">
+            </p>
+            <p>
+                <label for="">برند</label>
+                <select>
+                    {% for brand in brands %}
+                        <option value="">
+                            {{ brand.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>
+                <label for="">دسته بندی</label>
+                <select id="main-category">
+                    <option value="">
+                        ------------
+                    </option>
+                    {% for category in categories %}
+                        {% if not category.parent %}
+                            <option value="{{ category.id }}">
+                                {{ category.name }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </p>
+            <p id="child-category-wrapper">
+
+            </p>
+            <p id="attribute-category-wrapper">
+
+            </p>
+            <input type="submit">
+        </form>
 
     </main>
     <!--END-MAIN-->
@@ -11,4 +50,78 @@
 
 {% block title %}
     test heed
+{% endblock %}
+
+{% block customjs %}
+    <script>
+        var jsonCategory = {{ json_categories|safe }};
+        var jsonCategoryAttribute = {{ json_category_attribute|safe }};
+        var jsonCategoryAttributeValue = {{ json_category_attribute_value|safe }};
+
+
+        for (var attributeValue in jsonCategoryAttributeValue) {
+            {#console.log(jsonCategoryAttributeValue[attribute]['fields']['category']);#}
+            console.log(jsonCategoryAttributeValue[attributeValue]);
+
+            console.log(jsonCategoryAttributeValue[attributeValue]['fields']['attribute_value']);
+            console.log(jsonCategoryAttributeValue[attributeValue]['fields']['category_attribute']);
+
+        }
+        jQuery('#main-category').on('change', function () {
+            childSelectHtml = ''
+            parentID = jQuery('#main-category').val()
+            childSelectHtml += '<label for="">زیر دسته بندی :</label>'
+                + '<select onchange="showAttribute()" id="child-category"> '
+                + '<option>----------</option>'
+            for (var category in jsonCategory) {
+                if (jsonCategory[category]['fields']['parent'] == parentID) {
+                    childSelectHtml += '<option value="' +
+                        jsonCategory[category]['pk'] +
+                        '">'
+
+
+                    childSelectHtml += jsonCategory[category]['fields']['name']
+                    childSelectHtml += '</option>'
+                    console.log(jsonCategory[category]['fields']['name']);
+                }
+
+            }
+            childSelectHtml += '</select>'
+            jQuery('#child-category-wrapper').html(childSelectHtml)
+        });
+
+        function showAttribute() {
+            attributeHtmlMaker = ''
+            categoryID = jQuery('#child-category').val()
+
+            for (var attribute in jsonCategoryAttribute) {
+                if (jsonCategoryAttribute[attribute]['fields']['category'] == categoryID) {
+
+                    attributeHtmlMaker += '<label for="">'
+                    attributeHtmlMaker += jsonCategoryAttribute[attribute]['fields']['name']
+                    attributeHtmlMaker += '</label>'
+                    attributeHtmlMaker += '<select> '
+                    for (var attributeValue in jsonCategoryAttributeValue) {
+                        if (jsonCategoryAttributeValue[attributeValue]['fields']['category_attribute'] == jsonCategoryAttribute[attribute]['pk']) {
+                            attributeHtmlMaker += '<option>'
+                            attributeHtmlMaker += jsonCategoryAttributeValue[attributeValue]['fields']['attribute_value']
+                            attributeHtmlMaker += '</option>'
+
+                        }
+
+
+                        {#console.log(jsonCategoryAttributeValue[attribute]['fields']['category']);#}
+                        {#console.log(jsonCategoryAttributeValue[attributeValue]);#}
+{##}
+{#                        console.log(jsonCategoryAttributeValue[attributeValue]['fields']['attribute_value']);#}
+{#                        console.log(jsonCategoryAttributeValue[attributeValue]['fields']['category_attribute']);#}
+{##}
+                    }
+                    attributeHtmlMaker += '</select>'
+                }
+
+            }
+            jQuery('#attribute-category-wrapper').html(attributeHtmlMaker)
+        }
+    </script>
 {% endblock %}
