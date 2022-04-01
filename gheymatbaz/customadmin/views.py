@@ -5,11 +5,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
-from customadmin.forms import AddProductForm
+from customadmin.forms import AddCategoryForm, EditeCategory
 from customadmin.utils import check_is_superuser
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue
-
-import json
 
 
 # Create your views here.
@@ -17,7 +15,7 @@ import json
 @login_required(login_url='/admin/login')
 @require_http_methods(request_method_list=['GET'])
 @user_passes_test(check_is_superuser)
-def admin_product(request):
+def all_product(request):
     context = dict()
     context['products'] = Product.objects.all()
     return render(request, "customadmin/all-product.html", context=context)
@@ -58,9 +56,37 @@ def add_product(request):
 
 
 @login_required(login_url='/admin/login')
-@require_http_methods(request_method_list=['post'])
+@require_http_methods(request_method_list=['GET', 'POST'])
 @user_passes_test(check_is_superuser)
-def create_product(request):
-    context = dict()
-    context['products'] = Product.objects.all()
-    return render(request, "customadmin/insert-product.html", context=context)
+def all_category(request):
+    form = AddCategoryForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    categories = Category.objects.all()
+    data_categories = serializers.serialize('json', categories)
+
+    return render(request, "customadmin/all-category.html", {'categories': categories,
+                                                             'json_categories': data_categories,
+                                                             'form': AddCategoryForm
+                                                             })
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def edit_category(request, pk):
+    if request.method == 'POST':
+        form = EditeCategory(request.POST or None)
+        if form.is_valid():
+            cd = form.cleaned_data
+    query = Category.objects.filter(pk=pk).first()
+    # if query.exists():
+    form = EditeCategory()
+    categories = Category.objects.all()
+    data_categories = serializers.serialize('json', categories)
+
+    return render(request, "customadmin/edit-category.html", {'current_category': query,
+                                                              'categories': categories,
+                                                              'json_categories': data_categories,
+                                                              'form': form
+                                                              })
