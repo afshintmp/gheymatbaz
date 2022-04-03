@@ -3,7 +3,10 @@ from django.core import serializers
 
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from customadmin.forms import AddCategoryForm, EditeCategory
 from customadmin.utils import check_is_superuser
@@ -55,38 +58,106 @@ def add_product(request):
                                                                })
 
 
-@login_required(login_url='/admin/login')
-@require_http_methods(request_method_list=['GET', 'POST'])
-@user_passes_test(check_is_superuser)
-def all_category(request):
-    form = AddCategoryForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-    categories = Category.objects.all()
-    data_categories = serializers.serialize('json', categories)
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ['name', 'parent', 'slug']
+    template_name = 'customadmin/edit-category.html'
 
-    return render(request, "customadmin/all-category.html", {'categories': categories,
-                                                             'json_categories': data_categories,
-                                                             'form': AddCategoryForm
-                                                             })
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.all()
+        context['categories'] = category
+        context['json_categories'] = serializers.serialize('json', category)
+        return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 
-@login_required(login_url='/admin/login')
-@require_http_methods(request_method_list=['GET', 'POST'])
-@user_passes_test(check_is_superuser)
-def edit_category(request, pk):
-    if request.method == 'POST':
-        form = EditeCategory(request.POST or None)
-        if form.is_valid():
-            cd = form.cleaned_data
-    query = Category.objects.filter(pk=pk).first()
-    # if query.exists():
-    form = EditeCategory()
-    categories = Category.objects.all()
-    data_categories = serializers.serialize('json', categories)
+class CategoryUpdateView(UpdateView):
+    model = Category
+    fields = ['name', 'parent', 'slug']
+    template_name = 'customadmin/edit-category.html'
 
-    return render(request, "customadmin/edit-category.html", {'current_category': query,
-                                                              'categories': categories,
-                                                              'json_categories': data_categories,
-                                                              'form': form
-                                                              })
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.all()
+        context['categories'] = category
+        context['json_categories'] = serializers.serialize('json', category)
+        return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    success_url = reverse_lazy('author-list')
+    template_name = 'customadmin/confirm-delete-category.html'
+    success_url = reverse_lazy('category-add')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.all()
+        context['categories'] = category
+        context['json_categories'] = serializers.serialize('json', category)
+        return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class BrandCreateView(CreateView):
+    model = Brand
+    fields = ['name', 'slug', 'image']
+    template_name = 'customadmin/edit-brand.html'
+    success_url = reverse_lazy('brand-add')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        brand = Brand.objects.all()
+        context['brands'] = brand
+        return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class BrandUpdateView(UpdateView):
+    model = Brand
+    fields = ['name', 'slug', 'image']
+    template_name = 'customadmin/edit-brand.html'
+    success_url = reverse_lazy('brand-add')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        brand = Brand.objects.all()
+        context['brands'] = brand
+
+        return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class BrandDeleteView(DeleteView):
+    model = Brand
+    success_url = reverse_lazy('author-list')
+    template_name = 'customadmin/confirm-delete-category.html'
+    success_url = reverse_lazy('category-add')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.all()
+        context['categories'] = category
+        context['json_categories'] = serializers.serialize('json', category)
+        return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)

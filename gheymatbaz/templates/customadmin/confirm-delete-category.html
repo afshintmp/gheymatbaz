@@ -1,21 +1,15 @@
-{% extends 'admin-base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <!--START-MAIN-->
-
     <main class="custom-admin-main">
-
         <div class="cat-block">
 
-
-            <h4>ویرایش
-                <b> {{ current_category.name }}</b>
-            </h4>
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit">
+            <form method="post">{% csrf_token %}
+                <p>Are you sure you want to delete "{{ object }}"?</p>
+                <input type="submit" value="Confirm">
             </form>
+
         </div>
         <div class="cat-block">
             {% for category in categories %}

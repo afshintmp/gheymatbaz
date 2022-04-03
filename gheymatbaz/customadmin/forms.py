@@ -16,7 +16,7 @@ class AddCategoryForm(forms.ModelForm):
 
 
 class EditeCategory(forms.ModelForm):
-    category = forms.ModelChoiceField(queryset=Category.objects.all())
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.HiddenInput)
 
     class Meta:
         model = Category

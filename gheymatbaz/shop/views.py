@@ -29,3 +29,7 @@ def index(request):
     context = dict()
     context['categories'] = Category.objects.all()
     return render(request, "index.html", context=context)
+
+
+def single_brand(request, slug):
+    pass

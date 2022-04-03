@@ -15,9 +15,21 @@ class ProductKeyWord(models.Model):
 
 class Brand(models.Model):
     name = models.CharField(max_length=32, blank=False, null=False)
+    slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
+    image = models.ImageField(upload_to='brand', null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('brand-add', args=[self.slug])
+
+    @property
+    def get_photo_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        else:
+            return ""
 
 
 class Category(models.Model):
@@ -33,7 +45,7 @@ class Category(models.Model):
         verbose_name_plural = 'categories'
 
     def get_absolute_url(self):
-        return reverse('category-archive', args=[self.slug])
+        return reverse('single-brand', args=[self.slug])
 
 
 class CategoryAttribute(models.Model):
