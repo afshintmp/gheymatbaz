@@ -78,8 +78,10 @@ class Product(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default='published')
 
-    brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True, blank=True)
+
+    category = models.ManyToManyField(Category, blank=True)
+    category_attribute_value = models.ManyToManyField(CategoryAttributeValue, blank=True)
     view = models.BigIntegerField(default=0)
     rate = models.BigIntegerField(default=0)
     rate_number = models.BigIntegerField(default=0)
@@ -116,3 +118,9 @@ class ProductGallery(models.Model):
     #     if not self.slug:
     #         self.slug = slugify(self.title)
     #     super(Product, self).save(*args, **kwargs)
+
+
+class ProductAttribute(models.Model):
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    attribute = models.CharField(max_length=32)
+    attribute_value = models.TextField()

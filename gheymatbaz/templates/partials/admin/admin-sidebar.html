@@ -6,8 +6,15 @@
         <li><a href="{% url "brand-add" %}">
             برند ها
         </a></li>
-        <li><a href="">
-            محصولات
-        </a></li>
+        <li>
+            <a href="{% url "product-all" %}">
+                محصولات
+            </a>
+            <ul>
+                <li>
+                    <a href="{% url "product-add" %}">افزودن</a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>

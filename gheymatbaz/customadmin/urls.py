@@ -1,11 +1,12 @@
 from django.urls import path, re_path
-from customadmin.views import all_product, edit_product, add_product, CategoryCreateView, \
-    CategoryUpdateView, CategoryDeleteView, BrandCreateView, BrandUpdateView, BrandDeleteView
+from customadmin.views import edit_product, CategoryCreateView, \
+    CategoryUpdateView, CategoryDeleteView, BrandCreateView, BrandUpdateView, BrandDeleteView, ProductListView, \
+    ProductCreateView
 
 urlpatterns = [
-    path('product/all', all_product),
-    path('product/add', add_product, name='add-product'),
-    re_path('product/edit/(?P<slug>[-\w]+)/', edit_product),
+
+
+    # re_path('product/edit/(?P<slug>[-\w]+)/', edit_product),
     # path('categories/all', all_category),
     # path('category/edit/<int:pk>/', edit_category, name='edit-category'),
 
@@ -16,5 +17,8 @@ urlpatterns = [
     path('brand/add/', BrandCreateView.as_view(), name='brand-add'),
     path('brand/<int:pk>/', BrandUpdateView.as_view(), name='brand-update'),
     path('brand/<int:pk>/delete/', BrandDeleteView.as_view(), name='brand-delete'),
+
+    path('product/all', ProductListView.as_view(), name='product-all'),
+    path('product/add', ProductCreateView.as_view(), name='product-add'),
 
 ]

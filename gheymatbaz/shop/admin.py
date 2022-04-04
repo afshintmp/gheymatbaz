@@ -1,5 +1,6 @@
 from django.contrib import admin
-from shop.models import Product, Category, Brand, CategoryAttribute, CategoryAttributeValue, ProductGallery
+from shop.models import Product, Category, Brand, CategoryAttribute, CategoryAttributeValue, ProductGallery, \
+    ProductKeyWord, ProductAttribute
 
 
 # Register your models here.
@@ -22,11 +23,19 @@ class ProductGalleryInline(admin.TabularInline):
     model = ProductGallery
 
 
+class ProductKeywordInline(admin.TabularInline):
+    model = ProductKeyWord
+
+
+class ProductAttributeInline(admin.TabularInline):
+    model = ProductAttribute
+
+
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'brand', 'category']
+    list_display = ['title', 'brand']
     list_filter = ['brand', 'category']
     search_fields = ['title', 'category__name', 'brand__name']
-    inlines = [ProductGalleryInline]
+    inlines = [ProductGalleryInline, ProductKeywordInline, ProductAttributeInline]
 
 
 class CategoryAdmin(admin.ModelAdmin):

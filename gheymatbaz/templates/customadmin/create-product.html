@@ -1,0 +1,21 @@
+{% extends 'admin-base.html' %}
+
+{% block content %}
+    <!--START-MAIN-->
+
+    <main class="custom-admin-main">
+
+        <div class="cat-block">
+
+
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit">
+            </form>
+        </div>
+
+
+    </main>
+    <!--END-MAIN-->
+{% endblock %}

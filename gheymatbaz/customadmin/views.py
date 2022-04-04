@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from customadmin.forms import AddCategoryForm, EditeCategory
 from customadmin.utils import check_is_superuser
@@ -129,7 +129,7 @@ class BrandCreateView(CreateView):
 
 class BrandUpdateView(UpdateView):
     model = Brand
-    fields = ['name', 'slug', 'image']
+    fields = ['name', 'slug', 'image', 'brand', 'category']
     template_name = 'customadmin/edit-brand.html'
     success_url = reverse_lazy('brand-add')
 
@@ -157,6 +157,26 @@ class BrandDeleteView(DeleteView):
         context['categories'] = category
         context['json_categories'] = serializers.serialize('json', category)
         return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'customadmin/all-product.html'
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ['title', 'slug', 'status', 'brand', 'category', 'category_attribute_value']
+    template_name = 'customadmin/create-product.html'
+    success_url = reverse_lazy('product-all')
 
     @method_decorator(login_required, user_passes_test(check_is_superuser))
     def dispatch(self, *args, **kwargs):
