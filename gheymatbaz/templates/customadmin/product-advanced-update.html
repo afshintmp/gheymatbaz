@@ -30,14 +30,26 @@
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>
+
                 {% for attribute in categoryattribute %}
                     {{ attribute }}
-                    <select name="attribute">
+                    <select name="{{ attribute }}">
+                        <option value="">
+                            _________
+
+                        </option>
                         {% for attributevalue in categoryattributevalue %}
 
                             {% if  attributevalue.category_attribute.pk  == attribute.pk %}
 
-                                <option value="attributevalue">
+                                <option value="{{ attributevalue.pk }}"
+                                        {% for val in products.category_attribute_value.all %}
+                                            {% if val.pk == attributevalue.pk %}
+                                        selected
+                                            {% endif %}
+
+                                        {% endfor %}
+                                >
                                     {{ attributevalue }}
                                 </option>
 
@@ -50,10 +62,10 @@
                 {% endfor %}
             </p>
             <p>
-                <input type="file" multiple>
+                {#                <input name="image-gallery" type="file" multiple>#}
             </p>
             <p>
-                <textarea id="mytextarea"></textarea>
+                {#                <textarea name="context" id="mytextarea"></textarea>#}
             </p>
             <input type="submit">
         </form>

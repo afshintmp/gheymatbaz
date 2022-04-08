@@ -189,13 +189,6 @@ class ProductUpdateView(UpdateView):
     template_name = 'customadmin/create-product.html'
     success_url = reverse_lazy('product-all')
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     brand = Brand.objects.all()
-    #     context['brands'] = brand
-    #
-    #     return context
-
     @method_decorator(login_required, user_passes_test(check_is_superuser))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
@@ -206,10 +199,22 @@ class ProductUpdateView(UpdateView):
 @user_passes_test(check_is_superuser)
 def product_advanced_update(request, pk):
     if request.method == "POST":
-        form = request.POST['attribute']
+        form = request.POST
+        product = Product.objects.get(pk=pk)
+        attribute_dict = list()
+        for f in form:
+            if not f == 'csrfmiddlewaretoken':
+                attribute_dict.append(form[f])
+
+        product.category_attribute_value.clear()
+        product.category_attribute_value.set(attribute_dict)
+
         return render(request, "customadmin/trace.html", context=form)
+
     else:
+
         context = dict()
+
         product = Product.objects.get(pk=pk)
         category = product.category.all()
         category_attribute = CategoryAttribute.objects.filter(category_id__in=category)
@@ -218,10 +223,14 @@ def product_advanced_update(request, pk):
         context['products'] = product
         context['categoryattribute'] = category_attribute
         context['categoryattributevalue'] = category_attribute_value
-        # data_product = serializers.serialize('json', product)
-        # data_category_attribute = serializers.serialize('json', category_attribute)
-        # data_category_attribute_value = serializers.serialize('json', category_attribute_value)
-        # context['form'] = AddProductForm
 
-        # return HttpResponse(data_product, content_type="application/json")
         return render(request, "customadmin/product-advanced-update.html", context=context)
+
+
+class CategoryAttributeListView(ListView):
+    model = CategoryAttribute
+    template_name = 'customadmin/list-category-attribute.html'
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)

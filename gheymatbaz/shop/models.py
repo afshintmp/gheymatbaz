@@ -104,6 +104,9 @@ class Product(models.Model):
         else:
             return ""
 
+    def advanced_saved(self):
+        pass
+
 
 class ProductGallery(models.Model):
     image = models.ImageField(upload_to='product_image', null=False, blank=False)

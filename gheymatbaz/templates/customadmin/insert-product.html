@@ -4,7 +4,7 @@
     <!--START-MAIN-->
     <main>
 
-        <form method="post" action="{% url 'create-product' %}">
+        <form method="post" action="{% url 'create-product' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <p>
                 <label for="">عنوان</label>
@@ -112,10 +112,10 @@
 
                         {#console.log(jsonCategoryAttributeValue[attribute]['fields']['category']);#}
                         {#console.log(jsonCategoryAttributeValue[attributeValue]);#}
-{##}
-{#                        console.log(jsonCategoryAttributeValue[attributeValue]['fields']['attribute_value']);#}
-{#                        console.log(jsonCategoryAttributeValue[attributeValue]['fields']['category_attribute']);#}
-{##}
+                        {##}
+                        {#                        console.log(jsonCategoryAttributeValue[attributeValue]['fields']['attribute_value']);#}
+                        {#                        console.log(jsonCategoryAttributeValue[attributeValue]['fields']['category_attribute']);#}
+                        {##}
                     }
                     attributeHtmlMaker += '</select>'
                 }
