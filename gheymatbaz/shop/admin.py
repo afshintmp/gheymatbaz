@@ -49,7 +49,12 @@ class CategoryAttributeAdmin(admin.ModelAdmin):
     inlines = [CategoryAttributeValueInline]
 
 
+class ProductAttributeAdmin(admin.ModelAdmin):
+    list_display = ['attribute', 'attribute_value']
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Brand)
+admin.site.register(ProductAttribute, ProductAttributeAdmin)
 admin.site.register(CategoryAttribute, CategoryAttributeAdmin)

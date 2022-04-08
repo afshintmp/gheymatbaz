@@ -174,10 +174,54 @@ class ProductListView(ListView):
 
 class ProductCreateView(CreateView):
     model = Product
-    fields = ['title', 'slug', 'status', 'brand', 'category', 'category_attribute_value']
+    fields = ['title', 'slug', 'status', 'image', 'brand', 'category']
     template_name = 'customadmin/create-product.html'
     success_url = reverse_lazy('product-all')
 
     @method_decorator(login_required, user_passes_test(check_is_superuser))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ['title', 'slug', 'status', 'image', 'brand', 'category']
+    template_name = 'customadmin/create-product.html'
+    success_url = reverse_lazy('product-all')
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     brand = Brand.objects.all()
+    #     context['brands'] = brand
+    #
+    #     return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def product_advanced_update(request, pk):
+    if request.method == "POST":
+        form = request.POST['attribute']
+        return render(request, "customadmin/trace.html", context=form)
+    else:
+        context = dict()
+        product = Product.objects.get(pk=pk)
+        category = product.category.all()
+        category_attribute = CategoryAttribute.objects.filter(category_id__in=category)
+        category_attribute_value = CategoryAttributeValue.objects.filter(category_attribute_id__in=category_attribute)
+
+        context['products'] = product
+        context['categoryattribute'] = category_attribute
+        context['categoryattributevalue'] = category_attribute_value
+        # data_product = serializers.serialize('json', product)
+        # data_category_attribute = serializers.serialize('json', category_attribute)
+        # data_category_attribute_value = serializers.serialize('json', category_attribute_value)
+        # context['form'] = AddProductForm
+
+        # return HttpResponse(data_product, content_type="application/json")
+        return render(request, "customadmin/product-advanced-update.html", context=context)

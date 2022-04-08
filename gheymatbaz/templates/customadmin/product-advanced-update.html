@@ -1,0 +1,103 @@
+{% extends 'admin-base.html' %}
+
+{% block content %}
+    <!--START-MAIN-->
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
+    <main class="custom-admin-main">
+        <p>
+            ویرایش
+            <span>{{ products.title }}</span>
+        </p>
+        <p>
+            <span>
+                دسته بندی :
+
+            </span>
+
+
+            {% for category in products.category.all %}
+
+                <span>
+                {{ category.name }}
+
+            </span>
+            {% endfor %}
+        </p>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                {% for attribute in categoryattribute %}
+                    {{ attribute }}
+                    <select name="attribute">
+                        {% for attributevalue in categoryattributevalue %}
+
+                            {% if  attributevalue.category_attribute.pk  == attribute.pk %}
+
+                                <option value="attributevalue">
+                                    {{ attributevalue }}
+                                </option>
+
+
+
+                            {% endif %}
+
+                        {% endfor %}
+                    </select>
+                {% endfor %}
+            </p>
+            <p>
+                <input type="file" multiple>
+            </p>
+            <p>
+                <textarea id="mytextarea"></textarea>
+            </p>
+            <input type="submit">
+        </form>
+    </main>
+    <!--END-MAIN-->
+{% endblock %}
+
+{% block title %}
+    test heed
+{% endblock %}
+
+
+{% block customjs %}
+
+{% endblock %}
+
+{% block customstyle %}
+    <style>
+        .category-table-row {
+
+            margin-bottom: 0;
+            padding: 0px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sub-category-table-row {
+            margin-right: 25px;
+        }
+
+        .category-table-colm {
+            display: inline-block;
+            margin-bottom: 0;
+            padding: 8px 15px;
+        }
+
+        .custom-admin-main {
+            padding: 20px;
+        }
+
+        .cat-block {
+            display: inline-block;
+            width: 45%;
+            vertical-align: top;
+        }
+    </style>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}

@@ -14,7 +14,10 @@
                 <tr>
                     <td>{{ product.title }}</td>
                     <td>
-                        <a href="">ویرایش</a>
+                        <a href="{% url 'product-update' product.pk %}">ویرایش</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'product-advanced-update' product.pk %}">پیشرفته</a>
                     </td>
                 </tr>
             {% endfor %}
