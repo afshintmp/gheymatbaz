@@ -1,0 +1,84 @@
+{% extends 'admin-base.html' %}
+
+{% block content %}
+    <div class="cat-block">
+
+
+        <h4>ویرایش
+            {#                <b> {{ current_category.name }}</b>#}
+        </h4>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit">
+        </form>
+    </div>
+    <div class="cat-block">
+        <ul>
+            {% for obj in object_list %}
+                <li class="category-table">
+                    <div class="category-table-row">
+                        <p class="category-table-colm">
+                            {{ obj.id }}
+                        </p>
+                        <p class="category-table-colm">
+                            {{ obj }}
+                        </p>
+                        <p class="category-table-colm">
+                            {{ obj.category }}
+                        </p>
+
+
+                        <p class="category-table-colm">
+                            <a href="{% url 'category-attribute-update' obj.pk %}">ویرایش</a>
+                        </p>
+
+                        <p class="category-table-colm">
+                            <a href="">حذف</a>
+                        </p>
+                    </div>
+
+                </li>
+
+
+
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+
+{% endblock %}
+
+
+{% block customstyle %}
+    <style>
+        .category-table-row {
+
+            margin-bottom: 0;
+            padding: 0px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sub-category-table-row {
+            margin-right: 25px;
+        }
+
+        .category-table-colm {
+            display: inline-block;
+            margin-bottom: 0;
+            padding: 8px 15px;
+        }
+
+        .custom-admin-main {
+            padding: 20px;
+        }
+
+        .cat-block {
+            display: inline-block;
+            width: 45%;
+            vertical-align: top;
+        }
+    </style>
+{% endblock %}

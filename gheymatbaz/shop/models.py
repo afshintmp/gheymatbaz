@@ -51,6 +51,7 @@ class Category(models.Model):
 class CategoryAttribute(models.Model):
     name = models.CharField(max_length=32, null=False, blank=False)
     category_id = models.ForeignKey(Category, on_delete=models.CASCADE, name='category')
+    slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
 
     def __str__(self):
         return self.name

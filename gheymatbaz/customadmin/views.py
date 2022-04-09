@@ -227,9 +227,34 @@ def product_advanced_update(request, pk):
         return render(request, "customadmin/product-advanced-update.html", context=context)
 
 
-class CategoryAttributeListView(ListView):
+class CategoryAttributeCreateView(CreateView):
     model = CategoryAttribute
-    template_name = 'customadmin/list-category-attribute.html'
+    fields = ['name', 'category', 'slug']
+    template_name = 'customadmin/edit-category-attribute.html'
+    success_url = reverse_lazy('category-attribute-add')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categoryattribute = CategoryAttribute.objects.all()
+        context['object_list'] = categoryattribute
+        return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class CategoryAttributeUpdateView(UpdateView):
+    model = CategoryAttribute
+    fields = ['name', 'category', 'slug']
+    template_name = 'customadmin/update-category-attribute.html'
+    success_url = reverse_lazy('category-attribute-add')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categoryattribute = CategoryAttribute.objects.all()
+        context['object_list'] = categoryattribute
+        return context
 
     @method_decorator(login_required, user_passes_test(check_is_superuser))
     def dispatch(self, *args, **kwargs):
