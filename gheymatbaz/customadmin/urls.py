@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from customadmin.views import edit_product, CategoryCreateView, \
     CategoryUpdateView, CategoryDeleteView, BrandCreateView, BrandUpdateView, BrandDeleteView, ProductListView, \
     ProductCreateView, ProductUpdateView, product_advanced_update, CategoryAttributeCreateView, \
-    CategoryAttributeUpdateView
+    CategoryAttributeUpdateView, CategoryAttributeDeleteView, CategoryAttributeValueListView
 
 urlpatterns = [
 
@@ -25,4 +25,9 @@ urlpatterns = [
 
     path('category-attribute/add/', CategoryAttributeCreateView.as_view(), name='category-attribute-add'),
     path('category-attribute/<int:pk>/', CategoryAttributeUpdateView.as_view(), name='category-attribute-update'),
+    path('category-attribute/<int:pk>/delete/', CategoryAttributeDeleteView.as_view(),
+         name='category-attribute-delete'),
+
+    path('category-attribute-value/<int:pk>/', CategoryAttributeValueListView.as_view(),
+         name='category-attribute-value-list')
 ]

@@ -247,7 +247,7 @@ class CategoryAttributeCreateView(CreateView):
 class CategoryAttributeUpdateView(UpdateView):
     model = CategoryAttribute
     fields = ['name', 'category', 'slug']
-    template_name = 'customadmin/update-category-attribute.html'
+    template_name = 'customadmin/edit-category-attribute.html'
     success_url = reverse_lazy('category-attribute-add')
 
     def get_context_data(self, **kwargs):
@@ -255,6 +255,34 @@ class CategoryAttributeUpdateView(UpdateView):
         categoryattribute = CategoryAttribute.objects.all()
         context['object_list'] = categoryattribute
         return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class CategoryAttributeDeleteView(DeleteView):
+    model = CategoryAttribute
+    success_url = reverse_lazy('category-attribute-add')
+    template_name = 'customadmin/confirm-delete-category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.all()
+        context['categories'] = category
+        context['json_categories'] = serializers.serialize('json', category)
+        return context
+
+    @method_decorator(login_required, user_passes_test(check_is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class CategoryAttributeValueListView(ListView):
+    model = CategoryAttributeValue
+    fields = ['name']
+    template_name = 'customadmin/edit-category-attribute-value.html'
+    success_url = reverse_lazy('category-attribute-add')
 
     @method_decorator(login_required, user_passes_test(check_is_superuser))
     def dispatch(self, *args, **kwargs):

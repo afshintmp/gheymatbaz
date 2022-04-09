@@ -1,17 +1,18 @@
 {% extends 'admin-base.html' %}
 
 {% block content %}
+
     <div class="cat-block">
 
 
-        <h4>ویرایش
-            {#                <b> {{ current_category.name }}</b>#}
-        </h4>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit">
-        </form>
+{#        <h4>ویرایش#}
+{#                            <b> {{ current_category.name }}</b>#}
+{#        </h4>#}
+{#        <form action="" method="post">#}
+{#            {% csrf_token %}#}
+{#            {{ form.as_p }}#}
+{#            <input type="submit">#}
+{#        </form>#}
     </div>
     <div class="cat-block">
         <ul>
@@ -28,13 +29,15 @@
                             {{ obj.category }}
                         </p>
 
-
+                        <p class="category-table-colm">
+                            <a href="{% url 'category-attribute-update' obj.pk %}">مقادیر</a>
+                        </p>
                         <p class="category-table-colm">
                             <a href="{% url 'category-attribute-update' obj.pk %}">ویرایش</a>
                         </p>
 
                         <p class="category-table-colm">
-                            <a href="">حذف</a>
+                            <a href="{% url 'category-attribute-delete' obj.pk %}">حذف</a>
                         </p>
                     </div>
 
@@ -46,8 +49,6 @@
         </ul>
 
     </div>
-
-
 
 {% endblock %}
 
