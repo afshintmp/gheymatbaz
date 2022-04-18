@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
-from customadmin.forms import AddCategoryForm, EditeCategory
+from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeValueForm
 from customadmin.utils import check_is_superuser
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue
 
@@ -278,12 +278,28 @@ class CategoryAttributeDeleteView(DeleteView):
         return super().dispatch(*args, **kwargs)
 
 
-class CategoryAttributeValueListView(ListView):
-    model = CategoryAttributeValue
-    fields = ['name']
-    template_name = 'customadmin/edit-category-attribute-value.html'
-    success_url = reverse_lazy('category-attribute-add')
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def category_attribute_value(request, pk):
+    if request.method == "POST":
+        form = request.POST
+        category_attribute = CategoryAttribute.objects.get(pk=form['parent_attribute_id'])
+        c = CategoryAttributeValue(attribute_value=form['attribute_value'],
+                                   category_attribute=category_attribute)
+        c.save()
+        context = dict()
+        context['object_list'] = CategoryAttributeValue.objects.filter(category_attribute=pk)
+        context['form'] = CategoryAttributeValueForm({'parent_attribute_id': pk})
+        return render(request, 'customadmin/edit-category-attribute-value.html', context=context)
 
-    @method_decorator(login_required, user_passes_test(check_is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+
+
+    else:
+
+        context = dict()
+        context['object_list'] = CategoryAttributeValue.objects.filter(category_attribute=pk)
+        context['form'] = CategoryAttributeValueForm({'parent_attribute_id': pk})
+        return render(request, 'customadmin/edit-category-attribute-value.html', context=context)
+
+# template_name = 'customadmin/edit-category-attribute-value.html'
