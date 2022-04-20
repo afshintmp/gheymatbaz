@@ -1,9 +1,11 @@
+from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core import serializers
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
@@ -14,6 +16,39 @@ from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAtt
 
 
 # Create your views here.
+@login_required(login_url='/gheymat-admin/authenticate')
+@require_http_methods(request_method_list=['GET'])
+@user_passes_test(check_is_superuser)
+def admin_panel(request):
+    return HttpResponse("welcome to admin panel")
+
+
+def admin_authenticate(request):
+    context = dict()
+    logout(request)
+    username = password = redirect = ''
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        redirect = request.POST['next']
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(redirect)
+        else:
+            context['error'] = 'خطا در احراز هویت'
+
+    try:
+        context['next'] = request.GET['next']
+    except MultiValueDictKeyError:
+        context['next'] = request.POST['next']
+    except:
+        context['next'] = 'gheymat-admin'
+
+    return render(request, "customadmin/login-template.html", context=context)
+
 
 @login_required(login_url='/admin/login')
 @require_http_methods(request_method_list=['GET'])
