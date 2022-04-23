@@ -9,7 +9,7 @@ from shop.models import Product, Category
 @require_http_methods(request_method_list=['GET'])
 def single_product(request, slug):
     context = dict()
-    # context['product'] = Product.objects.get(slug=slug)
+    context['product'] = Product.objects.get(slug=slug)
     return render(request, "shop/single-product.html", context=context)
 
 

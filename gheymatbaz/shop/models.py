@@ -36,6 +36,7 @@ class Category(models.Model):
     name = models.CharField(max_length=32, blank=False, null=False)
     parent = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
     slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
+    icon_class = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -45,7 +46,7 @@ class Category(models.Model):
         verbose_name_plural = 'categories'
 
     def get_absolute_url(self):
-        return reverse('single-brand', args=[self.slug])
+        return reverse('category-archive', args=[self.slug])
 
 
 class CategoryAttribute(models.Model):
@@ -88,6 +89,7 @@ class Product(models.Model):
     rate_number = models.BigIntegerField(default=0)
     description = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='product', null=True, blank=True)
+    alt_text = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -111,7 +113,8 @@ class Product(models.Model):
 
 class ProductGallery(models.Model):
     image = models.ImageField(upload_to='product_image', null=False, blank=False)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
+    alt_text = models.CharField(max_length=200, null=True, blank=True)
+    product_id = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, blank=True)
 
     slug = models.SlugField(max_length=200, null=True, blank=True)
 

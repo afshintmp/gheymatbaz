@@ -7,3 +7,20 @@ body {
     text-align: right;
 
 }
+
+.admin-side-bar {
+    background: #0c5460;
+    color: #fff;
+}
+
+.admin-side-bar a {
+    color: #fff;
+}
+
+.main-admin-container {
+    min-height: 100vh;
+}
+
+.admin-side-bar {
+    height: 100vh;
+}

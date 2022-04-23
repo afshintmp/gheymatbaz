@@ -20,7 +20,7 @@ from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAtt
 @require_http_methods(request_method_list=['GET'])
 @user_passes_test(check_is_superuser)
 def admin_panel(request):
-    return HttpResponse("welcome to admin panel")
+    return render(request, "customadmin/admin-index.html", context={})
 
 
 def admin_authenticate(request):
@@ -43,9 +43,10 @@ def admin_authenticate(request):
     try:
         context['next'] = request.GET['next']
     except MultiValueDictKeyError:
-        context['next'] = request.POST['next']
-    except:
-        context['next'] = 'gheymat-admin'
+        try:
+            context['next'] = request.POST['next']
+        except MultiValueDictKeyError:
+            context['next'] = '/gheymat-admin'
 
     return render(request, "customadmin/login-template.html", context=context)
 
@@ -95,7 +96,7 @@ def add_product(request):
 
 class CategoryCreateView(CreateView):
     model = Category
-    fields = ['name', 'parent', 'slug']
+    fields = ['name', 'parent', 'slug', 'icon_class']
     template_name = 'customadmin/edit-category.html'
 
     def get_context_data(self, **kwargs):
@@ -112,7 +113,7 @@ class CategoryCreateView(CreateView):
 
 class CategoryUpdateView(UpdateView):
     model = Category
-    fields = ['name', 'parent', 'slug']
+    fields = ['name', 'parent', 'slug', 'icon_class']
     template_name = 'customadmin/edit-category.html'
 
     def get_context_data(self, **kwargs):
