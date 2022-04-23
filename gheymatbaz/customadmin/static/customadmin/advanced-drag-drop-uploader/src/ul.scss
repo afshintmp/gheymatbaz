@@ -1,0 +1,76 @@
+
+#uploader{ //jq obj
+  padding: 1em;
+  position: relative;
+  #uploaderCont{
+    #dragandrophandler{
+      flex-direction: column;
+      background: #ebebeb;
+      height: 30vh;
+      min-height: 180px;
+      border: 1px solid #c8c8c8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 400ms;
+      > *{transition: all 400ms;}
+      svg{
+        width: 100px;
+        height: 3.3em;
+        opacity: 0.12;
+        margin-bottom: 7px;
+      }
+      label{
+        margin-left: 5px;
+        color: #007bff;
+        cursor: pointer;
+        &:hover{text-decoration: underline;}
+      }
+      &.active{
+        box-shadow: 0 0 18px 2px inset #979797;
+        background: #bbd3ff;
+        svg{
+          transform: translateY(11px);
+          height: 3.8em;
+          opacity: 1;
+          fill: #fff;
+        }
+        span{opacity: 0}
+      }
+    }
+
+    .row.fileQueue{
+      padding: 1% 0;
+      border-bottom: thin solid #e6e6e6;
+      opacity: 0;
+      > div{ // cols
+        display: flex;
+        align-items: center;
+        &.name b{
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        &.remove{justify-content: flex-end;}
+      }
+    }
+    .row.queueSrc{display:none;}
+    .row.ulProgress{
+      display:none;
+      height:16px;
+      width: 100%;
+      .col{
+        position: absolute;
+        top: 28%;
+        left: 0;
+      }
+      .progress-bar{width:0;}
+    }
+    .submit{ //row
+      display: none;
+      margin-top: 17px;
+    }
+
+  } //ulcont
+
+}
+

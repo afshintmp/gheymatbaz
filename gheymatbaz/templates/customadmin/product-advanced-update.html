@@ -1,17 +1,29 @@
 {% extends 'admin-base.html' %}
-
+{% load static %}
 {% block content %}
-    <!--START-MAIN-->
+
+    <input accept="image/*" type='file' id="imgInp"/>
+    <img id="blah" src="#" alt="your image"/>
+
     <script>
-        tinymce.init({
-            selector: '#mytextarea'
-        });
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
     </script>
+
     <main class="custom-admin-main">
         <p>
             ویرایش
             <span>{{ products.title }}</span>
         </p>
+
+        <input type="file" id="file-uploader" multiple>
+        <div>
+
+        </div>
         <p>
             <span>
                 دسته بندی :
@@ -62,10 +74,14 @@
                 {% endfor %}
             </p>
             <p>
-                {#                <input name="image-gallery" type="file" multiple>#}
+                <button id="image-uploader-multy">اپلود</button>
+                <input name="image-gallery" type="file" multiple>
+            <div class="image-uploader-wrapper" style="display: none">
+                hello word!
+            </div>
             </p>
             <p>
-                {#                <textarea name="context" id="mytextarea"></textarea>#}
+                <textarea name="context" id="mytextarea"></textarea>
             </p>
             <input type="submit">
         </form>
@@ -112,4 +128,6 @@
         }
     </style>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+
 {% endblock %}

@@ -221,7 +221,7 @@ class ProductCreateView(CreateView):
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ['title', 'slug', 'status', 'image', 'brand', 'category']
+    fields = ['title', 'slug', 'status', 'image', 'alt_text', 'brand', 'category']
     template_name = 'customadmin/create-product.html'
     success_url = reverse_lazy('product-all')
 
