@@ -1,0 +1,124 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+{% block content %}
+    <!--START-MAIN-->
+
+
+
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <main class="custom-admin-main container">
+            <div class="row pt-4 pb-4">
+                <div class="product-block col-8">
+
+
+                    <p>
+                        <input class="form-control" type="text" placeholder="عنوان">
+                    </p>
+
+
+                    <p>
+                        <textarea name="context" id="mytextarea"></textarea>
+                    </p>
+                    <div id="image-uploader" style="border: 1px solid #eee">
+                        <img id="uploader-icon" width="" height="100"
+                             src="{% static '/customadmin/imageuploader.png' %}"
+                             alt="your image"/>
+                        <div class="on-upload">
+
+                        </div>
+
+                    </div>
+
+
+                    <input type="file" id="imgInp" onchange="fileProcessor()" multiple style="display: none">
+
+                    <input type="submit">
+
+                </div>
+                <div class="inner-side col-4">
+
+
+                    {% include 'partials/admin/product-category-selector.html' %}
+
+                    <p>
+                        <label for="">برند</label>
+                        <input type="text">
+                    </p>
+
+
+                </div>
+                <div class="seo-wrapper col-8">
+                    <div>
+                        <label for="">متا تایتل</label>
+                        <input type="text">
+                    </div>
+                    <div>
+                        <label for="">متا دیسکرپشن</label>
+                        <input type="text">
+                    </div>
+                    <p>
+                        <label for="">
+                            پیوند یکتا
+                        </label>
+                        <input type="text" class="admin-input">
+                    </p>
+                </div>
+
+            </div>
+        </main>
+    </form>
+
+    <!--END-MAIN-->
+{% endblock %}
+
+{% block customjs %}
+    <script>
+        tinymce.init({
+            selector: 'textarea#mytextarea',
+            height: 500,
+            menubar: false,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+            language: 'fa',
+            {#language_url: '/langs/fa_IR.js',#}
+            directionality: 'rtl'
+        });
+        jQuery('#uploader-icon').click(function () {
+            jQuery('#imgInp').trigger('click');
+        });
+
+        function fileProcessor() {
+
+            namemaker = ''
+
+            for (let i = 0; i < document.getElementById('imgInp').files.length; i++) {
+                namemaker += '<p class="uploaded-wrapper">' +
+                    '<img src="' +
+                    URL.createObjectURL(document.getElementById('imgInp').files[i]) +
+                    '" alt="">' +
+                    '<input value="' +
+                    document.getElementById('imgInp').files[i].name +
+                    '">' +
+                    '<span class="btn-border">تایید</span>' +
+                    '<span class="btn-border">حذف</span></p>'
+
+            }
+            jQuery('#uploader-icon').hide()
+            jQuery('.on-upload').html(namemaker)
+        }
+    </script>
+{% endblock %}
+
+{% block customstyle %}
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}

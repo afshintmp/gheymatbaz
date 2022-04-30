@@ -34,7 +34,8 @@ class Brand(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=32, blank=False, null=False)
-    parent = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
+    parent = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True,
+                               related_name='child_category_list', )
     slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
     icon_class = models.CharField(max_length=200, null=True, blank=True)
 

@@ -11,6 +11,9 @@ body {
 .admin-side-bar {
     background: #0c5460;
     color: #fff;
+    position: fixed;
+    top: 0;
+    right: 0;
 }
 
 .admin-side-bar a {
@@ -23,4 +26,43 @@ body {
 
 .admin-side-bar {
     height: 100vh;
+}
+
+.admin-input {
+    width: 100%;
+}
+
+
+.admin-side-bar ul {
+    margin-right: 0;
+    padding: 0;
+}
+
+#image-uploader {
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.btn-border {
+    border: 1px solid #eee;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.uploaded-wrapper {
+    width: 25%;
+
+}
+
+.uploaded-wrapper > img {
+    width: 100%;
+
+}
+
+.list-style-none {
+    list-style: none;
+    padding-right: 20px;
 }

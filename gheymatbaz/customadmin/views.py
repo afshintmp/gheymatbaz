@@ -11,7 +11,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeValueForm
-from customadmin.utils import check_is_superuser
+from customadmin.utils import check_is_superuser, sort_category
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue
 
 
@@ -228,6 +228,41 @@ class ProductUpdateView(UpdateView):
     @method_decorator(login_required, user_passes_test(check_is_superuser))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def product_update(request, pk):
+    if request.method == "POST":
+        form = request.POST
+        product = Product.objects.get(pk=pk)
+        attribute_dict = list()
+        for f in form:
+            if not f == 'csrfmiddlewaretoken':
+                attribute_dict.append(form[f])
+
+        product.category_attribute_value.clear()
+        product.category_attribute_value.set(attribute_dict)
+
+        return render(request, "customadmin/trace.html", context=form)
+
+    else:
+
+        context = dict()
+
+        product = Product.objects.get(pk=pk)
+        category = Category.objects.all()
+        category_attribute = CategoryAttribute.objects.filter(category_id__in=category)
+        category_attribute_value = CategoryAttributeValue.objects.filter(category_attribute_id__in=category_attribute)
+
+        context['products'] = product
+        context['category'] = category
+        context['categorytag'] = sort_category()
+        context['categoryattribute'] = category_attribute
+        context['categoryattributevalue'] = category_attribute_value
+
+        return render(request, "customadmin/create-product-custom.html", context=context)
 
 
 @login_required(login_url='/admin/login')

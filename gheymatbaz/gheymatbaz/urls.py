@@ -24,5 +24,6 @@ urlpatterns = [
                   path('', index),
                   path('admin/', admin.site.urls),
                   path('shop/', include('shop.urls')),
-                  path('gheymat-admin/', include('customadmin.urls'))
+                  path('gheymat-admin/', include('customadmin.urls')),
+                  path('tinymce/', include('tinymce.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

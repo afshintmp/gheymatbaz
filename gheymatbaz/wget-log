@@ -1,0 +1,12 @@
+--2022-04-27 13:39:20--  https://raw.github.com/abdennour/miscs.sh/master/killport
+Resolving raw.github.com (raw.github.com)... 185.199.110.133, 185.199.109.133, 185.199.108.133, ...
+Connecting to raw.github.com (raw.github.com)|185.199.110.133|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://raw.githubusercontent.com/abdennour/miscs.sh/master/killport [following]
+--2022-04-27 13:39:23--  https://raw.githubusercontent.com/abdennour/miscs.sh/master/killport
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 10.10.34.34
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|10.10.34.34|:443... failed: Connection timed out.
+Retrying.
+
+--2022-04-30 10:14:51--  (try: 2)  https://raw.githubusercontent.com/abdennour/miscs.sh/master/killport
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|10.10.34.34|:443... 

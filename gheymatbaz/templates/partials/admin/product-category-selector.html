@@ -1,0 +1,111 @@
+<div>
+    <label for="">دسته بندی</label>
+    <ul class="list-style-none">
+        {% for cat in category %}
+            {% if not cat.parent %}
+                <li>
+                    <input type="checkbox" id="{{ cat.id }}" value="{{ cat.pk }}">
+                    <label for="{{ cat.pk }}">{{ cat.name }}</label>
+                    <span>more</span>
+                </li>
+                {% if cat.child_category_list %}
+                    <ul class="list-style-none" style="display: none">
+                        {% for child1 in cat.child_category_list.all %}
+                            <li>
+                                <input type="checkbox" id="{{ child1.id }}" value="{{ child1.pk }}">
+                                <label for="{{ child1.pk }}">{{ child1.name }}</label>
+                            </li>
+                            {% if child1.child_category_list %}
+                                <ul class="list-style-none">
+                                    {% for child2 in child1.child_category_list.all %}
+                                        <li>
+                                            <input type="checkbox" id="{{ child2.id }}"
+                                                   value="{{ child2.pk }}">
+                                            <label for="{{ child2.pk }}">{{ child2.name }}</label>
+                                            <span>more</span>
+                                        </li>
+
+                                        {% if child2.child_category_list %}
+                                            <ul class="list-style-none">
+                                                {% for child3 in child2.child_category_list.all %}
+                                                    <li>
+                                                        <input type="checkbox" id="{{ child3.id }}"
+                                                               value="{{ child3.pk }}">
+                                                        <label for="{{ child3.pk }}">{{ child3.name }}</label>
+
+                                                    </li>
+                                                    {% if child3.child_category_list %}
+                                                        <ul class="list-style-none">
+                                                            {% for child4 in child3.child_category_list.all %}
+                                                                <li>
+                                                                    <input type="checkbox" id="{{ child4.id }}"
+                                                                           value="{{ child4.pk }}">
+                                                                    <label for="{{ child4.pk }}">{{ child4.name }}</label>
+
+                                                                </li>
+                                                                {% if child4.child_category_list %}
+                                                                    <ul class="list-style-none">
+                                                                        {% for child5 in child4.child_category_list.all %}
+                                                                            <li>
+                                                                                <input type="checkbox"
+                                                                                       id="{{ child5.id }}"
+                                                                                       value="{{ child5.pk }}">
+                                                                                <label for="{{ child5.pk }}">{{ child5.name }}</label>
+
+                                                                            </li>
+
+                                                                            {% if child5.child_category_list %}
+                                                                                <ul class="list-style-none">
+                                                                                    {% for child6 in child5.child_category_list.all %}
+                                                                                        <li>
+                                                                                            <input type="checkbox"
+                                                                                                   id="{{ child6.id }}"
+                                                                                                   value="{{ child6.pk }}">
+                                                                                            <label for="{{ child6.pk }}">{{ child6.name }}</label>
+
+                                                                                        </li>
+
+                                                                                        {% if child6.child_category_list %}
+                                                                                            <ul class="list-style-none">
+                                                                                                {% for child7 in child6.child_category_list.all %}
+                                                                                                    <li>
+                                                                                                        <input type="checkbox"
+                                                                                                               id="{{ child7.id }}"
+                                                                                                               value="{{ child7.pk }}">
+                                                                                                        <label for="{{ child7.pk }}">{{ child7.name }}</label>
+
+                                                                                                    </li>
+                                                                                                {% endfor %}
+                                                                                            </ul>
+                                                                                        {% endif %}
+
+                                                                                    {% endfor %}
+                                                                                </ul>
+                                                                            {% endif %}
+
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                {% endif %}
+
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </ul>
+                            {% endif %}
+
+
+                        {% endfor %}
+
+                    </ul>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
