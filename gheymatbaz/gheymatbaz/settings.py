@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'customadmin.apps.CustomadminConfig',
     'tinymce',
+    'fontawesomefree',
 ]
 
 MIDDLEWARE = [

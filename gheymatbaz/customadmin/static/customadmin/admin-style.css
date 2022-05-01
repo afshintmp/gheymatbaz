@@ -66,3 +66,24 @@ body {
     list-style: none;
     padding-right: 20px;
 }
+
+.show-more-category {
+    vertical-align: -2px;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.show-more-category > * {
+    color: #0c5460;
+}
+
+.product-category-selector {
+}
+
+.product-category-selector ul {
+}
+
+.product-category-selector ul li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
