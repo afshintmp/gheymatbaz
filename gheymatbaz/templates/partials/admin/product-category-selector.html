@@ -1,6 +1,18 @@
 <div class="product-category-selector">
     <label for="">دسته بندی</label>
-    <ul class="list-style-none">
+    <select class="js-example-basic-multiple form-control" name="states[]" id="connector" multiple="multiple">
+        {% for secat in category %}
+            {% if not secat.child_category_list.all %}
+                <option data-parent="{{ secat.parent }}" value="{{ secat.id }}">
+                    {{ secat.name }}
+                </option>
+
+            {% endif %}
+        {% endfor %}
+    </select>
+
+
+    <ul class="list-style-none" id="category-tree">
         {% for cat in category %}
             {% if not cat.parent %}
                 <li>
@@ -57,7 +69,7 @@
                                                             <input type="checkbox" id="{{ child3.id }}"
                                                                    value="{{ child3.id }}">
                                                         {% endif %}
-                                                        <label for="{{ child3.id }}">{{ child3.name }}</label>
+                                                        <label for="{{ child3.id }}">---{{ child3.name }}</label>
                                                         {% if child3.child_category_list.all %}
                                                             <span class="show-more-category">
                                                                 <i class="fa-solid fa-angles-down"></i>
@@ -72,7 +84,7 @@
                                                                         <input type="checkbox" id="{{ child4.id }}"
                                                                                value="{{ child4.id }}">
                                                                     {% endif %}
-                                                                    <label for="{{ child4.id }}">{{ child4.name }}</label>
+                                                                    <label for="{{ child4.id }}">----{{ child4.name }}</label>
                                                                     {% if  child4.child_category_list.all %}
                                                                         <span class="show-more-category">
                                                                             <i class="fa-solid fa-angles-down"></i>
@@ -80,7 +92,7 @@
                                                                     {% endif %}
                                                                 </li>
                                                                 {% if child4.child_category_list.all %}
-                                                                    <ul class="list-style-none">
+                                                                    <ul class="list-style-none" style="display: none">
                                                                         {% for child5 in child4.child_category_list.all %}
                                                                             <li>
                                                                                 {% if not child5.child_category_list.all %}
@@ -88,7 +100,7 @@
                                                                                            id="{{ child5.id }}"
                                                                                            value="{{ child5.id }}">
                                                                                 {% endif %}
-                                                                                <label for="{{ child5.id }}">{{ child5.name }}</label>
+                                                                                <label for="{{ child5.id }}">-----{{ child5.name }}</label>
                                                                                 {% if child5.child_category_list.all %}
                                                                                     <span class="show-more-category">
                                                                                           <i class="fa-solid fa-angles-down"></i>
@@ -98,7 +110,8 @@
                                                                             </li>
 
                                                                             {% if child5.child_category_list.all %}
-                                                                                <ul class="list-style-none">
+                                                                                <ul class="list-style-none"
+                                                                                    style="display: none">
                                                                                     {% for child6 in child5.child_category_list.all %}
                                                                                         <li>
                                                                                             {% if not child6.child_category_list.all %}
@@ -106,7 +119,7 @@
                                                                                                        id="{{ child6.id }}"
                                                                                                        value="{{ child6.id }}">
                                                                                             {% endif %}
-                                                                                            <label for="{{ child6.id }}">{{ child6.name }}</label>
+                                                                                            <label for="{{ child6.id }}">------{{ child6.name }}</label>
                                                                                             {% if child6.child_category_list.all %}
                                                                                                 <span class="show-more-category">
                                                                                                      <i class="fa-solid fa-angles-down"></i>
@@ -115,13 +128,14 @@
                                                                                         </li>
 
                                                                                         {% if child6.child_category_list.all %}
-                                                                                            <ul class="list-style-none">
+                                                                                            <ul class="list-style-none"
+                                                                                                style="display: none">
                                                                                                 {% for child7 in child6.child_category_list.all %}
                                                                                                     <li>
                                                                                                         <input type="checkbox"
                                                                                                                id="{{ child7.id }}"
                                                                                                                value="{{ child7.id }}">
-                                                                                                        <label for="{{ child7.id }}">{{ child7.name }}</label>
+                                                                                                        <label for="{{ child7.id }}">-------{{ child7.name }}</label>
 
                                                                                                     </li>
                                                                                                 {% endfor %}

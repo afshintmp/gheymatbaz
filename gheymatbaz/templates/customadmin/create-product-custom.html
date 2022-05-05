@@ -21,6 +21,45 @@
                     <p>
                         <textarea name="context" id="mytextarea"></textarea>
                     </p>
+
+
+                    <div class="seo-wrapper">
+                        <div>
+                            <label for="">متا تایتل</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label for="">متا دیسکرپشن</label>
+                            <input type="text">
+                        </div>
+                        <p>
+                            <label for="">
+                                پیوند یکتا
+                            </label>
+                            <input type="text" class="admin-input">
+                        </p>
+                    </div>
+
+
+                </div>
+                <div class="inner-side col-4">
+
+
+                    {% include 'partials/admin/product-category-selector.html' %}
+
+                    <p>
+                        <label for="">برند</label>
+                        <br>
+                        <select class="js-example-basic-single form-control" name="state">
+                            {% for b in brand %}
+                                <option value="{{ b.id }}">  {{ b.name }}</option>
+                            {% endfor %}
+
+
+                        </select>
+
+                    </p>
+
                     <div id="image-uploader" style="border: 1px solid #eee">
                         <img id="uploader-icon" width="" height="100"
                              src="{% static '/customadmin/imageuploader.png' %}"
@@ -32,40 +71,12 @@
                     </div>
 
 
-                    <input type="file" id="imgInp" onchange="fileProcessor()" multiple style="display: none">
-
-                    <input type="submit">
-
-                </div>
-                <div class="inner-side col-4">
-
-
-                    {% include 'partials/admin/product-category-selector.html' %}
-
-                    <p>
-                        <label for="">برند</label>
-                        <input type="text">
-                    </p>
+                    <input type="file" id="imgInp" onchange="fileProcessor()" style="display: none">
 
 
                 </div>
-                <div class="seo-wrapper col-8">
-                    <div>
-                        <label for="">متا تایتل</label>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <label for="">متا دیسکرپشن</label>
-                        <input type="text">
-                    </div>
-                    <p>
-                        <label for="">
-                            پیوند یکتا
-                        </label>
-                        <input type="text" class="admin-input">
-                    </p>
-                </div>
 
+                <input type="submit">
             </div>
         </main>
     </form>
@@ -116,6 +127,10 @@
             jQuery('#uploader-icon').hide()
             jQuery('.on-upload').html(namemaker)
         }
+
+
+        $('.js-example-basic-single').select2();
+        $('.js-example-basic-multiple').select2();
     </script>
 {% endblock %}
 

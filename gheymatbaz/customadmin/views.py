@@ -258,7 +258,7 @@ def product_update(request, pk):
 
         context['products'] = product
         context['category'] = category
-        context['categorytag'] = sort_category()
+        context['brand'] = Brand.objects.all()
         context['categoryattribute'] = category_attribute
         context['categoryattributevalue'] = category_attribute_value
 

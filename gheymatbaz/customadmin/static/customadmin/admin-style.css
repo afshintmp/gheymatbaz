@@ -69,14 +69,26 @@ body {
 
 .show-more-category {
     vertical-align: -2px;
-    padding-right: 5px;
+    margin-right: 8px;
     cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    -webkit-transition: 0.3s all;
+    -moz-transition: 0.3s all;
+    -ms-transition: 0.3s all;
+    -o-transition: 0.3s all;
+    transition: 0.3s all;
 }
 
 .show-more-category > * {
     color: #0c5460;
 }
-
+.show-more-category-rotate{
+    transform: rotate(180deg);
+}
+.show-more-category-rotate > *{
+        color: #600c24;
+}
 .product-category-selector {
 }
 
