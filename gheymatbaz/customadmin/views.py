@@ -1,6 +1,10 @@
+import os
+
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core import serializers
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -12,6 +16,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeValueForm
 from customadmin.utils import check_is_superuser, sort_category
+from gheymatbaz import settings
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue
 
 
@@ -237,10 +242,18 @@ def product_update(request, pk):
     product = Product.objects.get(pk=pk)
     if request.method == "POST":
         form = request.POST
+        img = request.FILES['pic']
         product.title = form['title']
         product.description = form['context']
         product.meta_title = form['meta_title']
         product.meta_description = form['meta_description']
+
+        product.image = img
+        if form.get("noindex") is not None:
+            product.noindex = True
+        else:
+            product.noindex = False
+
         product.save()
 
     context = dict()

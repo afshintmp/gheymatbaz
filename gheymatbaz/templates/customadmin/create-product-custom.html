@@ -39,11 +39,8 @@
                                    value="{{ product.meta_description }}">
                         </div>
                         <div>
-
+                            <input type="checkbox" name="noindex" value="on" {% if product.noindex %}checked{% endif %}>
                             <label for="">no index</label>
-                            <input type="checkbox" value="on">
-
-
                         </div>
                         <p>
                             <label for="">
@@ -86,7 +83,8 @@
                     </div>
 
 
-                    <input type="file" id="imgInp" onchange="fileProcessor()" style="display: none">
+                    <input type="file" name="pic" id="imgInp" onchange="fileProcessor()" style="display: none">
+{#                    <input type="file" id="" name="pic" onchange="">#}
 
 
                 </div>

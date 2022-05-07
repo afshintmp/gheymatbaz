@@ -3,10 +3,10 @@
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
-    <meta name="robots" content="noindex">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block meta_title %}{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    {% block meta %}{% endblock %}
+
     <link rel="stylesheet" href="{% static 'shop/assets/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'shop/assets/css/swiper/swiper.min.css' %}">
     <link rel="stylesheet" href="{% static 'shop/assets/css/Select2/select2.min.css' %}">

@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
-{% block meta_title %}
-    {{ product.meta_title }}
+{% block meta %}
+    <title>{{ product.meta_title }}</title>
+    <meta name="description" content="{{ product.meta_description }}">
+    {% if product.noindex %}
+        <meta name="robots" content="noindex">
+    {% endif %}
 {% endblock %}
-{% block meta_description %}{{ product.meta_description }}{% endblock %}
+
 
 {% block content %}
     <!--START-MAIN-->
