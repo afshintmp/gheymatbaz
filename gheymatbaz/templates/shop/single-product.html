@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% block meta_title %}
+    {{ product.meta_title }}
+{% endblock %}
+{% block meta_description %}{{ product.meta_description }}{% endblock %}
 
 {% block content %}
     <!--START-MAIN-->
@@ -47,9 +51,7 @@
             <div class="container-fluid p-0 d-flex flex-wrap">
                 <div class="col-xl-5">
                     <div class="box">
-                  <span class="name d-block d-lg-none">
-          {{ product.title }}
-        </span>
+
                         <div class="ab-right">
                             <a href="#" class="btn">
                                 <i class="icon-heart"></i>
@@ -64,23 +66,65 @@
                         </div>
                         <div class="swiper-container swiper-main-p">
                             <div class="swiper-wrapper">
-                                {% if product.image %}
-                                    <a data-fancybox="gallery1" href="{{ product.image.url }}" class="swiper-slide">
-                                        <img src="{{ product.image.url }}" alt="{{ product.alt_text }}">
-                                    </a>
-                                {% endif %}
-
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
+                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
+                                    <img src="assets/img/mobile-1.png" alt="">
+                                </a>
                             </div>
                         </div>
                         <div class="position-relative">
                             <div class="swiper-container swiper-sync-p">
                                 <div class="swiper-wrapper">
-                                    {% if product.image %}
-                                        <div class="swiper-slide">
-                                            <img src="{{ product.image.url }}" alt="">
-                                        </div>
-                                    {% endif %}
-
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="assets/img/mobile-1.png" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="btn-nav next swiper-button-next-main-p">
@@ -93,68 +137,96 @@
                     </div>
                 </div>
                 <div class="col-xl-7">
-        <span class="name d-none d-lg-block">
-         {{ product.title }}
-        </span>
+                    <!--START-CHANGE-->
+                    <!--SPAN TO H1-->
+                    <!--REMOVE CLASS d-none d-lg-block-->
+                    <h1 class="name">
+                        {{ product.title }}
+                    </h1>
+                    <!--END-CHANGE-->
+
                     <ul class="nav nav-tab">
                         <li class="nav-item">
-                            64 گیگابایت
+                            <!--START-CHANGE -->
+                            <!-- ADD BUTTON TO LI-->
+                            <button class="btn">
+                                64 گیگابایت
+                            </button>
+                            <!--END-CHANGE-->
                         </li>
                         <li class="nav-item">
-                            128 گیگابایت
+                            <!--START-CHANGE -->
+                            <!-- ADD BUTTON TO LI-->
+                            <button class="btn">
+                                128 گیگابایت
+                            </button>
+                            <!--END-CHANGE-->
                         </li>
                         <li class="nav-item">
-                            256 گیگابایت
+                            <!--START-CHANGE -->
+                            <!-- ADD BUTTON TO LI-->
+                            <button class="btn">
+                                256 گیگابایت
+                            </button>
+                            <!--END-CHANGE-->
                         </li>
                         <li class="nav-item">
-                            512 گیگابایت
+                            <!--START-CHANGE -->
+                            <!-- ADD BUTTON TO LI-->
+                            <button class="btn">
+                                512 گیگابایت
+                            </button>
+                            <!--END-CHANGE-->
                         </li>
                     </ul>
                     <div class="box small-box">
-                        <div class="row prl-10px">
-                            <div class="col-xl-6 prl-5px">
+                        <!--START-CHANGE-->
+                        <!--div to ul li-->
+                        <ul class="row prl-10px">
+                            <li class="col-xl-6 prl-5px">
                                 <div class="inf">
                                     <i class="icon-left-chevron"></i>
                                     <b>حافظه داخلی</b>
                                     256 گیگابایت
                                 </div>
-                            </div>
-                            <div class="col-xl-6 prl-5px">
+                            </li>
+                            <li class="col-xl-6 prl-5px">
                                 <div class="inf">
                                     <i class="icon-left-chevron"></i>
                                     <b>سیستم عامل </b>
                                     Android
                                 </div>
-                            </div>
-                            <div class="col-xl-6 prl-5px">
+                            </li>
+                            <li class="col-xl-6 prl-5px">
                                 <div class="inf">
                                     <i class="icon-left-chevron"></i>
                                     <b>شبکه های ارتباطی</b>
                                     5G، 4G، 3G، 2G
                                 </div>
-                            </div>
-                            <div class="col-xl-6 prl-5px">
+                            </li>
+                            <li class="col-xl-6 prl-5px">
                                 <div class="inf">
                                     <i class="icon-left-chevron"></i>
                                     <b>رزولوشن عکس</b>
                                     108 مگاپیکسل
                                 </div>
-                            </div>
-                            <div class="col-xl-6 prl-5px">
+                            </li>
+                            <li class="col-xl-6 prl-5px">
                                 <div class="inf">
                                     <i class="icon-left-chevron"></i>
                                     <b>دوربین‌های پشت گوشی </b>
                                     4 ماژول دوربین
                                 </div>
-                            </div>
-                            <div class="col-xl-6 prl-5px">
+                            </li>
+                            <li class="col-xl-6 prl-5px">
                                 <div class="inf">
                                     <i class="icon-left-chevron"></i>
                                     <b>فناوری صفحه‌نمایش</b>
                                     Dynamic AMOLED 2X
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
+                        <!--END-CHANGE-->
                         <div class="show-more show-inf d-flex d-lg-none">
                             <i class="icon-down-chevron"></i>
                             <span>
@@ -201,12 +273,17 @@
                     </div>
                     <div class="box small-box d-flex align-items-center flex-wrap">
                         <div class="colors">
-            <span class="d-none d-lg-block">
+                            <!--START-CHANGE-->
+                            <!--ADD TO DIV-->
+                            <div>
+              <span class="d-none d-lg-block">
               رنگ های محصول
             </span>
-                            <span class="d-block d-lg-none">
+                                <span class="d-block d-lg-none">
               رنگ ها
             </span>
+                            </div>
+                            <!--END-CHANGE-->
                             <div class="d-flex">
                                 <div class="circle">
                                     <span style="background-color: #abafba"></span>
@@ -220,9 +297,14 @@
                             </div>
                         </div>
                         <div class="rate">
-            <span>
+                            <!--START-CHANGE-->
+                            <!--ADD TO DIV-->
+                            <div>
+              <span>
               امتیاز کاربران
-            </span>
+              </span>
+                            </div>
+                            <!--END-CHANGE-->
                             <div class="d-flex align-items-center">
                                 <img src="assets/img/rate-orange.png" alt="">
                                 <span style="color: #b2b2b2">
@@ -245,12 +327,17 @@
                                 </i>
                                 <span>
                 <span class="d-flex align-items-center">
-                     <i class="icon-u-Wallet d-lg-none d-block">
+                  <i class="icon-u-Wallet d-lg-none d-block">
                 <span class="path1"></span>
                 <span class="path2"></span>
                 <span class="path3"></span>
               </i>
-                  شروع قیمت ها
+                    <!--START-CHANGE-->
+                    <!--ADD TO SPAN-->
+                  <span>
+                    شروع قیمت ها
+                  </span>
+                    <!--END-CHANGE-->
                 </span>
                 <b class="d-block">
                   <span class="small">از</span>
@@ -406,44 +493,48 @@
             <div class="container-fluid">
                 <ul class="nav">
                     <li class="nav-item tab-item">
-                        <a href="#t-1">
-                            <i class="icon-u-cart">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>
-                            لیست فروشندگان
-                        </a>
+                        <!--START-CHANGE-->
+                        <!--REMOVE A-->
+                        <i class="icon-u-cart">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                        </i>
+                        لیست فروشندگان
+                        <!--END-CHANGE-->
                     </li>
                     <li class="nav-item tab-item">
-                        <a href="#t-2">
-                            <i class="icon-u-Paper">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>
-                            توضیحات محصول
-                        </a>
+                        <!--START-CHANGE-->
+                        <!--REMOVE A-->
+                        <i class="icon-u-Paper">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                        </i>
+                        توضیحات محصول
+                        <!--END-CHANGE-->
                     </li>
                     <li class="nav-item tab-item">
-                        <a href="#t-3">
-                            <i class="icon-u-Setting">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>
-                            مشخصات فنی
-                        </a>
+                        <!--START-CHANGE-->
+                        <!--REMOVE A-->
+                        <i class="icon-u-Setting">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                        </i>
+                        مشخصات فنی
+                        <!--END-CHANGE-->
                     </li>
                     <li class="nav-item tab-item">
-                        <a href="#t-4">
-                            <i class="icon-u-Chat">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>
-                            نظرات کاربران
-                        </a>
+                        <!--START-CHANGE-->
+                        <!--REMOVE A-->
+                        <i class="icon-u-Chat">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                        </i>
+                        نظرات کاربران
+                        <!--END-CHANGE-->
                     </li>
                 </ul>
             </div>
@@ -454,13 +545,18 @@
         <div class="seller-list" id="t-1">
             <div class="container-fluid">
                 <div class="top-bar">
-        <span class="title d-none d-xl-block">
+                    <!--START-CHANGE-->
+                    <!--TITLES ADD TO DIV-->
+                    <div>
+          <span class="title d-none d-xl-block">
           سریع تر و با قیمت مناسب تر خرید کنید
           <b>لیست سایر فروشندگان این محصول</b>
         </span>
-                    <span class="title d-block d-xl-none">
+                        <span class="title d-block d-xl-none">
           <b>لیست فروشندگان</b>
         </span>
+                    </div>
+                    <!--END-CHANGE-->
 
                     <button class="btn btn-filter d-flex d-lg-none">
                         <i class="icon-u-filter1">
@@ -535,17 +631,23 @@
                         <div class="price d-none d-xl-block">
                             28.970.000 تومان
                         </div>
-                        <a href="" class="label d-none d-xl-flex">
+                        <!--START-CHANGE-->
+                        <!--a to button-->
+                        <button class="label d-none d-xl-flex border-0">
                             خرید اینترنتی
-                        </a>
+                        </button>
+                        <!--END-CHANGE-->
                         <div class="brand">
                             <img src="assets/img/digi.png" alt="">
-                            <span>
-              <b>
-                فروشگاه دیجی کالا
-              </b>
-                شهر تهران
-            </span>
+                            <!--START-CHANGE-->
+                            <!--span to a-->
+                            <a href="">
+                                <b>
+                                    فروشگاه دیجی کالا
+                                </b>
+                                شهر تهران
+                            </a>
+                            <!--START-CHANGE-->
                         </div>
                         <div class="btn-group">
                             <div class="btn gold-theme">
@@ -569,12 +671,16 @@
                 از طریق پست
               </span>
                             </div>
-                            <a href="" class="btn gray-theme">
+                            <!--START-CHANGE-->
+                            <!--A TO BUTTON-->
+                            <button class="btn gray-theme">
                                 <i class="icon-warning1"></i>
                                 <span class="d-none d-xl-block">
                 گزارش تخلف
               </span>
-                            </a>
+                            </button>
+                            <!--END-CHANGE-->
+
                         </div>
                     </div>
                     <div class="row-item">
@@ -590,12 +696,18 @@
               بروزرسانی     19 شهریورماه 1400
             </span>
                         </div>
-                        <div class="text d-none d-xl-block">
-                            گوشی موبایل اپل مدل iPhone 12 دو سیم‌ کارت ظرفیت 128 گیگابایت
+                        <!--START-CHANGE-->
+                        <!--.text to div-->
+                        <div class="d-flex align-items-center flex-wrap">
+                            <div class="text d-none d-xl-block">
+                                گوشی موبایل اپل مدل iPhone 12 دو سیم‌ کارت ظرفیت 128 گیگابایت
+                            </div>
+                            <div class="text light-theme d-none d-xl-block">
+                                رجیستر شده / 18 ماه گارانتی شرکتی +12 ماه بیمه ایران
+                            </div>
                         </div>
-                        <div class="text light-theme d-none d-xl-block">
-                            رجیستر شده / 18 ماه گارانتی شرکتی +12 ماه بیمه ایران
-                        </div>
+                        <!--END-CHANGE-->
+
                     </div>
                     <div class="row-item d-flex d-xl-none">
                         <div class="price">
@@ -1050,99 +1162,17 @@
                         </span>
                 </div>
                 <div class="box">
-                    <p class="text">
-                        چند سال است که Galaxy Noteهای سامسونگ طرفداران خاص خود را پیدا کرده و با قابلیت‌های بالایی به
-                        بازار
-                        عرضه می‌شوند. گوشی‌های سری نوت سامسونگ، طراحی خاص خود را دارند که آن‌ها را از گوشی‌های سری S جدا
-                        می‌کند. همان‌طور که انتظار می‌رفت گوشی S21 Plus 5G هم از قاعده طراحی گوشی‌های سری نوت پیروی کرده
-                        است. گوشی موبایل سامسونگ مدل Galaxy S21 Plus 5G SM-G996B/DS دو سیم کارت ظرفیت 128 گیگابایت از
-                        به‌روزترین و باکیفیت‌ترین گوشی‌های موجود در بازار است طراحی زیبا و کارایی مناسبی دارد. از
-                        ویژگی‌های
-                        این گوشی موبایل می‌توان به باتری لیتیوم‌پلیمری با ظرفیت 4800 میلی‌آمپر اشاره کرد که این میزان
-                        شما را
-                        از شارژ مداوم گوشی موبایل بی‌نیاز می‌کند. این محصول قابلیت شارژ سریع با توان 25 وات را دارد و از
-                        فناوری شارژ سریع PD نسخه سوم پشتیبانی می‌کند. از دیگر قابلیت‌های گوشی Galaxy S21 Plus 5G
-                        SM-G996B/DS
-                        می‌توان به برخورداری از قابلیت شارژ بی‌سیم Qi/PMA با توان 15 وات اشاره کرد. دوربین 64 مگاپیکسلی
-                        این
-                        موبایل آن را برای انجام عکاسی حرفه‌ای هم به گزینه‌ای مناسب بدل کرده است. این گوشی قابلیت شارژ
-                        بی‌سیم
-                        دستگاه‌های دیگر (Power Bank/Reverse Wireless Charging) با توان 4.5 وات دارا است. گوشی موبایل
-                        سامسونگ
-                        مدل Galaxy S21 Plus 5G دو سیم کارت ظرفیت 128 گیگابایت و رم 8 گیگابایت می‌تواند شما را در تمامی
-                        کارها، بازی‌ها و تمامی عملیات گرافیکی شگفت‌زده کند. در سری Galaxy S21 شارژر و هندزفری حذف شده
-                        است.
-                    </p>
-                    <div class="row prl-10px">
-                        <div class="col-lg-4 col-md-6 prl-5px">
-                            <div class="img">
-                                <img src="assets/img/img-1.png" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 prl-5px">
-                            <div class="img">
-                                <img src="assets/img/img-1.png" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 prl-5px">
-                            <div class="img">
-                                <img src="assets/img/img-1.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text has-after">
-                        چند سال است که Galaxy Noteهای سامسونگ طرفداران خاص خود را پیدا کرده و با قابلیت‌های بالایی به
-                        بازار
-                        عرضه می‌شوند. گوشی‌های سری نوت سامسونگ، طراحی خاص خود را دارند که آن‌ها را از گوشی‌های سری S جدا
-                        می‌کند. همان‌طور که انتظار می‌رفت گوشی S21 Plus 5G هم از قاعده طراحی گوشی‌های سری نوت پیروی کرده
-                        است. گوشی موبایل سامسونگ مدل Galaxy S21 Plus 5G SM-G996B/DS دو سیم کارت ظرفیت 128 گیگابایت از
-                        به‌روزترین و باکیفیت‌ترین گوشی‌های موجود در بازار است طراحی زیبا و کارایی مناسبی دارد. از
-                        ویژگی‌های
-                        این گوشی موبایل می‌توان به باتری لیتیوم‌پلیمری با ظرفیت 4800 میلی‌آمپر اشاره کرد که این میزان
-                        شما را
-                        از شارژ مداوم گوشی موبایل بی‌نیاز می‌کند. این محصول قابلیت شارژ سریع با توان 25 وات را دارد و از
-                        فناوری شارژ سریع PD نسخه سوم پشتیبانی می‌کند. از دیگر قابلیت‌های گوشی Galaxy S21 Plus 5G
-                        SM-G996B/DS
-                        می‌توان به برخورداری از قابلیت شارژ بی‌سیم Qi/PMA با توان 15 وات اشاره کرد. دوربین 64 مگاپیکسلی
-                        این
-                        موبایل آن را برای انجام عکاسی حرفه‌ای هم به گزینه‌ای مناسب بدل کرده است. این گوشی قابلیت شارژ
-                        بی‌سیم
-                        دستگاه‌های دیگر (Power Bank/Reverse Wireless Charging) با توان 4.5 وات دارا است. گوشی موبایل
-                        سامسونگ
-                        مدل Galaxy S21 Plus 5G دو سیم کارت ظرفیت 128 گیگابایت و رم 8 گیگابایت می‌تواند شما را در تمامی
-                        کارها، بازی‌ها و تمامی عملیات گرافیکی شگفت‌زده کند. در سری Galaxy S21 شارژر و هندزفری حذف شده
-                        است.
-                        چند سال است که Galaxy Noteهای سامسونگ طرفداران خاص خود را پیدا کرده و با قابلیت‌های بالایی به
-                        بازار
-                        عرضه می‌شوند. گوشی‌های سری نوت سامسونگ، طراحی خاص خود را دارند که آن‌ها را از گوشی‌های سری S جدا
-                        می‌کند. همان‌طور که انتظار می‌رفت گوشی S21 Plus 5G هم از قاعده طراحی گوشی‌های سری نوت پیروی کرده
-                        است. گوشی موبایل سامسونگ مدل Galaxy S21 Plus 5G SM-G996B/DS دو سیم کارت ظرفیت 128 گیگابایت از
-                        به‌روزترین و باکیفیت‌ترین گوشی‌های موجود در بازار است طراحی زیبا و کارایی مناسبی دارد. از
-                        ویژگی‌های
-                        این گوشی موبایل می‌توان به باتری لیتیوم‌پلیمری با ظرفیت 4800 میلی‌آمپر اشاره کرد که این میزان
-                        شما را
-                        از شارژ مداوم گوشی موبایل بی‌نیاز می‌کند. این محصول قابلیت شارژ سریع با توان 25 وات را دارد و از
-                        فناوری شارژ سریع PD نسخه سوم پشتیبانی می‌کند. از دیگر قابلیت‌های گوشی Galaxy S21 Plus 5G
-                        SM-G996B/DS
-                        می‌توان به برخورداری از قابلیت شارژ بی‌سیم Qi/PMA با توان 15 وات اشاره کرد. دوربین 64 مگاپیکسلی
-                        این
-                        موبایل آن را برای انجام عکاسی حرفه‌ای هم به گزینه‌ای مناسب بدل کرده است. این گوشی قابلیت شارژ
-                        بی‌سیم
-                        دستگاه‌های دیگر (Power Bank/Reverse Wireless Charging) با توان 4.5 وات دارا است. گوشی موبایل
-                        سامسونگ
-                        مدل Galaxy S21 Plus 5G دو سیم کارت ظرفیت 128 گیگابایت و رم 8 گیگابایت می‌تواند شما را در تمامی
-                        کارها، بازی‌ها و تمامی عملیات گرافیکی شگفت‌زده کند. در سری Galaxy S21 شارژر و هندزفری حذف شده
-                        است.
-                    </p>
-                    <span class="show-more-p">
-          <span>
-            مشاهده جزئیات بیشتر
-          </span>
-          <span style="display:none;">
-            مشاهده جزئیات کمتر
-          </span>
-        </span>
 
+                    {{ product.description|safe }}
+
+                    <span class="show-more-p">
+                         <span>
+                              مشاهده جزئیات بیشتر
+                         </span>
+                         <span style="display:none;">
+                             مشاهده جزئیات کمتر
+                         </span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -1541,16 +1571,22 @@
                         </div>
                         <ul class="nav d-none d-lg-flex">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <!--START-CHANGE-->
+                                <!--a to button-->
+                                <button class="nav-link">
                                     <i class="icon-like"></i>
                                     38
-                                </a>
+                                </button>
+                                <!--END-CHANGE-->
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link gray-theme">
+                                <!--START-CHANGE-->
+                                <!--a to button-->
+                                <button class="nav-link gray-theme">
                                     <i class="icon-dislike"></i>
                                     12
-                                </a>
+                                </button>
+                                <!--END-CHANGE-->
                             </li>
                             <li class="nav-item">
                                 <a href="" class="nav-link gold-theme">
@@ -1559,20 +1595,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link reply-theme">
+                                <!--START-CHANGE-->
+                                <!--a to button-->
+                                <button class="nav-link reply-theme">
                                     پاسخ دادن
-                                </a>
+                                </button>
+                                <!--END-CHANGE-->
                             </li>
                         </ul>
                     </div>
                     <p class="text">
                         لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها
-                        و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز
-                        و
-                        کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال
-                        و
-                        آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری داریم .
+                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی
+                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه
+                        درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری
+                        داریم .
                     </p>
                     <ul class="nav d-flex d-lg-none">
                         <li class="nav-item">
@@ -1639,12 +1676,10 @@
                     </div>
                     <p class="text">
                         لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها
-                        و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز
-                        و
-                        کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال
-                        و
-                        آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری داریم .
+                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی
+                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه
+                        درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری
+                        داریم .
                     </p>
                     <ul class="nav d-flex d-lg-none">
                         <li class="nav-item">
@@ -1687,8 +1722,8 @@
                     <div class="row align-items-center">
                         <div class="col-12">
                             <div class="form-group">
-                            <textarea
-                                    placeholder="من از این فروشگاه زیاد خرید کردم , متاسفانه اصلا راضی نبوده و نیستم"></textarea>
+                                <textarea
+                                        placeholder="من از این فروشگاه زیاد خرید کردم , متاسفانه اصلا راضی نبوده و نیستم"></textarea>
                             </div>
                         </div>
                         <div class="col-auto mr-auto d-none d-lg-block">
@@ -1706,10 +1741,8 @@
         </div>
         <!--END-FORM-ELEMENTS-->
 
+
     </main>
     <!--END-MAIN-->
 {% endblock %}
 
-{% block title %}
-    test heed
-{% endblock %}

@@ -74,7 +74,7 @@ class Product(models.Model):
     )
 
     title = models.CharField(max_length=32, blank=False, null=False)
-    slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
+
     published_at = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -92,6 +92,11 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product', null=True, blank=True)
     alt_text = models.CharField(max_length=200, null=True, blank=True)
 
+    meta_title = models.CharField(max_length=200, null=True, blank=True)
+    meta_description = models.CharField(max_length=300, null=True, blank=True)
+    noindex = models.BooleanField(null=False, blank=True, default=False)
+    slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
+
     def __str__(self):
         return self.title
 
@@ -108,9 +113,6 @@ class Product(models.Model):
         else:
             return ""
 
-    def advanced_saved(self):
-        pass
-
 
 class ProductGallery(models.Model):
     image = models.ImageField(upload_to='product_image', null=False, blank=False)
@@ -118,14 +120,6 @@ class ProductGallery(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, blank=True)
 
     slug = models.SlugField(max_length=200, null=True, blank=True)
-
-    # def __str__(self):
-    #     return self.product_id
-
-    # def save(self, *args, **kwargs):
-    #     if not self.slug:
-    #         self.slug = slugify(self.title)
-    #     super(Product, self).save(*args, **kwargs)
 
 
 class ProductAttribute(models.Model):

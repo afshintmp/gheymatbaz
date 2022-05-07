@@ -14,29 +14,44 @@
 
 
                     <p>
-                        <input class="form-control" type="text" placeholder="عنوان">
+                        <input class="form-control" name="title" type="text" placeholder="عنوان"
+                               value="{{ product.title }}"
+                        >
                     </p>
 
 
                     <p>
-                        <textarea name="context" id="mytextarea"></textarea>
+                        <textarea name="context" id="mytextarea">
+                            {{ product.description }}
+                        </textarea>
                     </p>
 
 
                     <div class="seo-wrapper">
                         <div>
                             <label for="">متا تایتل</label>
-                            <input type="text">
+                            <input type="text" name="meta_title" class="form-control"
+                                   value="{{ product.meta_title }}">
                         </div>
                         <div>
                             <label for="">متا دیسکرپشن</label>
-                            <input type="text">
+                            <input type="text" name="meta_description" class="form-control"
+                                   value="{{ product.meta_description }}">
+                        </div>
+                        <div>
+
+                            <label for="">no index</label>
+                            <input type="checkbox" value="on">
+
+
                         </div>
                         <p>
                             <label for="">
                                 پیوند یکتا
                             </label>
-                            <input type="text" class="admin-input">
+                            <input type="text" name="slug" class="form-control"
+                                   value="{{ product.slug }}"
+                            >
                         </p>
                     </div>
 
@@ -76,7 +91,7 @@
 
                 </div>
 
-                <input type="submit">
+                <input type="submit" value="ذخیره" class="btn-success w-100">
             </div>
         </main>
     </form>
@@ -117,10 +132,10 @@
                     '<img src="' +
                     URL.createObjectURL(document.getElementById('imgInp').files[i]) +
                     '" alt="">' +
-                    '<input value="' +
-                    document.getElementById('imgInp').files[i].name +
+                    '<input name="alt-text" value="' +
+                    {#document.getElementById('imgInp').files[i].name +#}
                     '">' +
-                    '<span class="btn-border">تایید</span>' +
+                    {#'<span class="btn-border">تایید</span>' +#}
                     '<span class="btn-border">حذف</span></p>'
 
             }

@@ -26,6 +26,7 @@ body {
 
 .admin-side-bar {
     height: 100vh;
+    padding-top: 15px;
 }
 
 .admin-input {
@@ -34,7 +35,7 @@ body {
 
 
 .admin-side-bar ul {
-    margin-right: 0;
+    margin-right: 5px;
     padding: 0;
 }
 
@@ -83,12 +84,15 @@ body {
 .show-more-category > * {
     color: #0c5460;
 }
-.show-more-category-rotate{
+
+.show-more-category-rotate {
     transform: rotate(180deg);
 }
-.show-more-category-rotate > *{
-        color: #600c24;
+
+.show-more-category-rotate > * {
+    color: #600c24;
 }
+
 .product-category-selector {
 }
 
