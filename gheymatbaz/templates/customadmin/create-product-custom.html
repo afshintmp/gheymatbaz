@@ -62,9 +62,11 @@
                     <p>
                         <label for="">برند</label>
                         <br>
-                        <select class="js-example-basic-single form-control" name="state">
+                        <select class="js-example-basic-single form-control" name="brand">
+                            <option value="0">___________________</option>
                             {% for b in brand %}
-                                <option value="{{ b.id }}">  {{ b.name }}</option>
+                                <option value="{{ b.id }}"
+                                        {% if product.brand.id == b.id %}selected{% endif %}>  {{ b.name }}</option>
                             {% endfor %}
 
 
@@ -75,16 +77,26 @@
                     <div id="image-uploader" style="border: 1px solid #eee">
                         <img id="uploader-icon" width="" height="100"
                              src="{% static '/customadmin/imageuploader.png' %}"
-                             alt="your image"/>
+                             alt="your image" {% if product.image %} style="display: none" {% endif %}/>
                         <div class="on-upload">
+                            {% if product.image %}
+                                <p class="uploaded-wrapper"><img
+                                        src="{{ product.image.url }}"
+                                        alt="">
+                                    <input name="alt-text" value="{{ product.alt_text|default_if_none:"" }}">
+                                    <span class="btn-border" onclick="removePic()">حذف</span>
+                                </p>
 
+                            {% endif %}
                         </div>
 
                     </div>
+                    <div id="image-handle">
+                        <input type="file" name="" id="imgInp" onchange="fileProcessor()" style="display: none">
+                    </div>
 
 
-                    <input type="file" name="pic" id="imgInp" onchange="fileProcessor()" style="display: none">
-{#                    <input type="file" id="" name="pic" onchange="">#}
+                    {#                    <input type="file" id="" name="pic" onchange="">#}
 
 
                 </div>
@@ -137,10 +149,17 @@
                     '<span class="btn-border">حذف</span></p>'
 
             }
-            jQuery('#uploader-icon').hide()
-            jQuery('.on-upload').html(namemaker)
+            jQuery('#uploader-icon').hide();
+            jQuery('.on-upload').html(namemaker);
+            $('#imgInp').prop('name', 'pic')
         }
 
+        function removePic() {
+            removePicHTML = '<input type="hidden" value="true" name="removeimage">';
+            $('#image-handle').html(removePicHTML);
+            $('.on-upload').remove();
+            $('#uploader-icon').show();
+        }
 
         $('.js-example-basic-single').select2();
         $('.js-example-basic-multiple').select2();

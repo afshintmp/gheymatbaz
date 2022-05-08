@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block meta %}
-    <title>{{ product.meta_title }}</title>
-    <meta name="description" content="{{ product.meta_description }}">
+    {% if product.meta_title %}
+        <title>{{ product.meta_title }}</title>
+    {% endif %}
+    <meta name="description" content="{{ product.meta_description|default_if_none:"" }}">
     {% if product.noindex %}
         <meta name="robots" content="noindex">
     {% endif %}
@@ -70,66 +72,25 @@
                         </div>
                         <div class="swiper-container swiper-main-p">
                             <div class="swiper-wrapper">
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
-                                <a data-fancybox="gallery1" href="assets/img/mobile-1.png" class="swiper-slide">
-                                    <img src="assets/img/mobile-1.png" alt="">
-                                </a>
+                                {% if product.image %}
+                                    <a data-fancybox="gallery1" href="{{ product.image.url }}" class="swiper-slide">
+                                        <img src="{{ product.image.url }}"
+                                             alt="{{ product.alt_text|default_if_none:"" }}">
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="position-relative">
                             <div class="swiper-container swiper-sync-p">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
+                                {% if product.image %}
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <img src="{{ product.image.url }}"
+                                                 alt="{{ product.alt_text|default_if_none:"" }}">
+                                        </div>
+
                                     </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/img/mobile-1.png" alt="">
-                                    </div>
-                                </div>
+                                {% endif %}
                             </div>
                             <div class="btn-nav next swiper-button-next-main-p">
                                 <i class="icon-left-chevron"></i>
@@ -243,13 +204,15 @@
                     </div>
                     <div class="box small-box">
                         <ul class="nav nav-inf">
-                            <li class="nav-item d-none d-lg-flex">
-                                برند
-                                &nbsp;
-                                <a href="#">
-                                    سامسونگ
-                                </a>
-                            </li>
+                            {% if  product.brand %}
+                                <li class="nav-item d-none d-lg-flex">
+                                    برند
+                                    &nbsp;
+                                    <a href="#">
+                                        {{ product.brand }}
+                                    </a>
+                                </li>
+                            {% endif %}
                             <li class="nav-item d-none d-lg-flex">
                                 دسته بندی
                                 &nbsp;

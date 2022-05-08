@@ -242,13 +242,34 @@ def product_update(request, pk):
     product = Product.objects.get(pk=pk)
     if request.method == "POST":
         form = request.POST
-        img = request.FILES['pic']
+
+        form_file = request.FILES
         product.title = form['title']
         product.description = form['context']
         product.meta_title = form['meta_title']
         product.meta_description = form['meta_description']
 
-        product.image = img
+        if form.getlist("category") is not None:
+            category_obj = Category.objects.filter(id__in=form.getlist('category'))
+            product.category = category_obj
+        if form.get("brand") != '0':
+            brand_obj = Brand.objects.get(pk=form['brand'])
+            product.brand = brand_obj
+        else:
+            product.brand = None
+
+        if form_file.get("pic") is not None:
+            product.image = form_file['pic']
+
+        if form.get("alt-text") is not None:
+            product.alt_text = form['alt-text']
+        else:
+            product.alt_text = None
+
+        if form.get("removeimage") is not None:
+            product.image = None
+            product.alt_text = None
+
         if form.get("noindex") is not None:
             product.noindex = True
         else:
