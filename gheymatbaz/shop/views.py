@@ -6,16 +6,22 @@ from django.views.decorators.http import require_http_methods
 from shop.models import Product, Category
 
 
-@require_http_methods(request_method_list=['GET'])
-def single_product(request, slug):
+# @require_http_methods(request_method_list=['GET'])
+def single_product(request, slug, i=1):
     context = dict()
-    context['product'] = Product.objects.get(slug=slug)
-    return render(request, "shop/single-product.html", context=context)
+    product = Product.objects.get(slug=slug)
+    product.view = product.view + 1
+    product.save()
+    context['product'] = product
+    html = render(request, "shop/single-product.html", context=context)
+
+    return html
 
 
 def list_all(request):
     context = dict()
     context['products'] = Product.objects.all()
+
     return render(request, "shop/archive-product.html", context=context)
 
 

@@ -84,7 +84,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True, blank=True)
 
     category = models.ManyToManyField(Category, blank=True)
-    category_attribute_value = models.ManyToManyField(CategoryAttributeValue, blank=True)
+    # category_attribute_value = models.ManyToManyField(CategoryAttributeValue, blank=True)
     view = models.BigIntegerField(default=0)
     rate = models.BigIntegerField(default=0)
     rate_number = models.BigIntegerField(default=0)
@@ -112,6 +112,15 @@ class Product(models.Model):
             return self.image.url
         else:
             return ""
+
+
+class ProductCategoryAttributeValue(models.Model):
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    category_attribute_value = models.ForeignKey(CategoryAttributeValue, on_delete=models.CASCADE)
+    in_header = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.category_attribute_value.attribute_value
 
 
 class ProductGallery(models.Model):

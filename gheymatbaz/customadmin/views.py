@@ -15,9 +15,10 @@ from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeValueForm
-from customadmin.utils import check_is_superuser, sort_category
+from customadmin.utils import check_is_superuser
 from gheymatbaz import settings
-from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue
+from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue, \
+    ProductCategoryAttributeValue
 
 
 # Create your views here.
@@ -240,6 +241,7 @@ class ProductUpdateView(UpdateView):
 @user_passes_test(check_is_superuser)
 def product_update(request, pk):
     product = Product.objects.get(pk=pk)
+
     if request.method == "POST":
         form = request.POST
 
@@ -250,8 +252,9 @@ def product_update(request, pk):
         product.meta_description = form['meta_description']
 
         if form.getlist("category") is not None:
-            category_obj = Category.objects.filter(id__in=form.getlist('category'))
-            product.category = category_obj
+            # category_obj = Category.objects.filter(id__in=form.getlist('category'))
+            product.category.set(form.getlist('category'))
+
         if form.get("brand") != '0':
             brand_obj = Brand.objects.get(pk=form['brand'])
             product.brand = brand_obj
@@ -321,34 +324,36 @@ def product_add(request):
 @require_http_methods(request_method_list=['GET', 'POST'])
 @user_passes_test(check_is_superuser)
 def product_advanced_update(request, pk):
+    product = Product.objects.get(pk=pk)
+
+    product_category_attribute_value = ProductCategoryAttributeValue.objects.filter(product_id=product)
+
     if request.method == "POST":
         form = request.POST
-        product = Product.objects.get(pk=pk)
+        cats = form.getlist('attribute[]')
+        product_category_attribute_value.delete()
+        for cat in cats:
+            p = ProductCategoryAttributeValue(product_id=product,
+                                              category_attribute_value=CategoryAttributeValue.objects.get(
+                                                  pk=cat))
+            if form.get(cat) is not None:
+                p.in_header = True
+            else:
+                p.in_header = False
 
-        attribute_dict = list()
-        for f in form:
-            if not f == 'csrfmiddlewaretoken':
-                attribute_dict.append(form[f])
+            p.save()
 
-        product.category_attribute_value.clear()
-        product.category_attribute_value.set(attribute_dict)
+    context = dict()
 
-        return render(request, "customadmin/trace.html", context=form)
+    category = product.category.all()
+    category_attribute = CategoryAttribute.objects.filter(category_id__in=category)
+    category_attribute_value = CategoryAttributeValue.objects.filter(category_attribute_id__in=category_attribute)
 
-    else:
-
-        context = dict()
-
-        product = Product.objects.get(pk=pk)
-        category = product.category.all()
-        category_attribute = CategoryAttribute.objects.filter(category_id__in=category)
-        category_attribute_value = CategoryAttributeValue.objects.filter(category_attribute_id__in=category_attribute)
-
-        context['products'] = product
-        context['categoryattribute'] = category_attribute
-        context['categoryattributevalue'] = category_attribute_value
-
-        return render(request, "customadmin/product-advanced-update.html", context=context)
+    context['product'] = product
+    context['categoryattribute'] = category_attribute
+    context['categoryattributevalue'] = category_attribute_value
+    context['productcategoryattributevalue'] = product_category_attribute_value
+    return render(request, "customadmin/product-advanced-update.html", context=context)
 
 
 class CategoryAttributeCreateView(CreateView):

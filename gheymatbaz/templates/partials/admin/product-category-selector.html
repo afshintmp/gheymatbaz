@@ -3,7 +3,8 @@
     <select class="js-example-basic-multiple form-control" name="category" id="connector" multiple="multiple">
         {% for secat in category %}
             {% if not secat.child_category_list.all %}
-                <option data-parent="{{ secat.parent }}" value="{{ secat.id }}">
+                <option data-parent="{{ secat.parent }}" value="{{ secat.id }}"
+                        {% if secat in product.category.all %}selected{% endif %}>
                     {{ secat.name }}
                 </option>
 
@@ -18,7 +19,8 @@
                 <li>
 
                     {% if not cat.child_category_list.all %}
-                        <input type="checkbox"  id="{{ cat.id }}" value="{{ cat.id }}">
+                        <input type="checkbox" id="{{ cat.id }}" value="{{ cat.id }}"
+                               {% if cat in product.category.all %}checked{% endif %}>
                     {% endif %}
                     <label for="{{ cat.id }}">{{ cat.name }}</label>
                     {% if cat.child_category_list.all %}
@@ -35,7 +37,8 @@
 
                                 {% if not child1.child_category_list.all %}
                                     <input type="checkbox" id="{{ child1.id }}"
-                                           value="{{ child1.id }}">
+                                           value="{{ child1.id }}"
+                                           {% if child1 in product.category.all %}checked{% endif %}>
                                 {% endif %}
                                 <label for="{{ child1.id }}">-{{ child1.name }}</label>
                                 {% if child1.child_category_list.all %}
@@ -51,7 +54,8 @@
 
                                             {% if not child2.child_category_list.all %}
                                                 <input type="checkbox" id="{{ child2.id }}"
-                                                       value="{{ child2.id }}">
+                                                       value="{{ child2.id }}"
+                                                       {% if child2 in product.category.all %}checked{% endif %}>
                                             {% endif %}
                                             <label for="{{ child2.id }}">--{{ child2.name }}</label>
                                             {% if child2.child_category_list.all %}
@@ -69,7 +73,9 @@
                                                         {% if not child3.child_category_list.all %}
                                                             <input type="checkbox"
                                                                    id="{{ child3.id }}"
-                                                                   value="{{ child3.id }}">
+                                                                   value="{{ child3.id }}"
+                                                                   {% if child3 in product.category.all %}checked{% endif %}
+                                                            >
                                                         {% endif %}
                                                         <label for="{{ child3.id }}">---{{ child3.name }}</label>
                                                         {% if child3.child_category_list.all %}
@@ -85,7 +91,8 @@
                                                                     {% if not child4.child_category_list.all %}
                                                                         <input type="checkbox"
                                                                                id="{{ child4.id }}"
-                                                                               value="{{ child4.id }}">
+                                                                               value="{{ child4.id }}"
+                                                                               {% if child4 in product.category.all %}checked{% endif %}>
                                                                     {% endif %}
                                                                     <label for="{{ child4.id }}">----{{ child4.name }}</label>
                                                                     {% if  child4.child_category_list.all %}
@@ -100,9 +107,10 @@
                                                                             <li>
                                                                                 {% if not child5.child_category_list.all %}
                                                                                     <input
-                                                                                           type="checkbox"
-                                                                                           id="{{ child5.id }}"
-                                                                                           value="{{ child5.id }}">
+                                                                                            type="checkbox"
+                                                                                            id="{{ child5.id }}"
+                                                                                            value="{{ child5.id }}"
+                                                                                            {% if child5 in product.category.all %}checked{% endif %}>
                                                                                 {% endif %}
                                                                                 <label for="{{ child5.id }}">-----{{ child5.name }}</label>
                                                                                 {% if child5.child_category_list.all %}
@@ -120,9 +128,10 @@
                                                                                         <li>
                                                                                             {% if not child6.child_category_list.all %}
                                                                                                 <input
-                                                                                                       type="checkbox"
-                                                                                                       id="{{ child6.id }}"
-                                                                                                       value="{{ child6.id }}">
+                                                                                                        type="checkbox"
+                                                                                                        id="{{ child6.id }}"
+                                                                                                        value="{{ child6.id }}"
+                                                                                                        {% if child6 in product.category.all %}checked{% endif %}>
                                                                                             {% endif %}
                                                                                             <label for="{{ child6.id }}">------{{ child6.name }}</label>
                                                                                             {% if child6.child_category_list.all %}
@@ -141,7 +150,8 @@
 
                                                                                                                 type="checkbox"
                                                                                                                 id="{{ child7.id }}"
-                                                                                                                value="{{ child7.id }}">
+                                                                                                                value="{{ child7.id }}"
+                                                                                                                {% if child7 in product.category.all %}checked{% endif %}>
                                                                                                         <label for="{{ child7.id }}">-------{{ child7.name }}</label>
 
                                                                                                     </li>

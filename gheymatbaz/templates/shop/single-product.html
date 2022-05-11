@@ -213,13 +213,18 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            <li class="nav-item d-none d-lg-flex">
-                                دسته بندی
-                                &nbsp;
-                                <a href="#">
-                                    تلفن همراه
-                                </a>
-                            </li>
+
+                            {% if product.category %}
+                                <li class="nav-item d-none d-lg-flex">
+                                    دسته بندی
+
+                                    {% for cats in product.category.all %}  &nbsp;
+                                        <a href="#">
+                                            {{ cats.name }}
+                                        </a>
+                                    {% endfor %}
+                                </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a href="" class="gray d-flex align-items-center">
                                     <i class="icon-chat1"></i>
@@ -228,7 +233,8 @@
                             </li>
                             <li class="nav-item">
                                 <i class="icon-user1"></i>
-                                18210 بازدید
+                                {{ product.view }}
+                                بازدید
                             </li>
                             <li class="nav-item d-flex d-lg-none">
                                 <a class="d-flex align-items-center" href="">

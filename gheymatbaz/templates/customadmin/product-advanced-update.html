@@ -1,101 +1,121 @@
 {% extends 'admin-base.html' %}
 {% load static %}
 {% block content %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <main class="custom-admin-main container">
+            <div class="row pt-4 pb-4">
+                <div class="product-block col-8">
 
-    <input accept="image/*" type='file' id="imgInp"/>
-    <img id="blah" src="#" alt="your image"/>
 
-    <script>
-        imgInp.onchange = evt => {
-            const [file] = imgInp.files
-            if (file) {
-                blah.src = URL.createObjectURL(file)
-            }
-        }
-    </script>
+                    <p>
+                        <input class="form-control" readonly name="title" type="text" placeholder="عنوان"
+                               value="{{ product.title }}"
+                        >
+                    </p>
+
+                    <div>
+                        <span>
+                              دسته بندی :
+
+                        </span>
+
+
+                        {% for category in product.category.all %}
+
+                            <span>
+                             {{ category.name }}
+
+                            </span>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <p>
+
+                            {% for attribute in categoryattribute %}
+                                <div>
+                                    <label for="">
+                                        {{ attribute }}
+                                    </label>
+
+                                    <select class="js-example-basic-single form-control w-60" name="attribute[]">
+
+                                        <option value="">
+                                            _________
+
+                                        </option>
+                                        {% for attributevalue in categoryattributevalue %}
+
+                                            {% if  attributevalue.category_attribute.pk  == attribute.pk %}
+
+                                                <option value="{{ attributevalue.pk }}"
+                                                        {% if attributevalue|safe in productcategoryattributevalue|safe %}
+                                                        selected
+                                                        {% endif %}
+                                                >
+                                                    {{ attributevalue|safe }}
+                                                </option>
+
+
+
+                                            {% endif %}
+
+                                        {% endfor %}
+                                    </select>
+
+                                    <span>
+                                        <input type="checkbox" name="{{ attribute.pk }}">
+                                        <p style="display: inline-block">
+                                            ویژه
+                                        </p>
+
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <input type="submit" value="ذخیره" class="btn-success w-100">
+            </div>
+        </main>
+    </form>
 
     <main class="custom-admin-main">
-        <p>
-            ویرایش
-            <span>{{ products.title }}</span>
-        </p>
 
         <input type="file" id="file-uploader" multiple>
         <div>
 
         </div>
+
+
+        {% csrf_token %}
+
         <p>
-            <span>
-                دسته بندی :
-
-            </span>
-
-
-            {% for category in products.category.all %}
-
-                <span>
-                {{ category.name }}
-
-            </span>
-            {% endfor %}
+            <button id="image-uploader-multy">اپلود</button>
+            <input name="image-gallery" type="file" multiple>
+        <div class="image-uploader-wrapper" style="display: none">
+            hello word!
+        </div>
         </p>
-        <form action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p>
+        <p>
+            <textarea name="context" id="mytextarea"></textarea>
+        </p>
+        <input type="submit">
 
-                {% for attribute in categoryattribute %}
-                    {{ attribute }}
-                    <select name="{{ attribute }}">
-                        <option value="">
-                            _________
-
-                        </option>
-                        {% for attributevalue in categoryattributevalue %}
-
-                            {% if  attributevalue.category_attribute.pk  == attribute.pk %}
-
-                                <option value="{{ attributevalue.pk }}"
-                                        {% for val in products.category_attribute_value.all %}
-                                            {% if val.pk == attributevalue.pk %}
-                                        selected
-                                            {% endif %}
-
-                                        {% endfor %}
-                                >
-                                    {{ attributevalue }}
-                                </option>
-
-
-
-                            {% endif %}
-
-                        {% endfor %}
-                    </select>
-                {% endfor %}
-            </p>
-            <p>
-                <button id="image-uploader-multy">اپلود</button>
-                <input name="image-gallery" type="file" multiple>
-            <div class="image-uploader-wrapper" style="display: none">
-                hello word!
-            </div>
-            </p>
-            <p>
-                <textarea name="context" id="mytextarea"></textarea>
-            </p>
-            <input type="submit">
-        </form>
     </main>
     <!--END-MAIN-->
 {% endblock %}
 
-{% block title %}
-    test heed
-{% endblock %}
+
 
 
 {% block customjs %}
-
+    <script>
+        $('.js-example-basic-single').select2();
+    </script>
 {% endblock %}
 
 {% block customstyle %}

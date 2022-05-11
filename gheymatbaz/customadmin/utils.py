@@ -8,6 +8,3 @@ from shop.models import Category
 def check_is_superuser(user):
     return user.is_superuser
 
-
-def sort_category():
-    pass
