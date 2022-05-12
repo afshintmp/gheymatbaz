@@ -52,7 +52,8 @@ class Category(models.Model):
 
 class CategoryAttribute(models.Model):
     name = models.CharField(max_length=32, null=False, blank=False)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE, name='category')
+    category_id = models.ForeignKey(Category, on_delete=models.CASCADE, name='category',
+                                    related_name='related_category')
     slug = models.SlugField(max_length=200, allow_unicode=True, null=False, blank=False, unique=True)
 
     def __str__(self):
@@ -61,7 +62,8 @@ class CategoryAttribute(models.Model):
 
 class CategoryAttributeValue(models.Model):
     attribute_value = models.CharField(max_length=32, null=False, blank=False)
-    parent_attribute_id = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE, name='category_attribute')
+    parent_attribute_id = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE, name='category_attribute',
+                                            related_name='related_category_attribute')
 
     def __str__(self):
         return self.attribute_value
@@ -116,7 +118,10 @@ class Product(models.Model):
 
 class ProductCategoryAttributeValue(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    category_attribute_value = models.ForeignKey(CategoryAttributeValue, on_delete=models.CASCADE)
+    category_attribute = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE)
+    category_attribute_value = models.ForeignKey(CategoryAttributeValue, on_delete=models.CASCADE,
+                                                 name='category_attribute_value',
+                                                 related_name='related_category_attribute_value')
     in_header = models.BooleanField(default=False)
 
     def __str__(self):

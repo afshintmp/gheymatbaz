@@ -326,17 +326,20 @@ def product_add(request):
 def product_advanced_update(request, pk):
     product = Product.objects.get(pk=pk)
 
-    product_category_attribute_value = ProductCategoryAttributeValue.objects.filter(product_id=product)
+    product_category_attribute_value = ProductCategoryAttributeValue.objects.filter(
+        product_id=product)
 
     if request.method == "POST":
         form = request.POST
         cats = form.getlist('attribute[]')
         product_category_attribute_value.delete()
+
         for cat in cats:
+            category_attribute_value_obj = CategoryAttributeValue.objects.get(pk=cat)
+
             p = ProductCategoryAttributeValue(product_id=product,
-                                              category_attribute_value=CategoryAttributeValue.objects.get(
-                                                  pk=cat))
-            if form.get(cat) is not None:
+                                              category_attribute_value=category_attribute_value_obj)
+            if form.get(str(category_attribute_value_obj.category_attribute.pk)) is not None:
                 p.in_header = True
             else:
                 p.in_header = False
@@ -346,8 +349,10 @@ def product_advanced_update(request, pk):
     context = dict()
 
     category = product.category.all()
-    category_attribute = CategoryAttribute.objects.filter(category_id__in=category)
-    category_attribute_value = CategoryAttributeValue.objects.filter(category_attribute_id__in=category_attribute)
+    category_attribute = CategoryAttribute.objects.filter(category_id__in=category).prefetch_related(
+        'related_category_attribute')
+    category_attribute_value = CategoryAttributeValue.objects.filter(
+        category_attribute_id__in=category_attribute)
 
     context['product'] = product
     context['categoryattribute'] = category_attribute

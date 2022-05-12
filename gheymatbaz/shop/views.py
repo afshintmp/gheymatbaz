@@ -3,16 +3,22 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.decorators.http import require_http_methods
 
-from shop.models import Product, Category
+from shop.models import Product, Category, ProductCategoryAttributeValue, CategoryAttribute
 
 
 # @require_http_methods(request_method_list=['GET'])
-def single_product(request, slug, i=1):
+def single_product(request, slug):
     context = dict()
     product = Product.objects.get(slug=slug)
+    product_category_attribute = ProductCategoryAttributeValue.objects.filter(product_id=product.pk)
+    category_attribute = CategoryAttribute.objects.filter(category_id__in=product.category.all()).prefetch_related(
+        'related_category_attribute')
     product.view = product.view + 1
     product.save()
     context['product'] = product
+    context['product_category_attribute'] = product_category_attribute
+    context['category_attribute'] = category_attribute
+
     html = render(request, "shop/single-product.html", context=context)
 
     return html

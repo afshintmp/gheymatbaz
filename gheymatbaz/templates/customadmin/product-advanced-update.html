@@ -38,7 +38,8 @@
                                         {{ attribute }}
                                     </label>
 
-                                    <select class="js-example-basic-single form-control w-60" name="attribute[]">
+                                    <select
+                                            class="js-example-basic-single form-control w-60" name="attribute[]">
 
                                         <option value="">
                                             _________
@@ -64,9 +65,23 @@
                                     </select>
 
                                     <span>
-                                        <input type="checkbox" name="{{ attribute.pk }}">
+                                        <input type="checkbox" name="{{ attribute.pk }}"
+                                                {% for arca in attribute.related_category_attribute.all %}
+
+                                                    {% for sh in arca.related_category_attribute_value.all %}
+                                                        {% if sh.in_header %}
+
+                                               checked
+                                                        {% endif %}
+
+                                                    {% endfor %}
+                                                {% endfor %}
+                                        >
+
+
                                         <p style="display: inline-block">
                                             ویژه
+
                                         </p>
 
                                     </span>
@@ -74,7 +89,25 @@
                             {% endfor %}
                         </p>
                     </div>
+                    <pre>
+                    {% for cat in categoryattributevalue %}
 
+                        {{ cat.category_attribute }}
+
+                        {#                        {{ cat.related_category_attribute }}#}
+                        -----------
+                        {{ cat }}
+
+                    {% endfor %}
+                        ----------------------------------------------
+                        {% for pcs in  productcategoryattributevalue %}
+                            {{ pcs }}
+
+                            {#                            {{ pcs.related_category_attribute }}#}
+                            ---------------
+                            {{ pcs.in_header }}
+                        {% endfor %}
+                    </pre>
                 </div>
 
 
@@ -115,6 +148,8 @@
 {% block customjs %}
     <script>
         $('.js-example-basic-single').select2();
+
+
     </script>
 {% endblock %}
 

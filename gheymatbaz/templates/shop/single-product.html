@@ -148,48 +148,19 @@
                         <!--START-CHANGE-->
                         <!--div to ul li-->
                         <ul class="row prl-10px">
-                            <li class="col-xl-6 prl-5px">
-                                <div class="inf">
-                                    <i class="icon-left-chevron"></i>
-                                    <b>حافظه داخلی</b>
-                                    256 گیگابایت
-                                </div>
-                            </li>
-                            <li class="col-xl-6 prl-5px">
-                                <div class="inf">
-                                    <i class="icon-left-chevron"></i>
-                                    <b>سیستم عامل </b>
-                                    Android
-                                </div>
-                            </li>
-                            <li class="col-xl-6 prl-5px">
-                                <div class="inf">
-                                    <i class="icon-left-chevron"></i>
-                                    <b>شبکه های ارتباطی</b>
-                                    5G، 4G، 3G، 2G
-                                </div>
-                            </li>
-                            <li class="col-xl-6 prl-5px">
-                                <div class="inf">
-                                    <i class="icon-left-chevron"></i>
-                                    <b>رزولوشن عکس</b>
-                                    108 مگاپیکسل
-                                </div>
-                            </li>
-                            <li class="col-xl-6 prl-5px">
-                                <div class="inf">
-                                    <i class="icon-left-chevron"></i>
-                                    <b>دوربین‌های پشت گوشی </b>
-                                    4 ماژول دوربین
-                                </div>
-                            </li>
-                            <li class="col-xl-6 prl-5px">
-                                <div class="inf">
-                                    <i class="icon-left-chevron"></i>
-                                    <b>فناوری صفحه‌نمایش</b>
-                                    Dynamic AMOLED 2X
-                                </div>
-                            </li>
+                            {{ category_attribute }}
+                            {% for foo in product_category_attribute %}
+                                {% if foo.in_header %}
+                                    <li class="col-xl-6 prl-5px">
+                                        <div class="inf">
+                                            <i class="icon-left-chevron"></i>
+
+                                            <b>حافظه داخلی</b>
+                                            {{ foo }}
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
                         </ul>
                         <!--END-CHANGE-->
                         <div class="show-more show-inf d-flex d-lg-none">
