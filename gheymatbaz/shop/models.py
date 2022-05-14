@@ -133,8 +133,6 @@ class ProductGallery(models.Model):
     alt_text = models.CharField(max_length=200, null=True, blank=True)
     product_id = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, blank=True)
 
-    slug = models.SlugField(max_length=200, null=True, blank=True)
-
 
 class ProductAttribute(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)

@@ -89,7 +89,32 @@
                             {% endfor %}
                         </p>
                     </div>
+                    <div>
+                        <div id="image-uploader" style="border: 1px solid #eee">
+                            <img id="uploader-icon" width="" height="100"
+                                 src="{% static '/customadmin/imageuploader.png' %}"
+                                 alt="your image" {% if 1 %} style="display: none" {% endif %}/>
+                            <div class="on-upload multiply">
+                                {% if 1 %}
+                                    {% for pic in product_gallery %}
+                                    <p class="uploaded-wrapper"><img
+                                            src="{{ pic.image.url }}"
+                                            alt="">
+                                        <input name="alt-text" value="{{ pic.alt_text|default_if_none:"" }}">
+                                        <span class="btn-border" onclick="removePic()">حذف</span>
+                                    </p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
 
+                        </div>
+                        <div id="image-handle">
+                            <input type="file" name="" id="imgInp" multiple="multiple" onchange="fileProcessor()"
+                                   style="display: none">
+                        </div>
+
+
+                    </div>
 
                 </div>
                 <div class="col-4">
@@ -111,19 +136,21 @@
                             </span>
                         </div>
                         <div class="relationmaker-body">
-                            <input type="text" class="w-100  mb-2" placeholder="عنوان">
-                            <select name="" id="pro-rel" class="">
+                            <input type="text" id="pro-rel-creator-title" class="w-100 mb-2" placeholder="عنوان">
+                            <select name="" id="pro-rel-pro" class="">
                                 {% for pro in category_product %}
-                                    <option value="">
-                                        {{ pro }}
-                                    </option>
+                                    {% if pro.id != product.id %}
+                                        <option value="{{ pro.id }}" data-name="{{ pro }}">
+                                            {{ pro }}
+                                        </option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                             <p class="btn  btn-primary d-inline-block w-100 mt-2 mb-2" onclick="RelCreator()">افزودن</p>
                         </div>
                     </div>
                     <div id="relation" class="mb-2">
-                        <table class="">
+                        <table class="" id="rel-table">
                             <tr>
                                 <th>عنوان</th>
                                 <th>محصول</th>
@@ -141,7 +168,9 @@
                                         {{ pro.product_rel }}
                                     </td>
                                     <td>
-                                        <i class="fa-solid fa-trash"></i>
+                                        <p onclick="deleteRel(this)" class="mb-0 pb-0">
+                                            <i class="fa-solid fa-trash cursor-pointer"></i>
+                                        </p>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -151,10 +180,11 @@
 
 
                     </div>
+
                 </div>
 
 
-                <input type="submit" value="ذخیره" class="btn-success w-100">
+                <input type="submit" value="ذخیره" class="btn btn-success w-100 mt-2">
             </div>
         </main>
     </form>
@@ -203,11 +233,74 @@
         }
 
         function RelCreator() {
-            alert(123456)
+            mytitle = $('#pro-rel-creator-title').val();
+            prorelpro = $('#pro-rel-pro').val();
+            prorelproname = $('#pro-rel-pro').find('option:selected').text();
+
+            html = $('#rel-table').html()
+
+            html += ' <tr><td>' +
+                '<input type="hidden" name="rel[][name]" readonly value="' +
+                mytitle +
+                '">' +
+                mytitle +
+                '</td>' +
+                '<td>' +
+                '<input type="hidden" readonly name="rel[][product]"' +
+                'value = "' +
+                prorelpro +
+                ' " >' +
+                prorelproname +
+                '</td>' +
+                '<td>' +
+                '<p onclick="deleteRel(this)" class="mb-0 pb-0">' +
+                '<i class="fa-solid fa-trash cursor-pointer"></i>' +
+                '</p>' +
+                '</td>' +
+                '</tr>'
+
+            $('#rel-table').html(html)
+
         }
 
-        $('#pro-rel').select2();
+        function deleteRel(elem) {
+            $(elem).parent().parent().remove()
 
+        }
+
+        $('#pro-rel-pro').select2();
+
+        function fileProcessor() {
+
+            namemaker = ''
+
+            for (let i = 0; i < document.getElementById('imgInp').files.length; i++) {
+                namemaker += '<p class="uploaded-wrapper">' +
+                    '<img src="' +
+                    URL.createObjectURL(document.getElementById('imgInp').files[i]) +
+                    '" alt="">' +
+                    '<input name="alt[]" value="' +
+                    {#document.getElementById('imgInp').files[i].name +#}
+                    '">' +
+                    {#'<span class="btn-border">تایید</span>' +#}
+                    '<span class="btn-border"  onclick="removePic()">حذف</span></p>'
+
+            }
+            jQuery('#uploader-icon').hide();
+            jQuery('.on-upload').html(namemaker);
+            $('#imgInp').prop('name', 'pic')
+        }
+
+        function removePic() {
+            removePicHTML = '<input type="hidden" value="true" name="removeimage">';
+            $('#image-handle').html(removePicHTML);
+            $('.on-upload').remove();
+            $('#uploader-icon').show();
+        }
+
+        jQuery('#uploader-icon').click(function () {
+            jQuery('#imgInp').trigger('click');
+        });
     </script>
 {% endblock %}
 

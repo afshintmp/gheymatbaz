@@ -179,7 +179,8 @@
                             <li class="nav-item">
                                 <a href="" class="gray d-flex align-items-center">
                                     <i class="icon-chat1"></i>
-                                    79 نظر
+                                    {{ product.rate }}
+                                    نظر
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -232,7 +233,10 @@
                             <div class="d-flex align-items-center">
                                 <img src="assets/img/rate-orange.png" alt="">
                                 <span style="color: #b2b2b2">
-              4.8 از 5 از 2964 رای
+              {{ product.rate_number }}
+               از 5 از
+                                    {{ product.rate_number }}
+                                    رای
             </span>
                             </div>
                         </div>

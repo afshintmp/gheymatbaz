@@ -18,7 +18,7 @@ from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeV
 from customadmin.utils import check_is_superuser
 from gheymatbaz import settings
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue, \
-    ProductCategoryAttributeValue, ProductRelation
+    ProductCategoryAttributeValue, ProductRelation, ProductGallery
 
 
 # Create your views here.
@@ -332,39 +332,55 @@ def product_advanced_update(request, pk):
 
     if request.method == "POST":
         form = request.POST
+        form_file = request.FILES
+        alt_text = form.getlist('alt[]')
         cats = form.getlist('attribute[]')
         rel_name = form.getlist('rel[][name]')
         rel_product = form.getlist('rel[][product]')
+
         product_category_attribute_value.delete()
         product_relation.delete()
         i = 0
-        for title in rel_name:
-            product_rel = Product.objects.get(pk=rel_product[i])
-            r = ProductRelation(title=title,
-                                product=product,
-                                product_rel=product_rel
-                                )
-            r.save()
-            i = i + 1
+        a = 0
+        for f in form_file.getlist('pic'):
+            g = ProductGallery(image=f,
+                               alt_text=alt_text[a],
+                               product_id=product)
+            g.save()
+
+            a = a + 1
+
+        if rel_name:
+            for title in rel_name:
+                product_rel = Product.objects.get(pk=rel_product[i])
+                r = ProductRelation(title=title,
+                                    product=product,
+                                    product_rel=product_rel
+                                    )
+                r.save()
+                i = i + 1
         for cat in cats:
-            category_attribute_value_obj = CategoryAttributeValue.objects.get(pk=cat)
+            if cat:
+                category_attribute_value_obj = CategoryAttributeValue.objects.get(pk=cat)
 
-            p = ProductCategoryAttributeValue(product_id=product,
-                                              category_attribute=category_attribute_value_obj.category_attribute,
-                                              category_attribute_value=category_attribute_value_obj)
-            if form.get(str(category_attribute_value_obj.category_attribute.pk)) is not None:
-                p.in_header = True
-            else:
-                p.in_header = False
+                p = ProductCategoryAttributeValue(product_id=product,
+                                                  category_attribute=category_attribute_value_obj.category_attribute,
+                                                  category_attribute_value=category_attribute_value_obj)
+                if form.get(str(category_attribute_value_obj.category_attribute.pk)) is not None:
+                    p.in_header = True
+                else:
+                    p.in_header = False
 
-            p.save()
+                p.save()
 
     context = dict()
 
     category = product.category.all()
+
     category_product = Product.objects.filter(category__in=category)
     category_attribute = CategoryAttribute.objects.filter(category_id__in=category).prefetch_related(
         'related_category_attribute')
+
     category_attribute_value = CategoryAttributeValue.objects.filter(
         category_attribute_id__in=category_attribute)
 
@@ -374,6 +390,7 @@ def product_advanced_update(request, pk):
     context['categoryattributevalue'] = category_attribute_value
     context['productcategoryattributevalue'] = product_category_attribute_value
     context['product_rel'] = ProductRelation.objects.filter(product=product)
+    context['product_gallery'] = ProductGallery.objects.filter(product_id=product)
     return render(request, "customadmin/product-advanced-update.html", context=context)
 
 

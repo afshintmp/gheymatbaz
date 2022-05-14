@@ -64,6 +64,7 @@ class ProductRelationAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Brand)
+admin.site.register(ProductGallery)
 admin.site.register(ProductAttribute, ProductAttributeAdmin)
 admin.site.register(CategoryAttribute, CategoryAttributeAdmin)
 admin.site.register(ProductCategoryAttributeValue, ProductCategoryAttributeValueAdmin)
