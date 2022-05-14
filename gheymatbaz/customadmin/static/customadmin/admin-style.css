@@ -106,6 +106,29 @@ body {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.w-60{
-    width: 60%!important;
+
+.w-60 {
+    width: 60% !important;
+}
+
+#relation > table {
+    width: 100%;
+}
+
+#relation > table svg {
+    color: #dd0202;
+}
+
+.cursor-pointer,
+.btn {
+    cursor: pointer !important;
+}
+
+#relationmaker > span {
+    width: 100% !important;
+}
+
+
+.relationmaker-body > .select2-container {
+    width: 100% !important;
 }

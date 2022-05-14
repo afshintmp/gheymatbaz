@@ -143,3 +143,12 @@ class ProductAttribute(models.Model):
 
     def __str__(self):
         return self.attribute
+
+
+class ProductRelation(models.Model):
+    title = models.CharField(max_length=200, blank=False, null=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_rel = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_related')
+
+    def __str__(self):
+        return self.title

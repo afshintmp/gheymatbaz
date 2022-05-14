@@ -18,7 +18,7 @@ from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeV
 from customadmin.utils import check_is_superuser
 from gheymatbaz import settings
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue, \
-    ProductCategoryAttributeValue
+    ProductCategoryAttributeValue, ProductRelation
 
 
 # Create your views here.
@@ -328,16 +328,29 @@ def product_advanced_update(request, pk):
 
     product_category_attribute_value = ProductCategoryAttributeValue.objects.filter(
         product_id=product)
+    product_relation = ProductRelation.objects.filter(product=product)
 
     if request.method == "POST":
         form = request.POST
         cats = form.getlist('attribute[]')
+        rel_name = form.getlist('rel[][name]')
+        rel_product = form.getlist('rel[][product]')
         product_category_attribute_value.delete()
-
+        product_relation.delete()
+        i = 0
+        for title in rel_name:
+            product_rel = Product.objects.get(pk=rel_product[i])
+            r = ProductRelation(title=title,
+                                product=product,
+                                product_rel=product_rel
+                                )
+            r.save()
+            i = i + 1
         for cat in cats:
             category_attribute_value_obj = CategoryAttributeValue.objects.get(pk=cat)
 
             p = ProductCategoryAttributeValue(product_id=product,
+                                              category_attribute=category_attribute_value_obj.category_attribute,
                                               category_attribute_value=category_attribute_value_obj)
             if form.get(str(category_attribute_value_obj.category_attribute.pk)) is not None:
                 p.in_header = True
@@ -349,15 +362,18 @@ def product_advanced_update(request, pk):
     context = dict()
 
     category = product.category.all()
+    category_product = Product.objects.filter(category__in=category)
     category_attribute = CategoryAttribute.objects.filter(category_id__in=category).prefetch_related(
         'related_category_attribute')
     category_attribute_value = CategoryAttributeValue.objects.filter(
         category_attribute_id__in=category_attribute)
 
     context['product'] = product
+    context['category_product'] = category_product
     context['categoryattribute'] = category_attribute
     context['categoryattributevalue'] = category_attribute_value
     context['productcategoryattributevalue'] = product_category_attribute_value
+    context['product_rel'] = ProductRelation.objects.filter(product=product)
     return render(request, "customadmin/product-advanced-update.html", context=context)
 
 

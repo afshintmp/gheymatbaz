@@ -89,25 +89,68 @@
                             {% endfor %}
                         </p>
                     </div>
-                    <pre>
-                    {% for cat in categoryattributevalue %}
 
-                        {{ cat.category_attribute }}
 
-                        {#                        {{ cat.related_category_attribute }}#}
-                        -----------
-                        {{ cat }}
+                </div>
+                <div class="col-4">
+                    <div class="mb-2 border-bottom">
+                        <p class="d-inline-block font-weight-bolder pt-2">
+                            محصولات مرتبط
+                        </p>
+                        <p class="btn btn-primary d-inline-block float-left" onclick="productRelCreator()">افزودن
+                        </p>
+                    </div>
+                    <div id="relationmaker" class="mb-2 border-bottom" style="display: none">
+                        <div>
+                            <p class="d-inline-block">
+                                افزودن محصول مرتبط
+                            </p>
+                            <span class="d-inline-block text-danger cursor-pointer float-left"
+                                  onclick="closeProductRelCreator()">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </span>
+                        </div>
+                        <div class="relationmaker-body">
+                            <input type="text" class="w-100  mb-2" placeholder="عنوان">
+                            <select name="" id="pro-rel" class="">
+                                {% for pro in category_product %}
+                                    <option value="">
+                                        {{ pro }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <p class="btn  btn-primary d-inline-block w-100 mt-2 mb-2" onclick="RelCreator()">افزودن</p>
+                        </div>
+                    </div>
+                    <div id="relation" class="mb-2">
+                        <table class="">
+                            <tr>
+                                <th>عنوان</th>
+                                <th>محصول</th>
+                                <th></th>
+                            </tr>
+                            {% for pro in product_rel %}
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="rel[][name]" readonly value="{{ pro }}">
+                                        {{ pro }}
+                                    </td>
+                                    <td>
+                                        <input type="hidden" readonly name="rel[][product]"
+                                               value="{{ pro.product_rel.id }}">
+                                        {{ pro.product_rel }}
+                                    </td>
+                                    <td>
+                                        <i class="fa-solid fa-trash"></i>
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                    {% endfor %}
-                        ----------------------------------------------
-                        {% for pcs in  productcategoryattributevalue %}
-                            {{ pcs }}
 
-                            {#                            {{ pcs.related_category_attribute }}#}
-                            ---------------
-                            {{ pcs.in_header }}
-                        {% endfor %}
-                    </pre>
+                        </table>
+
+
+                    </div>
                 </div>
 
 
@@ -149,6 +192,21 @@
     <script>
         $('.js-example-basic-single').select2();
 
+        function productRelCreator() {
+
+            $('#relationmaker').slideDown('fast')
+
+        }
+
+        function closeProductRelCreator() {
+            $('#relationmaker').slideUp('fast')
+        }
+
+        function RelCreator() {
+            alert(123456)
+        }
+
+        $('#pro-rel').select2();
 
     </script>
 {% endblock %}

@@ -111,51 +111,31 @@
                     <!--END-CHANGE-->
 
                     <ul class="nav nav-tab">
-                        <li class="nav-item">
-                            <!--START-CHANGE -->
-                            <!-- ADD BUTTON TO LI-->
-                            <button class="btn">
-                                64 گیگابایت
-                            </button>
-                            <!--END-CHANGE-->
-                        </li>
-                        <li class="nav-item">
-                            <!--START-CHANGE -->
-                            <!-- ADD BUTTON TO LI-->
-                            <button class="btn">
-                                128 گیگابایت
-                            </button>
-                            <!--END-CHANGE-->
-                        </li>
-                        <li class="nav-item">
-                            <!--START-CHANGE -->
-                            <!-- ADD BUTTON TO LI-->
-                            <button class="btn">
-                                256 گیگابایت
-                            </button>
-                            <!--END-CHANGE-->
-                        </li>
-                        <li class="nav-item">
-                            <!--START-CHANGE -->
-                            <!-- ADD BUTTON TO LI-->
-                            <button class="btn">
-                                512 گیگابایت
-                            </button>
-                            <!--END-CHANGE-->
-                        </li>
+                        {% for product in product_rel %}
+                            <li class="nav-item">
+
+                                <button class="btn">
+                                    <a href="{{ product.product_rel.get_absolute_url }}">
+                                        {{ product }}
+                                    </a>
+                                </button>
+
+                            </li>
+                        {% endfor %}
+
                     </ul>
                     <div class="box small-box">
                         <!--START-CHANGE-->
                         <!--div to ul li-->
                         <ul class="row prl-10px">
-                            {{ category_attribute }}
+
                             {% for foo in product_category_attribute %}
                                 {% if foo.in_header %}
                                     <li class="col-xl-6 prl-5px">
                                         <div class="inf">
                                             <i class="icon-left-chevron"></i>
 
-                                            <b>حافظه داخلی</b>
+                                            <b>  {{ foo.category_attribute }}</b>
                                             {{ foo }}
                                         </div>
                                     </li>
