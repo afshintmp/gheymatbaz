@@ -3,7 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.decorators.http import require_http_methods
 
-from shop.models import Product, Category, ProductCategoryAttributeValue, CategoryAttribute, ProductRelation
+from shop.models import Product, Category, ProductCategoryAttributeValue, CategoryAttribute, ProductRelation, \
+    ProductGallery
 
 
 # @require_http_methods(request_method_list=['GET'])
@@ -19,6 +20,7 @@ def single_product(request, slug):
     context['product_category_attribute'] = product_category_attribute
     context['category_attribute'] = category_attribute
     context['product_rel'] = ProductRelation.objects.filter(product=product)
+    context['product_gallery'] = ProductGallery.objects.filter(product_id=product)
     html = render(request, "shop/single-product.html", context=context)
 
     return html

@@ -143,3 +143,37 @@ body {
     width: 100% !important;
     display: inline-block;
 }
+
+.uploaded-wrapper > div {
+    position: relative;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.uploaded-wrapper > div > img {
+    max-width: 100%;
+    height: 100px;
+    z-index: 4;
+}
+
+.uploaded-wrapper > div > span > svg {
+    vertical-align: middle;
+    height: 17px;
+    color: #850f0f;
+    opacity: 0.6;
+    transition: 0.3s all;
+    max-width: 100%;
+}
+
+.uploaded-wrapper > div > span:hover > svg {
+    opacity: 1;
+}
+
+.uploaded-wrapper > div > span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+}

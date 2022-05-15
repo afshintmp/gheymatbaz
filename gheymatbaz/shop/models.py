@@ -129,6 +129,7 @@ class ProductCategoryAttributeValue(models.Model):
 
 
 class ProductGallery(models.Model):
+    id = models.AutoField(unique=True, primary_key=True)
     image = models.ImageField(upload_to='product_image', null=False, blank=False)
     alt_text = models.CharField(max_length=200, null=True, blank=True)
     product_id = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, blank=True)

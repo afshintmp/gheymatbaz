@@ -91,22 +91,29 @@
                     </div>
                     <div>
                         <div id="image-uploader" style="border: 1px solid #eee">
-                            <img id="uploader-icon" width="" height="100"
-                                 src="{% static '/customadmin/imageuploader.png' %}"
-                                 alt="your image" {% if 1 %} style="display: none" {% endif %}/>
+
                             <div class="on-upload multiply">
                                 {% if 1 %}
                                     {% for pic in product_gallery %}
-                                    <p class="uploaded-wrapper"><img
-                                            src="{{ pic.image.url }}"
-                                            alt="">
-                                        <input name="alt-text" value="{{ pic.alt_text|default_if_none:"" }}">
-                                        <span class="btn-border" onclick="removePic()">حذف</span>
-                                    </p>
+                                        <div class="uploaded-wrapper">
+                                            <div>
+                                                <img
+                                                        src="{{ pic.image.url }}"
+                                                        alt="">
+                                                <span class="btn-border" onclick="removePic(this ,'{{ pic.pk }}')">
+                                                 <i class="fa-solid fa-trash cursor-pointer"></i>
+                                            </span>
+                                            </div>
+                                            <input type="hidden" name="gallery_pic[]" value="{{ pic.pk }}">
+                                            <input name="alt_text_edit[]"
+                                                   value="{{ pic.alt_text|default_if_none:"" }}">
+
+                                        </div>
                                     {% endfor %}
                                 {% endif %}
                             </div>
 
+                            <p class="btn btn-primary w-75 mb-0" id="uploader-icon"> افزودن تصویر</p>
                         </div>
                         <div id="image-handle">
                             <input type="file" name="" id="imgInp" multiple="multiple" onchange="fileProcessor()"
@@ -146,7 +153,8 @@
                                     {% endif %}
                                 {% endfor %}
                             </select>
-                            <p class="btn  btn-primary d-inline-block w-100 mt-2 mb-2" onclick="RelCreator()">افزودن</p>
+                            <p class="btn  btn-primary d-inline-block w-100 mt-2 mb-2" onclick="RelCreator()">
+                                افزودن</p>
                         </div>
                     </div>
                     <div id="relation" class="mb-2">
@@ -272,30 +280,27 @@
 
         function fileProcessor() {
 
-            namemaker = ''
+            namemaker = jQuery('.on-upload').html();
 
             for (let i = 0; i < document.getElementById('imgInp').files.length; i++) {
-                namemaker += '<p class="uploaded-wrapper">' +
+                namemaker += '<div class="uploaded-wrapper"> <div>' +
                     '<img src="' +
                     URL.createObjectURL(document.getElementById('imgInp').files[i]) +
                     '" alt="">' +
-                    '<input name="alt[]" value="' +
-                    {#document.getElementById('imgInp').files[i].name +#}
-                    '">' +
-                    {#'<span class="btn-border">تایید</span>' +#}
-                    '<span class="btn-border"  onclick="removePic()">حذف</span></p>'
+                    '</div>' +
+                    '<input name="alt_text[]" value="" >' +
+                    '</div>'
+
 
             }
-            jQuery('#uploader-icon').hide();
             jQuery('.on-upload').html(namemaker);
             $('#imgInp').prop('name', 'pic')
         }
 
-        function removePic() {
-            removePicHTML = '<input type="hidden" value="true" name="removeimage">';
-            $('#image-handle').html(removePicHTML);
-            $('.on-upload').remove();
-            $('#uploader-icon').show();
+        function removePic(elem, id) {
+            {#removePicHTML = '<input type="hidden" value="true" name="removeimage">';#}
+            $(elem).parent().parent().remove()
+            $('#image-handle').html($('#image-handle').html() + '<input type="hidden" value="' + id + '" name="delete[]">')
         }
 
         jQuery('#uploader-icon').click(function () {

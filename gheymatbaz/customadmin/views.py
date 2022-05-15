@@ -333,32 +333,49 @@ def product_advanced_update(request, pk):
     if request.method == "POST":
         form = request.POST
         form_file = request.FILES
-        alt_text = form.getlist('alt[]')
+        alt_text = form.getlist('alt_text[]')
+        alt_text_edit = form.getlist('alt_text_edit[]')
+
+        if alt_text_edit is not None:
+            gallery_dict = dict(zip(form.getlist('gallery_pic[]'), alt_text_edit))
+            for g in gallery_dict:
+                pic_gallery = ProductGallery.objects.get(pk=g)
+                pic_gallery.alt_text = gallery_dict[g]
+                pic_gallery.save()
+
+        if form_file.getlist('pic') is not None:
+            pic_dict = dict(zip(form_file.getlist('pic'), alt_text))
+            for p in pic_dict:
+                g = ProductGallery(image=p,
+                                   alt_text=pic_dict[p],
+                                   product_id=product)
+                g.save()
+
         cats = form.getlist('attribute[]')
         rel_name = form.getlist('rel[][name]')
-        rel_product = form.getlist('rel[][product]')
-
-        product_category_attribute_value.delete()
-        product_relation.delete()
-        i = 0
-        a = 0
-        for f in form_file.getlist('pic'):
-            g = ProductGallery(image=f,
-                               alt_text=alt_text[a],
-                               product_id=product)
-            g.save()
-
-            a = a + 1
-
         if rel_name:
-            for title in rel_name:
-                product_rel = Product.objects.get(pk=rel_product[i])
-                r = ProductRelation(title=title,
+            product_relation.delete()
+            rel_product = form.getlist('rel[][product]')
+            rel_dict = dict(zip(rel_name, rel_product))
+
+            for rd in rel_dict:
+                product_rel = Product.objects.get(pk=rel_dict[rd])
+                r = ProductRelation(title=rd,
                                     product=product,
                                     product_rel=product_rel
                                     )
                 r.save()
-                i = i + 1
+
+        if form.getlist("alttextedit[]") is not None:
+            alt_text = form.getlist("alttextedit[]")
+            for alt in alt_text:
+                if alt:
+                    a = ProductGallery.objects.filter(product_id=product)
+                    a.alt_text = alt
+                    a.save()
+
+        product_category_attribute_value.delete()
+
         for cat in cats:
             if cat:
                 category_attribute_value_obj = CategoryAttributeValue.objects.get(pk=cat)
@@ -390,7 +407,7 @@ def product_advanced_update(request, pk):
     context['categoryattributevalue'] = category_attribute_value
     context['productcategoryattributevalue'] = product_category_attribute_value
     context['product_rel'] = ProductRelation.objects.filter(product=product)
-    context['product_gallery'] = ProductGallery.objects.filter(product_id=product)
+    context['product_gallery'] = ProductGallery.objects.filter(product_id=product).order_by('id')
     return render(request, "customadmin/product-advanced-update.html", context=context)
 
 
