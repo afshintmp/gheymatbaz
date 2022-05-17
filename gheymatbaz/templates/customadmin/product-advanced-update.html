@@ -122,73 +122,181 @@
 
 
                     </div>
-
-                </div>
-                <div class="col-4">
-                    <div class="mb-2 border-bottom">
-                        <p class="d-inline-block font-weight-bolder pt-2">
-                            محصولات مرتبط
-                        </p>
-                        <p class="btn btn-primary d-inline-block float-left" onclick="productRelCreator()">افزودن
-                        </p>
-                    </div>
-                    <div id="relationmaker" class="mb-2 border-bottom" style="display: none">
-                        <div>
-                            <p class="d-inline-block">
-                                افزودن محصول مرتبط
+                    <div>
+                        <div class="mb-2 border-bottom">
+                            <p class="d-inline-block font-weight-bolder pt-2">
+                                ویژگی محصول
                             </p>
-                            <span class="d-inline-block text-danger cursor-pointer float-left"
-                                  onclick="closeProductRelCreator()">
+                            <p class="btn btn-primary d-inline-block float-left" onclick="attrCreator()">افزودن
+                            </p>
+                        </div>
+                        <div id="attrmaker" class="mb-2 border-bottom" style="display: none">
+                            <div>
+                                <p class="d-inline-block">
+                                    افزودن ویژگی
+                                </p>
+                                <span class="d-inline-block text-danger cursor-pointer float-left"
+                                      onclick="closeProductAttrCreator()">
                                 <i class="fa-solid fa-circle-xmark"></i>
                             </span>
+                            </div>
+                            <div class="relationmaker-body">
+                                <input type="text" id="attr-title" class="w-100 mb-2" placeholder="ویژگی">
+                                <input type="text" id="attr-val" class="w-100 mb-2" placeholder="مقدار">
+
+                                <p class="btn  btn-primary d-inline-block w-100 mt-2 mb-2" onclick="attCreator()">
+                                    افزودن</p>
+                            </div>
                         </div>
-                        <div class="relationmaker-body">
-                            <input type="text" id="pro-rel-creator-title" class="w-100 mb-2" placeholder="عنوان">
-                            <select name="" id="pro-rel-pro" class="">
-                                {% for pro in category_product %}
-                                    {% if pro.id != product.id %}
-                                        <option value="{{ pro.id }}" data-name="{{ pro }}">
-                                            {{ pro }}
-                                        </option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                            <p class="btn  btn-primary d-inline-block w-100 mt-2 mb-2" onclick="RelCreator()">
-                                افزودن</p>
-                        </div>
-                    </div>
-                    <div id="relation" class="mb-2">
-                        <table class="" id="rel-table">
-                            <tr>
-                                <th>عنوان</th>
-                                <th>محصول</th>
-                                <th></th>
-                            </tr>
-                            {% for pro in product_rel %}
+                        <div id="keyword" class="mb-2">
+                            <table class="" id="attr-table">
                                 <tr>
-                                    <td>
-                                        <input type="hidden" name="rel[][name]" readonly value="{{ pro }}">
-                                        {{ pro }}
-                                    </td>
-                                    <td>
-                                        <input type="hidden" readonly name="rel[][product]"
-                                               value="{{ pro.product_rel.id }}">
-                                        {{ pro.product_rel }}
-                                    </td>
-                                    <td>
-                                        <p onclick="deleteRel(this)" class="mb-0 pb-0">
-                                            <i class="fa-solid fa-trash cursor-pointer"></i>
-                                        </p>
-                                    </td>
+
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
-                            {% endfor %}
+                                {% for at in pro_attribute %}
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="attr[][title]" readonly value="{{ at.attribute }}">
+                                            {{ at.attribute }}
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="attr[][val]" readonly value="{{ at.attribute_value }}">
+                                            {{ at.attribute_value }}
+                                        </td>
+
+                                        <td>
+                                            <p onclick="deleteAtrr(this)" class="mb-0 pb-0">
+                                                <i class="fa-solid fa-trash cursor-pointer"></i>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
 
 
-                        </table>
-
-
+                        </div>
                     </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                        <div class="mb-2 border-bottom">
+                            <p class="d-inline-block font-weight-bolder pt-2">
+                                محصولات مرتبط
+                            </p>
+                            <p class="btn btn-primary d-inline-block float-left" onclick="productRelCreator()">افزودن
+                            </p>
+                        </div>
+                        <div id="relationmaker" class="mb-2 border-bottom" style="display: none">
+                            <div>
+                                <p class="d-inline-block">
+                                    افزودن محصول مرتبط
+                                </p>
+                                <span class="d-inline-block text-danger cursor-pointer float-left"
+                                      onclick="closeProductRelCreator()">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </span>
+                            </div>
+                            <div class="relationmaker-body">
+                                <input type="text" id="pro-rel-creator-title" class="w-100 mb-2" placeholder="عنوان">
+                                <select name="" id="pro-rel-pro" class="">
+                                    {% for pro in category_product %}
+                                        {% if pro.id != product.id %}
+                                            <option value="{{ pro.id }}" data-name="{{ pro }}">
+                                                {{ pro }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <p class="btn  btn-primary d-inline-block w-100 mt-2 mb-2" onclick="RelCreator()">
+                                    افزودن</p>
+                            </div>
+                        </div>
+                        <div id="relation" class="mb-2">
+                            <table class="" id="rel-table">
+                                <tr>
+                                    <th>عنوان</th>
+                                    <th>محصول</th>
+                                    <th></th>
+                                </tr>
+                                {% for pro in product_rel %}
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="rel[][name]" readonly value="{{ pro }}">
+                                            {{ pro }}
+                                        </td>
+                                        <td>
+                                            <input type="hidden" readonly name="rel[][product]"
+                                                   value="{{ pro.product_rel.id }}">
+                                            {{ pro.product_rel }}
+                                        </td>
+                                        <td>
+                                            <p onclick="deleteRel(this)" class="mb-0 pb-0">
+                                                <i class="fa-solid fa-trash cursor-pointer"></i>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
 
+
+                            </table>
+
+
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mb-2 border-bottom">
+                            <p class="d-inline-block font-weight-bolder pt-2">
+                                کلمات کلیدی
+                            </p>
+                            <p class="btn btn-primary d-inline-block float-left" onclick="keywordCreator()">افزودن
+                            </p>
+                        </div>
+                        <div id="keywordmaker" class="mb-2 border-bottom" style="display: none">
+                            <div>
+                                <p class="d-inline-block">
+                                    افزودن کلمه
+                                </p>
+                                <span class="d-inline-block text-danger cursor-pointer float-left"
+                                      onclick="closeProductKeywordCreator()">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </span>
+                            </div>
+                            <div class="relationmaker-body">
+                                <input type="text" id="pro-key-creator" class="w-100 mb-2" placeholder="عنوان">
+
+                                <p class="btn  btn-primary d-inline-block w-100 mt-2 mb-2" onclick="KeywordCreator()">
+                                    افزودن</p>
+                            </div>
+                        </div>
+                        <div id="keyword" class="mb-2">
+                            <table class="" id="key-table">
+                                <tr>
+
+                                    <th>کلمه</th>
+                                    <th></th>
+                                </tr>
+                                {% for keyword in product_keyword %}
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="keyword[]" readonly value="{{ keyword.keyword }}">
+                                            {{ keyword.keyword }}
+                                        </td>
+
+                                        <td>
+                                            <p onclick="deleteKeyword(this)" class="mb-0 pb-0">
+                                                <i class="fa-solid fa-trash cursor-pointer"></i>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+
+
+                        </div>
+                    </div>
                 </div>
 
 
@@ -197,29 +305,7 @@
         </main>
     </form>
 
-    <main class="custom-admin-main">
 
-        <input type="file" id="file-uploader" multiple>
-        <div>
-
-        </div>
-
-
-        {% csrf_token %}
-
-        <p>
-            <button id="image-uploader-multy">اپلود</button>
-            <input name="image-gallery" type="file" multiple>
-        <div class="image-uploader-wrapper" style="display: none">
-            hello word!
-        </div>
-        </p>
-        <p>
-            <textarea name="context" id="mytextarea"></textarea>
-        </p>
-        <input type="submit">
-
-    </main>
     <!--END-MAIN-->
 {% endblock %}
 
@@ -230,6 +316,14 @@
     <script>
         $('.js-example-basic-single').select2();
 
+        function attrCreator() {
+            $('#attrmaker').slideDown('fast')
+        }
+
+        function keywordCreator() {
+            $('#keywordmaker').slideDown('fast')
+        }
+
         function productRelCreator() {
 
             $('#relationmaker').slideDown('fast')
@@ -238,6 +332,14 @@
 
         function closeProductRelCreator() {
             $('#relationmaker').slideUp('fast')
+        }
+
+        function closeProductKeywordCreator() {
+            $('#keywordmaker').slideUp('fast')
+        }
+
+        function closeProductAttrCreator() {
+            $('#attrmaker').slideUp('fast')
         }
 
         function RelCreator() {
@@ -271,9 +373,66 @@
 
         }
 
+        function KeywordCreator() {
+            mytitle = $('#pro-key-creator').val();
+
+            html = $('#key-table').html()
+
+            html += ' <tr><td>' +
+                '<input type="hidden" name="keyword[]" readonly value="' +
+                mytitle +
+                '">' +
+                mytitle +
+                '</td>' +
+
+                '<td>' +
+                '<p onclick="deleteRel(this)" class="mb-0 pb-0">' +
+                '<i class="fa-solid fa-trash cursor-pointer"></i>' +
+                '</p>' +
+                '</td>' +
+                '</tr>'
+
+            $('#key-table').html(html)
+        }
+
+        function attCreator() {
+            mytitle = $('#attr-title').val();
+            myval = $('#attr-val').val();
+            html = $('#attr-table').html()
+
+            html += ' <tr><td>' +
+                '<input type="hidden" name="attr[][title]" readonly value="' +
+                mytitle +
+                '">' +
+                mytitle +
+                '</td>' +
+                '<td>' +
+                '<input type="hidden" name="attr[][val]" readonly value="' +
+                myval +
+                '">' +
+                myval +
+                '</td>' +
+                '<td>' +
+                '<p onclick="deleteAttr(this)" class="mb-0 pb-0">' +
+                '<i class="fa-solid fa-trash cursor-pointer"></i>' +
+                '</p>' +
+                '</td>' +
+                '</tr>'
+
+            $('#attr-table').html(html)
+        }
+
         function deleteRel(elem) {
             $(elem).parent().parent().remove()
 
+        }
+
+        function deleteKeyword(elem) {
+            $(elem).parent().parent().remove()
+        }
+
+        function deleteAtrr(elem) {
+            $(elem).parent().parent().remove()
         }
 
         $('#pro-rel-pro').select2();

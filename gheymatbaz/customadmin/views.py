@@ -18,7 +18,7 @@ from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeV
 from customadmin.utils import check_is_superuser
 from gheymatbaz import settings
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue, \
-    ProductCategoryAttributeValue, ProductRelation, ProductGallery
+    ProductCategoryAttributeValue, ProductRelation, ProductGallery, ProductKeyWord, ProductAttribute
 
 
 # Create your views here.
@@ -302,22 +302,15 @@ def product_add(request):
                           slug=form['slug']
 
                           )
-        # attribute_dict = list()
-        # for f in form:
-        #     if not f == 'csrfmiddlewaretoken':
-        #         attribute_dict.append(form[f])
 
         product.save()
-        # product.category_attribute_value.set(attribute_dict)
 
         return render(request, "customadmin/trace.html", context=form)
 
-    else:
-
-        context = dict()
-        context['category'] = Category.objects.all()
-        context['brand'] = Brand.objects.all()
-        return render(request, "customadmin/create-product-custom.html", context=context)
+    context = dict()
+    context['category'] = Category.objects.all()
+    context['brand'] = Brand.objects.all()
+    return render(request, "customadmin/create-product-custom.html", context=context)
 
 
 @login_required(login_url='/admin/login')
@@ -329,12 +322,21 @@ def product_advanced_update(request, pk):
     product_category_attribute_value = ProductCategoryAttributeValue.objects.filter(
         product_id=product)
     product_relation = ProductRelation.objects.filter(product=product)
-
+    product_keyword = ProductKeyWord.objects.filter(product_id=product)
     if request.method == "POST":
         form = request.POST
         form_file = request.FILES
         alt_text = form.getlist('alt_text[]')
         alt_text_edit = form.getlist('alt_text_edit[]')
+        keyword = form.getlist('keyword[]')
+        product_keyword.delete()
+        if keyword is not None:
+
+            for k in keyword:
+                keyword = ProductKeyWord(keyword=k,
+                                         product_id=product)
+
+                keyword.save()
 
         if alt_text_edit is not None:
             gallery_dict = dict(zip(form.getlist('gallery_pic[]'), alt_text_edit))
@@ -390,6 +392,18 @@ def product_advanced_update(request, pk):
 
                 p.save()
 
+        pro_attr_name = form.getlist('attr[][title]')
+        ProductAttribute.objects.filter(product_id=product).delete()
+        if pro_attr_name is not None:
+
+            attr_dict = dict(zip(pro_attr_name, form.getlist('attr[][val]')))
+            for atr in attr_dict:
+                ata = ProductAttribute(product_id=product,
+                                       attribute=atr,
+                                       attribute_value=attr_dict[atr])
+
+                ata.save()
+
     context = dict()
 
     category = product.category.all()
@@ -407,7 +421,9 @@ def product_advanced_update(request, pk):
     context['categoryattributevalue'] = category_attribute_value
     context['productcategoryattributevalue'] = product_category_attribute_value
     context['product_rel'] = ProductRelation.objects.filter(product=product)
+    context['product_keyword'] = ProductKeyWord.objects.filter(product_id=product)
     context['product_gallery'] = ProductGallery.objects.filter(product_id=product).order_by('id')
+    context['pro_attribute'] = ProductAttribute.objects.filter(product_id=product)
     return render(request, "customadmin/product-advanced-update.html", context=context)
 
 

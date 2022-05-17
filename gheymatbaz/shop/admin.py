@@ -61,9 +61,14 @@ class ProductRelationAdmin(admin.ModelAdmin):
     list_display = ['title', 'product', 'product_rel']
 
 
+class ProductKeyWordAdmin(admin.ModelAdmin):
+    list_display = ['keyword', 'product_id']
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Brand)
+admin.site.register(ProductKeyWord, ProductKeyWordAdmin)
 admin.site.register(ProductGallery)
 admin.site.register(ProductAttribute, ProductAttributeAdmin)
 admin.site.register(CategoryAttribute, CategoryAttributeAdmin)

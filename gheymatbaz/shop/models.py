@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.text import slugify
 from django.urls import reverse
 
 
@@ -75,7 +74,7 @@ class Product(models.Model):
         ('published', 'Published'),
     )
 
-    title = models.CharField(max_length=32, blank=False, null=False)
+    title = models.CharField(max_length=400, blank=False, null=False)
 
     published_at = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

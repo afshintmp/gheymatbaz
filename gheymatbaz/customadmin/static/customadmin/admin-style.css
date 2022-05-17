@@ -111,10 +111,12 @@ body {
     width: 60% !important;
 }
 
+#keyword > table ,
 #relation > table {
     width: 100%;
 }
 
+#keyword > table svg ,
 #relation > table svg {
     color: #dd0202;
 }
