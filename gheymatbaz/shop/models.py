@@ -1,8 +1,11 @@
+from itertools import chain
+
 from django.db import models
 from django.urls import reverse
 
-
 # Create your models here.
+from shop.utils import get_child_id_func
+
 
 class ProductKeyWord(models.Model):
     keyword = models.CharField(max_length=32, blank=False, null=False)
@@ -48,6 +51,12 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('category-archive', args=[self.slug])
 
+    def get_child(self):
+        a = self.child_category_list.all()
+        for cat in a:
+            a = list(chain(a, cat.child_category_list.all()))
+        return a
+
 
 class CategoryAttribute(models.Model):
     name = models.CharField(max_length=32, null=False, blank=False)
@@ -85,7 +94,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True, blank=True)
 
     category = models.ManyToManyField(Category, blank=True)
-    # category_attribute_value = models.ManyToManyField(CategoryAttributeValue, blank=True)
+
     view = models.BigIntegerField(default=0)
     rate = models.BigIntegerField(default=0)
     rate_number = models.BigIntegerField(default=0)

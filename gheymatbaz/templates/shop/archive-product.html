@@ -65,59 +65,17 @@
                             <div class="body" style="display: block">
                                 <div class="scroll">
                                 <span class="titr">
-                                    موبایل و تبلت
+                                    {{ category.name }}
                                 </span>
                                     <ul class="nav">
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                گوشی موبایل
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                تبلت
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                هدفون و هندزفری
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                لوازم جانبی
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                قطعات
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                گوشی موبایل
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                تبلت
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                هدفون و هندزفری
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                لوازم جانبی
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                قطعات
-                                            </a>
-                                        </li>
+                                        {% for cats in category.child_category_list.all %}
+                                            <li class="nav-item">
+                                                <a href="" class="nav-link">
+                                                    {{ cats.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+
                                     </ul>
                                 </div>
                             </div>
@@ -136,66 +94,13 @@
                             <div class="body" style="display: none">
                                 <div class="scroll">
                                     <ul class="nav">
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link">
-                                                سامسونگ
-                                            </a>
-                                        </li>
+                                        {% for bra in products.brand %}
+                                            <li class="nav-item">
+                                                <a href="" class="nav-link">
+                                                    {{ bra.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
@@ -331,27 +236,18 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="brand-bar">
                         <div class="swiper-container swiper-brands">
                             <div class="swiper-wrapper">
-                                <a href="#" class="swiper-slide item">
-                                    <img src="assets/img/brand.png" alt="">
-                                </a>
-                                <a href="#" class="swiper-slide item">
-                                    <img src="assets/img/brand.png" alt="">
-                                </a>
-                                <a href="#" class="swiper-slide item">
-                                    <img src="assets/img/brand.png" alt="">
-                                </a>
-                                <a href="#" class="swiper-slide item">
-                                    <img src="assets/img/brand.png" alt="">
-                                </a>
-                                <a href="#" class="swiper-slide item">
-                                    <img src="assets/img/brand.png" alt="">
-                                </a>
-                                <a href="#" class="swiper-slide item">
-                                    <img src="assets/img/brand.png" alt="">
-                                </a>
+                                {% for br in brand %}
+
+                                    <a href="{% url 'archive-brand' br.3 %}" class="swiper-slide item">
+                                        <img src="/media/{{ br.2 }}" alt="{{ br.1 }}">
+                                    </a>
+                                {% endfor %}
+
+
                             </div>
                             <div class="btn-next swiper-button-next-brands">
                                 <i class="icon-left-chevron"></i>

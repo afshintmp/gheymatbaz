@@ -5,7 +5,7 @@ urlpatterns = [
 
     re_path(r'category/(?P<slug>[-\w]+)/', category_list, name='category-archive'),
     re_path(r'product/(?P<slug>[-\w]+)/', single_product, name='single-product'),
-    re_path(r'brand/(?P<slug>[-\w]+)/', single_brand, name='single-brand'),
+    re_path(r'brand/(?P<slug>[-\w]+)/', single_brand, name='archive-brand'),
     path('product/', list_all, name='archive-product'),
 
 ]
