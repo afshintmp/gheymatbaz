@@ -1,0 +1,199 @@
+<div class="product-category-selector">
+    <label for="connector">دسته بندی</label>
+
+
+    <ul class="list-style-none" id="category-tree">
+        {% for cat in category %}
+            {% if not cat.parent %}
+                <li>
+
+                    <p class="d-inline-block">{{ cat.name }}</p>
+                    {% if cat.child_category_list.all %}
+                        <span class="show-more-category">
+                            <i class="fa-solid fa-angles-down"></i>
+                         </span>
+                    {% endif %}
+                    <p class="d-inline-block">
+                        <a href="{% url 'category-update' cat.pk %}">ویرایش</a>
+                    </p>
+
+                    <p class="d-inline-block">
+                        <a href="{% url 'category-delete' cat.pk %}">حذف</a>
+                    </p>
+                    <div class="clear-fix"></div>
+                </li>
+                {% if cat.child_category_list.all %}
+                    <ul class="list-style-none" style="display: none">
+                        {% for child1 in cat.child_category_list.all %}
+                            <li>
+
+                                <p class="d-inline-block">-{{ child1.name }}</p>
+                                {% if child1.child_category_list.all %}
+                                    <span class="show-more-category">
+                                         <i class="fa-solid fa-angles-down"></i>
+                                     </span>
+                                {% endif %}
+                                <p class="d-inline-block">
+                                    <a href="{% url 'category-update' child1.pk %}">ویرایش</a>
+                                </p>
+
+                                <p class="d-inline-block">
+                                    <a href="{% url 'category-delete' child1.pk %}">حذف</a>
+                                </p>
+                                <div class="clear-fix"></div>
+                            </li>
+                            {% if child1.child_category_list.all %}
+                                <ul class="list-style-none" style="display: none">
+                                    {% for child2 in child1.child_category_list.all %}
+                                        <li>
+                                            <p class="d-inline-block">--{{ child2.name }}</p>
+                                            {% if child2.child_category_list.all %}
+                                                <span class="show-more-category">
+                                                     <i class="fa-solid fa-angles-down"></i>
+                                                </span>
+                                            {% endif %}
+                                            <p class="d-inline-block">
+                                                <a href="{% url 'category-update' child2.pk %}">ویرایش</a>
+                                            </p>
+
+                                            <p class="d-inline-block">
+                                                <a href="{% url 'category-delete' child2.pk %}">حذف</a>
+                                            </p>
+                                            <div class="clear-fix"></div>
+                                        </li>
+                                        {% if child2.child_category_list.all %}
+                                            <ul class="list-style-none" style="display: none">
+                                                {% for child3 in child2.child_category_list.all %}
+                                                    <li>
+
+                                                        <p class="d-inline-block">---{{ child3.name }}</p>
+                                                        {% if child3.child_category_list.all %}
+                                                            <span class="show-more-category">
+                                                                <i class="fa-solid fa-angles-down"></i>
+                                                            </span>
+                                                        {% endif %}
+                                                        <p class="d-inline-block">
+                                                            <a href="{% url 'category-update' child3.pk %}">ویرایش</a>
+                                                        </p>
+
+                                                        <p class="d-inline-block">
+                                                            <a href="{% url 'category-delete' child3.pk %}">حذف</a>
+                                                        </p>
+                                                        <div class="clear-fix"></div>
+                                                    </li>
+                                                    {% if child3.child_category_list.all %}
+                                                        <ul class="list-style-none" style="display: none">
+                                                            {% for child4 in child3.child_category_list.all %}
+                                                                <li>
+
+                                                                    <p class="d-inline-block">----{{ child4.name }}</p>
+                                                                    {% if  child4.child_category_list.all %}
+                                                                        <span class="show-more-category">
+                                                                            <i class="fa-solid fa-angles-down"></i>
+                                                                        </span>
+                                                                    {% endif %}
+                                                                    <p class="d-inline-block">
+                                                                        <a href="{% url 'category-update' child4.pk %}">ویرایش</a>
+                                                                    </p>
+
+                                                                    <p class="d-inline-block">
+                                                                        <a href="{% url 'category-delete' child4.pk %}">حذف</a>
+                                                                    </p>
+                                                                    <div class="clear-fix"></div>
+                                                                </li>
+                                                                {% if child4.child_category_list.all %}
+                                                                    <ul class="list-style-none" style="display: none">
+                                                                        {% for child5 in child4.child_category_list.all %}
+                                                                            <li>
+
+                                                                                <p class="d-inline-block">
+                                                                                    -----{{ child5.name }}</p>
+                                                                                {% if child5.child_category_list.all %}
+                                                                                    <span class="show-more-category">
+                                                                                          <i class="fa-solid fa-angles-down"></i>
+                                                                                    </span>
+
+                                                                                {% endif %}
+                                                                                <p class="d-inline-block">
+                                                                                    <a href="{% url 'category-update' child5.pk %}">ویرایش</a>
+                                                                                </p>
+
+                                                                                <p class="d-inline-block">
+                                                                                    <a href="{% url 'category-delete' child5.pk %}">حذف</a>
+                                                                                </p>
+                                                                                <div class="clear-fix"></div>
+                                                                            </li>
+
+                                                                            {% if child5.child_category_list.all %}
+                                                                                <ul class="list-style-none"
+                                                                               style="display: none" >
+                                                                                    {% for child6 in child5.child_category_list.all %}
+                                                                                        <li>
+
+                                                                                            <p class="d-inline-block">
+                                                                                                ------{{ child6.name }}</p>
+                                                                                            {% if child6.child_category_list.all %}
+                                                                                                <span class="show-more-category">
+                                                                                                     <i class="fa-solid fa-angles-down"></i>
+                                                                                                </span>
+                                                                                            {% endif %}
+                                                                                            <p class="d-inline-block">
+                                                                                                <a href="{% url 'category-update' child6.pk %}">ویرایش</a>
+                                                                                            </p>
+
+                                                                                            <p class="d-inline-block">
+                                                                                                <a href="{% url 'category-delete' child6.pk %}">حذف</a>
+                                                                                            </p>
+                                                                                            <div class="clear-fix"></div>
+                                                                                        </li>
+
+                                                                                        {% if child6.child_category_list.all %}
+                                                                                            <ul class="list-style-none" style="display: none">
+                                                                                                {% for child7 in child6.child_category_list.all %}
+                                                                                                    <li>
+                                                                                                        <p class="d-inline-block">
+                                                                                                            -------{{ child7.name }}</p>
+                                                                                                        <p class="d-inline-block">
+                                                                                                            <a href="{% url 'category-update' child7.pk %}">ویرایش</a>
+                                                                                                        </p>
+
+                                                                                                        <p class="d-inline-block">
+                                                                                                            <a href="{% url 'category-delete' child7.pk %}">حذف</a>
+                                                                                                        </p>
+                                                                                                        <div class="clear-fix"></div>
+                                                                                                    </li>
+                                                                                                {% endfor %}
+
+                                                                                            </ul>
+                                                                                        {% endif %}
+
+                                                                                    {% endfor %}
+                                                                                </ul>
+                                                                            {% endif %}
+
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                {% endif %}
+
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </ul>
+                            {% endif %}
+
+
+                        {% endfor %}
+
+                    </ul>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

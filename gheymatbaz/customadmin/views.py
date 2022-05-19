@@ -1,10 +1,7 @@
-import os
-
+from django.core.validators import slug_unicode_re
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core import serializers
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -98,6 +95,32 @@ def add_product(request):
                                                                'json_category_attribute': data_category_attribute,
                                                                'json_category_attribute_value': data_category_attribute_value
                                                                })
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def category_create_view(request):
+    context = dict()
+    if request.method == "POST":
+        form = request.POST
+        if Category.objects.filter(slug=form.get('slug')).exists():
+            context['rise_error'] = 'اسلاگ برای دسته بندیه دیگری استفاده شده'
+        else:
+            if slug_unicode_re.match(form.get('slug')):
+                c = Category(name=form.get('name'),
+                             parent_id=form.get('parent'),
+                             slug=form.get('slug'),
+                             icon_class=form.get('icon-class'))
+                c.save()
+            else:
+                context['rise_error'] = 'اسلاگ غیر معتبر'
+
+    category = Category.objects.all()
+
+    context['category'] = category
+    context['json_categories'] = serializers.serialize('json', category)
+    return render(request, "customadmin/edit-category.html", context=context)
 
 
 class CategoryCreateView(CreateView):

@@ -3,54 +3,85 @@
 {% block content %}
     <!--START-MAIN-->
 
-    <main class="custom-admin-main">
+    <main class="custom-admin-main container">
+        <div class="row">
+            <div class="col-4">
 
-        <div class="cat-block">
 
-
-            <h4>ویرایش
-                <b> {{ current_category.name }}</b>
-            </h4>
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit">
-            </form>
-        </div>
-        <div class="cat-block">
-            {% for category in categories %}
-                {% if not category.parent %}
-                    <div class="category-table">
-                        <div class="category-table-row">
-                            <p class="category-table-colm">
-                                {{ category.id }}
-                            </p>
-                            <p class="category-table-colm">
-                                {{ category.name }}
-                            </p>
-                            <p class="category-table-colm">
-                                <span onclick="showSubCat(this , {{ category.id }})">more</span>
-                            </p>
-                            <p class="category-table-colm">
-                                <a href="{% url 'category-update' category.pk %}">ویرایش</a>
-                            </p>
-
-                            <p class="category-table-colm">
-                                <a href="{% url 'category-delete' category.pk %}">حذف</a>
-                            </p>
-                        </div>
-
+                <h4>ویرایش
+                    <b> {{ current_category.name }}</b>
+                </h4>
+                {% if rise_error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <p class="mb-0 pb-0">{{ rise_error }}</p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
+
+
                 {% endif %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <input type="text" class="form-control" placeholder="عنوان" name="name">
+                    </div>
+                    <div class="mb-2">
+                        <label for="">والد</label>
+                        <select name="parent" id="" class="js-example-basic-single form-control">
+                            <option value="">بدون والد</option>
+                            {% for cat in category %}
+                                <option value="{{ cat.pk }}">{{ cat.name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" name="slug" class="form-control" placeholder="slug" required>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" name="icon-class" class="form-control" placeholder="کلاس ایکن">
+                    </div>
+                    <input type="submit" value="ذخیره" class="btn btn-success w-100">
+                </form>
+            </div>
+            <div class="col-8 ">
+
+                {% include 'partials/admin/category-category-selctor.html' %}
+
+                {% for category in categories %}
+                    {% if not category.parent %}
+                        <div class="category-table">
+                            <div class="category-table-row">
+
+                                <p class="category-table-colm">
+                                    {{ category.name }}
+                                </p>
+                                <p class="category-table-colm">
+                                <span onclick="showSubCat(this , {{ category.id }})">
+                                     <i class="fa-solid fa-angles-down"></i>
+                                </span>
+                                </p>
+                                <p class="category-table-colm">
+                                    <a href="{% url 'category-update' category.pk %}">ویرایش</a>
+                                </p>
+
+                                <p class="category-table-colm">
+                                    <a href="{% url 'category-delete' category.pk %}">حذف</a>
+                                </p>
+                            </div>
+
+                        </div>
+                    {% endif %}
 
 
 
-            {% endfor %}
+                {% endfor %}
 
+
+            </div>
 
         </div>
-
-
     </main>
     <!--END-MAIN-->
 {% endblock %}
@@ -81,7 +112,7 @@
                         subCategroHTMLMaker += jsonCategory[category]['fields']['name']
                         subCategroHTMLMaker += '</p><p class="category-table-colm"> <span href="" onclick="showSubCat(this ,'
                         subCategroHTMLMaker += jsonCategory[category]['pk']
-                        subCategroHTMLMaker += ' )">more</span> </p>'
+                        subCategroHTMLMaker += ' )"><i class="fa-solid fa-angles-down"></i></span> </p>'
                         subCategroHTMLMaker += ''
                         subCategroHTMLMaker += '<p class="category-table-colm">' +
                             '<a href="/dj-admin/category/' + jsonCategory[category]['pk'] + '">' +
@@ -105,11 +136,22 @@
 
         }
 
+        $('.js-example-basic-single').select2();
     </script>
 {% endblock %}
 
 {% block customstyle %}
     <style>
+        .alert-dismissible {
+            padding-right: 1.25rem !important;
+            padding-left: 4rem !important;
+        }
+
+        .alert-dismissible .close {
+            right: unset !important;
+            left: 0 !important;
+        }
+
         .category-table-row {
 
             margin-bottom: 0;
@@ -136,5 +178,52 @@
             width: 45%;
             vertical-align: top;
         }
+
+        .category-table {
+            display: table;
+            width: 100%;
+        }
+
+        .category-table-row {
+            display: table-row;
+        }
+
+        .category-table-colm {
+            display: table-column;
+        }
+
+        .product-category-selector ul li {
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-category-selector ul li p {
+            margin-bottom: 0;
+        }
+
+        .product-category-selector ul li > p:nth-child(2) {
+            float: left;
+            margin: 5px 10px;
+        }
+
+        .product-category-selector ul li > p:nth-child(3) {
+            float: left;
+            margin: 5px 10px;
+        }
+
+        .product-category-selector ul li > p:nth-child(4) {
+            float: left;
+            margin: 5px 10px;
+        }
+
+        .clear-fix {
+            clear: both;
+        }
+
+        .product-category-selector ul {
+            margin: 0;
+            padding-right: 10px;
+
+        }
+
     </style>
 {% endblock %}
