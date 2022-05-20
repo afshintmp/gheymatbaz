@@ -1,53 +1,93 @@
 {% extends 'admin-base.html' %}
 
 {% block content %}
+    <div class="container">
+        <div class="row mt-2">
+            <div class="cat-block col-4">
 
-    <div class="cat-block">
 
-
-        <h4>ویرایش
-            {#                <b> {{ current_category.name }}</b>#}
-        </h4>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit">
-        </form>
-    </div>
-    <div class="cat-block">
-        <ul>
-            {% for obj in object_list %}
-                <li class="category-table">
-                    <div class="category-table-row">
-                        <p class="category-table-colm">
-                            {{ obj.id }}
-                        </p>
-                        <p class="category-table-colm">
-                            {{ obj }}
-                        </p>
-                        <p class="category-table-colm">
-                            {{ obj.category }}
-                        </p>
-
-                        <p class="category-table-colm">
-                            <a href="{% url 'category-attribute-value-list' obj.pk %}">مقادیر</a>
-                        </p>
-                        <p class="category-table-colm">
-                            <a href="{% url 'category-attribute-update' obj.pk %}">ویرایش</a>
-                        </p>
-
-                        <p class="category-table-colm">
-                            <a href="{% url 'category-attribute-delete' obj.pk %}">حذف</a>
-                        </p>
+                <h5 class="font-weight-bolder text-primary">
+                    افزودن
+                    ویژگی به
+                    دسته بندی
+                    {{ category.name }}
+                </h5>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <input type="text" name="name" class="form-control" placeholder="عنوان">
                     </div>
+                    <div class="mb-2">
+                        <select name="" class="js-example-basic-single form-control" id="">
 
-                </li>
+                            {% if not category.child_category_list.all %}
+                                <option value="{{ category.pk }}">
+                                    {{ category.name }}
+                                </option>
+                            {% endif %}
 
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" class="form-control" placeholder="slug">
+                    </div>
+                    <input type="submit" class="btn btn-success w-100" value="ذخیره">
+                </form>
+            </div>
+            <div class="cat-block col-8">
 
+                <h5 class="font-weight-bolder text-primary">
+                    ویژگی ها
+                </h5>
+                <div>
+                    <span>فیلتر</span>
+                    <select name="" class="js-example-basic-single-two" onchange="changeFilter()" id="filter">
+                        {% for cat in all_category %}
 
-            {% endfor %}
-        </ul>
+                            <option {% if cat.pk == category.pk %} selected="selected"{% endif %} value="{{ cat.pk }}">
+                                {{ cat.name }}
+                            </option>
 
+                        {% endfor %}
+                    </select>
+                    <a class="btn btn-outline-secondary btn-sm" id="filterlink"
+                       href="/gheymat-admin/category/{{ category.pk }}/category-attribute/add">اعمال</a>
+                </div>
+                <div class="border-top mt-2">
+                    {% if category_attribute %}
+                        <ul>
+                            {% for obj in category_attribute %}
+                                <li class="category-table">
+                                    <div class="category-table-row">
+                                        <p class="category-table-colm">
+                                            {{ obj }}
+                                        </p>
+                                        <p class="category-table-colm">
+                                            {{ obj.category }}
+                                        </p>
+
+                                        <p class="category-table-colm">
+                                            <a href="{% url 'category-attribute-value-list' obj.pk %}">مقادیر</a>
+                                        </p>
+                                        <p class="category-table-colm">
+                                            <a href="{% url 'category-attribute-update' obj.pk %}">ویرایش</a>
+                                        </p>
+
+                                        <p class="category-table-colm">
+                                            <a href="{% url 'category-attribute-delete' obj.pk %}">حذف</a>
+                                        </p>
+                                    </div>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <h6 class="mt-2 text-dark text-center">هنوز ویژگی ای تنظیم نشده !</h6>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
     </div>
 
 {% endblock %}
@@ -82,4 +122,16 @@
             vertical-align: top;
         }
     </style>
+{% endblock %}
+
+{% block customjs %}
+    <script>
+        $('.js-example-basic-single').select2();
+        $('.js-example-basic-single-two').select2();
+
+        function changeFilter() {
+
+            $('#filterlink').attr('href', '/gheymat-admin/category/' + $('#filter').val() + '/category-attribute/add')
+        }
+    </script>
 {% endblock %}

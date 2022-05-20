@@ -1,11 +1,20 @@
 <div>
     <ul>
-        <li><a href="{% url "category-add" %}">
-            دسته بندی ها
-        </a></li>
-        <li><a href="{% url "brand-add" %}">
-            برند ها
-        </a></li>
+        <li>
+            <a href="{% url "category-add" %}">
+                دسته بندی ها
+            </a>
+        </li>
+        <li>
+            <a href="{% url "attribute-add" %}">
+                ویژگی های دسته بندی ها
+            </a>
+        </li>
+        <li>
+            <a href="{% url "brand-add" %}">
+                برند ها
+            </a>
+        </li>
         <li>
             <a href="{% url "product-all" %}">
                 محصولات
@@ -16,11 +25,6 @@
                 </li>
             </ul>
         </li>
-        <li>
-            <a href="{% url "category-attribute-add" %}">
-                ویژگی های دسته بندی ها
-            </a>
 
-        </li>
     </ul>
 </div>

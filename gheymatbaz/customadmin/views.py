@@ -148,6 +148,18 @@ def category_edit_view(request, pk):
     return render(request, "customadmin/edit-category.html", context=context)
 
 
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def category_advanced_view(request, pk):
+    context = dict()
+    context['category'] = category = Category.objects.get(pk=pk)
+    context['category_child_list'] = category_child_list = Category.objects.get(pk=pk)
+    context['category_attribute'] = category_attribute = CategoryAttribute.objects.filter(
+        category_id=category_child_list)
+    return render(request, 'customadmin/edit-category-advanced.html', context=context)
+
+
 class CategoryUpdateView(UpdateView):
     model = Category
     fields = ['name', 'parent', 'slug', 'icon_class']
@@ -473,6 +485,30 @@ class CategoryAttributeCreateView(CreateView):
     @method_decorator(login_required, user_passes_test(check_is_superuser))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def category_attribute_create_view(request, pk):
+    context = dict()
+    context['all_category'] = all_category = Category.objects.filter(child_category_list__isnull=True)
+
+    context['category'] = category = all_category.get(pk=pk)
+
+    context['category_attribute'] = CategoryAttribute.objects.filter(category_id=category)
+    return render(request, 'customadmin/edit-category-attribute.html', context=context)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def attribute_create_view(request):
+    context = dict()
+    context['category_attribute'] = CategoryAttribute.objects.all()
+
+    context['category'] = Category.objects.all()
+    return render(request, 'customadmin/edit-attribute.html', context=context)
 
 
 class CategoryAttributeUpdateView(UpdateView):

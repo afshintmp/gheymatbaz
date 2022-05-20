@@ -52,12 +52,22 @@ class Category(models.Model):
         return reverse('category-archive', args=[self.slug])
 
     def get_child(self):
-        a = self.child_category_list.all()
+        a = list(chain(self, self.child_category_list.all()))
         for cat in a:
             a = list(chain(a, cat.child_category_list.all()))
-        return a
-
-
+        for cat in a:
+            a = list(chain(a, cat.child_category_list.all()))
+        for cat in a:
+            a = list(chain(a, cat.child_category_list.all()))
+        for cat in a:
+            a = list(chain(a, cat.child_category_list.all()))
+        for cat in a:
+            a = list(chain(a, cat.child_category_list.all()))
+        for cat in a:
+            a = list(chain(a, cat.child_category_list.all()))
+        for cat in a:
+            a = list(chain(a, cat.child_category_list.all()))
+        return set(a)
 
 
 class CategoryAttribute(models.Model):

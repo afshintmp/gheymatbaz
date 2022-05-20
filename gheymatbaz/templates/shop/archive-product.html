@@ -94,13 +94,15 @@
                             <div class="body" style="display: none">
                                 <div class="scroll">
                                     <ul class="nav">
-                                        {% for bra in products.brand %}
+
+                                        {% for br in brand %}
                                             <li class="nav-item">
                                                 <a href="" class="nav-link">
-                                                    {{ bra.name }}
+                                                    {{ br.1 }}
                                                 </a>
                                             </li>
                                         {% endfor %}
+
                                     </ul>
                                 </div>
                             </div>
@@ -1020,4 +1022,131 @@
 
 {% block title %}
     test heed
+{% endblock %}
+
+{% block customjs %}
+    <script>
+
+        $(".scroll").mCustomScrollbar({
+            axis: "y" // horizontal scrollbar
+        });
+
+    </script>
+    <!--SIDEBAR-DROP-->
+    <script>
+        $('.show-body').click(function () {
+            $(this).toggleClass('show')
+            $(this).parent().parent().find('.body').slideToggle()
+        })
+    </script>
+    <!--RANGE SLIDER-->
+    <script>
+
+
+        $(function () {
+
+            var $range = $(".js-range-slider"),
+                $inputFrom = $(".js-input-from"),
+                $inputTo = $(".js-input-to"),
+                instance,
+                min = 0,
+                max = 600,
+                from = 0,
+                to = 0;
+
+            $range.ionRangeSlider({
+                type: "double",
+                min: min,
+                max: max,
+                from: 0,
+                to: 276,
+                prefix: '<span>هزار تومان</span> ',
+                onStart: updateInputs,
+                onChange: updateInputs,
+                step: 1,
+                prettify_enabled: true,
+                prettify_separator: ".",
+                values_separator: " - ",
+                force_edges: true
+
+
+            });
+
+            instance = $range.data("ionRangeSlider");
+
+            function updateInputs(data) {
+                from = data.from;
+                to = data.to;
+
+                $inputFrom.prop("value", from);
+                $inputTo.prop("value", to);
+            }
+
+            $inputFrom.on("input", function () {
+                var val = $(this).prop("value");
+
+                // validate
+                if (val < min) {
+                    val = min;
+                } else if (val > to) {
+                    val = to;
+                }
+
+                instance.update({
+                    from: val
+                });
+            });
+
+            $inputTo.on("input", function () {
+                var val = $(this).prop("value");
+
+                // validate
+                if (val < from) {
+                    val = from;
+                } else if (val > max) {
+                    val = max;
+                }
+
+                instance.update({
+                    to: val
+                });
+            });
+
+        });
+    </script>
+    <!--NAV-FILTER-->
+    <script>
+        $('.nav-filter .nav-item i').click(function () {
+            $(this).parent().hide()
+        })
+    </script>
+    <!--ABOUT-PRODUCT-MORE-->
+    <script>
+        $('.about-products .more').click(function () {
+            $(this).toggleClass('show')
+            $(this).find('span').toggle()
+            $(this).parent().find('.text').toggleClass('show')
+        })
+    </script>
+    <!--ITEM-PRODUCTS-->
+    <script>
+
+
+        if (window.matchMedia("(max-width:992px)").matches) {
+
+            $('.product-items .item').on('click', function (event) {
+                $(this).parent().addClass('show-detail')
+                $(this).parent().find('.detail-mobile').slideDown()
+            });
+            $('.product-items .item .detail-mobile').on('click', function (event) {
+                event.stopPropagation();
+            });
+
+            $('.product-items .item .close-detail').click(function () {
+                $('.product-items .item').removeClass('show-detail')
+                $('.detail-mobile').slideUp()
+            })
+
+        }
+    </script>
 {% endblock %}

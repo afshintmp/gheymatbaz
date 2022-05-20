@@ -12,7 +12,15 @@
                         <span class="show-more-category">
                             <i class="fa-solid fa-angles-down"></i>
                          </span>
+                    {% else %}
+
+                        <p class="d-inline-block">
+                            <a href="{% url 'category-attribute-add' cat.pk %}">ویژگی ها</a>
+                        </p>
                     {% endif %}
+                    <p class="d-inline-block">
+                        <a href="{% url 'category-advanced' cat.pk %}">پیشرفته</a>
+                    </p>
                     <p class="d-inline-block">
                         <a href="{% url 'category-update' cat.pk %}">ویرایش</a>
                     </p>
@@ -32,7 +40,15 @@
                                     <span class="show-more-category">
                                          <i class="fa-solid fa-angles-down"></i>
                                      </span>
+                                {% else %}
+                                    <p class="d-inline-block">
+                                        <a href="{% url 'category-attribute-add' child1.pk %}">ویژگی ها</a>
+                                    </p>
                                 {% endif %}
+
+                                <p class="d-inline-block">
+                                    <a href="{% url 'category-advanced' child1.pk %}">پیشرفته</a>
+                                </p>
                                 <p class="d-inline-block">
                                     <a href="{% url 'category-update' child1.pk %}">ویرایش</a>
                                 </p>
@@ -51,7 +67,15 @@
                                                 <span class="show-more-category">
                                                      <i class="fa-solid fa-angles-down"></i>
                                                 </span>
+                                            {% else %}
+                                                <p class="d-inline-block">
+                                                    <a href="{% url 'category-attribute-add' child2.pk %}">ویژگی ها</a>
+                                                </p>
                                             {% endif %}
+
+                                            <p class="d-inline-block">
+                                                <a href="{% url 'category-advanced' child2.pk %}">پیشرفته</a>
+                                            </p>
                                             <p class="d-inline-block">
                                                 <a href="{% url 'category-update' child2.pk %}">ویرایش</a>
                                             </p>
@@ -71,7 +95,16 @@
                                                             <span class="show-more-category">
                                                                 <i class="fa-solid fa-angles-down"></i>
                                                             </span>
+                                                        {% else %}
+                                                            <p class="d-inline-block">
+                                                                <a href="{% url 'category-attribute-add' child3.pk %}">ویژگی
+                                                                    ها</a>
+                                                            </p>
                                                         {% endif %}
+
+                                                        <p class="d-inline-block">
+                                                            <a href="{% url 'category-advanced' child3.pk %}">پیشرفته</a>
+                                                        </p>
                                                         <p class="d-inline-block">
                                                             <a href="{% url 'category-update' child3.pk %}">ویرایش</a>
                                                         </p>
@@ -91,7 +124,16 @@
                                                                         <span class="show-more-category">
                                                                             <i class="fa-solid fa-angles-down"></i>
                                                                         </span>
+                                                                    {% else %}
+                                                                        <p class="d-inline-block">
+                                                                            <a href="{% url 'category-attribute-add' child4.pk %}">ویژگی
+                                                                                ها</a>
+                                                                        </p>
                                                                     {% endif %}
+
+                                                                    <p class="d-inline-block">
+                                                                        <a href="{% url 'category-advanced' child4.pk %}">پیشرفته</a>
+                                                                    </p>
                                                                     <p class="d-inline-block">
                                                                         <a href="{% url 'category-update' child4.pk %}">ویرایش</a>
                                                                     </p>
@@ -112,8 +154,16 @@
                                                                                     <span class="show-more-category">
                                                                                           <i class="fa-solid fa-angles-down"></i>
                                                                                     </span>
+                                                                                {% else %}
 
+                                                                                    <p class="d-inline-block">
+                                                                                        <a href="{% url 'category-attribute-add' child5.pk %}">ویژگی
+                                                                                            ها</a>
+                                                                                    </p>
                                                                                 {% endif %}
+                                                                                <p class="d-inline-block">
+                                                                                    <a href="{% url 'category-advanced' child5.pk %}">پیشرفته</a>
+                                                                                </p>
                                                                                 <p class="d-inline-block">
                                                                                     <a href="{% url 'category-update' child5.pk %}">ویرایش</a>
                                                                                 </p>
@@ -126,7 +176,7 @@
 
                                                                             {% if child5.child_category_list.all %}
                                                                                 <ul class="list-style-none"
-                                                                               style="display: none" >
+                                                                                    style="display: none">
                                                                                     {% for child6 in child5.child_category_list.all %}
                                                                                         <li>
 
@@ -136,7 +186,15 @@
                                                                                                 <span class="show-more-category">
                                                                                                      <i class="fa-solid fa-angles-down"></i>
                                                                                                 </span>
+                                                                                            {% else %}
+                                                                                                <p class="d-inline-block">
+                                                                                                    <a href="{% url 'category-attribute-add' child6.pk %}">ویژگی
+                                                                                                        ها</a>
+                                                                                                </p>
                                                                                             {% endif %}
+                                                                                            <p class="d-inline-block">
+                                                                                                <a href="{% url 'category-advanced' child6.pk %}">پیشرفته</a>
+                                                                                            </p>
                                                                                             <p class="d-inline-block">
                                                                                                 <a href="{% url 'category-update' child6.pk %}">ویرایش</a>
                                                                                             </p>
@@ -148,11 +206,19 @@
                                                                                         </li>
 
                                                                                         {% if child6.child_category_list.all %}
-                                                                                            <ul class="list-style-none" style="display: none">
+                                                                                            <ul class="list-style-none"
+                                                                                                style="display: none">
                                                                                                 {% for child7 in child6.child_category_list.all %}
                                                                                                     <li>
                                                                                                         <p class="d-inline-block">
                                                                                                             -------{{ child7.name }}</p>
+                                                                                                        <p class="d-inline-block">
+                                                                                                            <a href="{% url 'category-attribute-add' child6.pk %}">ویژگی
+                                                                                                                ها</a>
+                                                                                                        </p>
+                                                                                                        <p class="d-inline-block">
+                                                                                                            <a href="{% url 'category-advanced' child7.pk %}">پیشرفته</a>
+                                                                                                        </p>
                                                                                                         <p class="d-inline-block">
                                                                                                             <a href="{% url 'category-update' child7.pk %}">ویرایش</a>
                                                                                                         </p>
