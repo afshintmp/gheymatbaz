@@ -470,33 +470,28 @@ def product_advanced_update(request, pk):
     return render(request, "customadmin/product-advanced-update.html", context=context)
 
 
-class CategoryAttributeCreateView(CreateView):
-    model = CategoryAttribute
-    fields = ['name', 'category', 'slug']
-    template_name = 'customadmin/edit-category-attribute.html'
-    success_url = reverse_lazy('category-attribute-add')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        categoryattribute = CategoryAttribute.objects.all()
-        context['object_list'] = categoryattribute
-        return context
-
-    @method_decorator(login_required, user_passes_test(check_is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
-
 @login_required(login_url='/admin/login')
 @require_http_methods(request_method_list=['GET', 'POST'])
 @user_passes_test(check_is_superuser)
 def category_attribute_create_view(request, pk):
     context = dict()
     context['all_category'] = all_category = Category.objects.filter(child_category_list__isnull=True)
+    if request.method == "POST":
+        form = request.POST
+        if CategoryAttribute.objects.filter(slug=form.get('slug')).exists():
+            context['rise_error'] = 'اسلاگ برای دسته بندیه دیگری استفاده شده'
+        else:
+            if slug_unicode_re.match(form.get('slug')):
+                ca = CategoryAttribute.objects.create(name=form.get('name')
+                                                      , category_id=form.get('category_id')
+                                                      , slug=form.get('slug'))
+                ca.save()
+            else:
+                context['rise_error'] = 'اسلاگ غیر معتبر'
 
     context['category'] = category = all_category.get(pk=pk)
-
     context['category_attribute'] = CategoryAttribute.objects.filter(category_id=category)
+
     return render(request, 'customadmin/edit-category-attribute.html', context=context)
 
 
@@ -505,9 +500,8 @@ def category_attribute_create_view(request, pk):
 @user_passes_test(check_is_superuser)
 def attribute_create_view(request):
     context = dict()
+    context['category'] = Category.objects.filter(child_category_list__isnull=True)
     context['category_attribute'] = CategoryAttribute.objects.all()
-
-    context['category'] = Category.objects.all()
     return render(request, 'customadmin/edit-attribute.html', context=context)
 
 

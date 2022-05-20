@@ -16,12 +16,14 @@
                     </div>
                     <div class="mb-2">
                         <select name="" class="js-example-basic-single form-control" id="">
+                            {% for cat in category %}
+                                {% if not cat.child_category_list.all %}
+                                    <option value="">
+                                        {{ cat.name }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
 
-                            {% if not category.child_category_list.all %}
-                                <option value="">
-                                    {{ category.name }}
-                                </option>
-                            {% endif %}
 
                         </select>
                     </div>
@@ -38,16 +40,20 @@
                 </h5>
                 <div>
                     <span>فیلتر</span>
-                    <select name="" class="js-example-basic-single-two " id="">
-{#                        {% for cat in category %}#}
-{#                            {% if not cat.child_category_list.all %}#}
-{#                                <option value="">#}
-{#                                    {{ cat.name }}#}
-{#                                </option>#}
-{#                            {% endif %}#}
-{#                        {% endfor %}#}
+                    <select name="" class="js-example-basic-single-two" onchange="changeFilter()" id="filter">
+                        {% for cat in category %}
+                            <option selected value="">
+                                همه
+                            </option>
+                            {% if not cat.child_category_list.all %}
+                                <option value="{{ cat.pk }}">
+                                    {{ cat.name }}
+                                </option>
+                            {% endif %}
+                        {% endfor %}
                     </select>
-                    <a class="btn btn-outline-secondary btn-sm" href="">اعمال</a>
+                    <a class="btn btn-outline-secondary btn-sm" id="filterlink"
+                       href="/gheymat-admin/category-attribute/add">اعمال</a>
                 </div>
                 <ul>
                     {% for obj in category_attribute %}
@@ -121,5 +127,10 @@
     <script>
         $('.js-example-basic-single').select2();
         $('.js-example-basic-single-two').select2();
+
+        function changeFilter() {
+
+            $('#filterlink').attr('href', '/gheymat-admin/category/' + $('#filter').val() + '/category-attribute/add')
+        }
     </script>
 {% endblock %}
