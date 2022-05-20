@@ -58,6 +58,8 @@ class Category(models.Model):
         return a
 
 
+
+
 class CategoryAttribute(models.Model):
     name = models.CharField(max_length=32, null=False, blank=False)
     category_id = models.ForeignKey(Category, on_delete=models.CASCADE, name='category',

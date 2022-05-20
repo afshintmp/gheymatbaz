@@ -7,10 +7,17 @@
         <div class="row">
             <div class="col-4">
 
+                {% if current_category %}
+                    <h5 class="text-primary font-weight-bolder">
+                        ویرایش
+                        <b> {{ current_category.name }}</b>
+                    </h5>
+                {% else %}
+                    <h5 class="text-primary font-weight-bolder">افزودن
 
-                <h4>ویرایش
-                    <b> {{ current_category.name }}</b>
-                </h4>
+                    </h5>
+
+                {% endif %}
                 {% if rise_error %}
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <p class="mb-0 pb-0">{{ rise_error }}</p>
@@ -24,29 +31,31 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="عنوان" name="name">
+                        <input type="text" class="form-control" placeholder="عنوان" name="name"
+                               value="{{ current_category.name }}">
                     </div>
                     <div class="mb-2">
                         <label for="">والد</label>
                         <select name="parent" id="" class="js-example-basic-single form-control">
                             <option value="">بدون والد</option>
                             {% for cat in category %}
-                                <option value="{{ cat.pk }}">{{ cat.name }}</option>
+                                <option {% if cat.pk == current_category.parent_id %}selected="selected"{% endif %}
+                                        value="{{ cat.pk }}">{{ cat.name }}</option>
                             {% endfor %}
 
                         </select>
                     </div>
                     <div class="mb-2">
-                        <input type="text" name="slug" class="form-control" placeholder="slug" required>
+                        <input type="text" name="slug" class="form-control" value="{{ current_category.slug }}" placeholder="slug" required>
                     </div>
                     <div class="mb-2">
-                        <input type="text" name="icon-class" class="form-control" placeholder="کلاس ایکن">
+                        <input type="text" name="icon-class" value="{{ current_category.icon_class }}" class="form-control" placeholder="کلاس ایکن">
                     </div>
                     <input type="submit" value="ذخیره" class="btn btn-success w-100">
                 </form>
             </div>
             <div class="col-8 ">
-
+                {{ current_category_parent }}
                 {% include 'partials/admin/category-category-selctor.html' %}
 
                 {% for category in categories %}
@@ -93,48 +102,7 @@
 
 {% block customjs %}
     <script>
-        var jsonCategory = {{ json_categories|safe }};
-        console.log(jsonCategory)
 
-        function showSubCat(element, cat_id) {
-
-            if (jQuery('#sub-' + cat_id).length === 1) {
-                jQuery('#sub-' + cat_id + ':visible').slideUp()
-                jQuery('#sub-' + cat_id + ':visible .sub-category-table-row').slideUp()
-                jQuery('#sub-' + cat_id + ':hidden').slideDown()
-            } else {
-                subCategroHTMLMaker = '<div class="sub-category-table-row" id="sub-' + cat_id + '">'
-                for (var category in jsonCategory) {
-                    if (jsonCategory[category]['fields']['parent'] === cat_id) {
-                        subCategroHTMLMaker += '<div class="category-table"><div class="category-table-row"><p class="category-table-colm">'
-                        subCategroHTMLMaker += jsonCategory[category]['pk']
-                        subCategroHTMLMaker += '</p><p class="category-table-colm">'
-                        subCategroHTMLMaker += jsonCategory[category]['fields']['name']
-                        subCategroHTMLMaker += '</p><p class="category-table-colm"> <span href="" onclick="showSubCat(this ,'
-                        subCategroHTMLMaker += jsonCategory[category]['pk']
-                        subCategroHTMLMaker += ' )"><i class="fa-solid fa-angles-down"></i></span> </p>'
-                        subCategroHTMLMaker += ''
-                        subCategroHTMLMaker += '<p class="category-table-colm">' +
-                            '<a href="/dj-admin/category/' + jsonCategory[category]['pk'] + '">' +
-                            'ویرایش' +
-                            '</a>' +
-                            '</p>'
-
-
-                        subCategroHTMLMaker += '<p class="category-table-colm">' +
-                            '<a href="/dj-admin/category/' + jsonCategory[category]['pk'] + '/delete">' +
-                            'حذف' +
-                            '</a>' +
-                            '</p>'
-                        subCategroHTMLMaker += '</div></div>'
-
-                    }
-                }
-                subCategroHTMLMaker += '</div>'
-                jQuery(element).parent().parent().parent().append(subCategroHTMLMaker)
-            }
-
-        }
 
         $('.js-example-basic-single').select2();
     </script>

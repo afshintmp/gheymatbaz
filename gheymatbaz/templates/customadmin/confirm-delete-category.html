@@ -1,52 +1,58 @@
-{% extends 'base.html' %}
+{% extends 'admin-base.html' %}
 
 {% block content %}
-    <!--START-MAIN-->
-    <main class="custom-admin-main">
-        <div class="cat-block">
 
-            <form method="post">{% csrf_token %}
-                <p>Are you sure you want to delete "{{ object }}"?</p>
-                <input type="submit" value="Confirm">
-            </form>
+    <main class="custom-admin-main container">
+        <div class="row">
+            <div class="col-4">
 
-        </div>
-        <div class="cat-block">
-            {% for category in categories %}
-                {% if not category.parent %}
-                    <div class="category-table">
-                        <div class="category-table-row">
-                            <p class="category-table-colm">
-                                {{ category.id }}
-                            </p>
-                            <p class="category-table-colm">
-                                {{ category.name }}
-                            </p>
-                            <p class="category-table-colm">
-                                <span onclick="showSubCat(this , {{ category.id }})">more</span>
-                            </p>
-                            <p class="category-table-colm">
-                                <a href="{% url 'category-update' category.pk %}">ویرایش</a>
-                            </p>
 
-                            <p class="category-table-colm">
-                                <a href="{% url 'category-delete' category.pk %}">حذف</a>
-                            </p>
+                <form method="post">{% csrf_token %}
+                    <h5 class="text-danger font-weight-bolder"> حذف {{ object }}</h5>
+                    <p> آیا مطمعن هستید ؟ </p>
+                    <input class="btb d-inline-block btn-danger w-100" type="submit" value="حذف">
+                </form>
+            </div>
+            <div class="col-8 ">
+
+                {% include 'partials/admin/category-category-selctor.html' %}
+
+                {% for category in categories %}
+                    {% if not category.parent %}
+                        <div class="category-table">
+                            <div class="category-table-row">
+
+                                <p class="category-table-colm">
+                                    {{ category.name }}
+                                </p>
+                                <p class="category-table-colm">
+                                <span onclick="showSubCat(this , {{ category.id }})">
+                                     <i class="fa-solid fa-angles-down"></i>
+                                </span>
+                                </p>
+                                <p class="category-table-colm">
+                                    <a href="{% url 'category-update' category.pk %}">ویرایش</a>
+                                </p>
+
+                                <p class="category-table-colm">
+                                    <a href="{% url 'category-delete' category.pk %}">حذف</a>
+                                </p>
+                            </div>
+
                         </div>
-
-                    </div>
-                {% endif %}
+                    {% endif %}
 
 
 
-            {% endfor %}
+                {% endfor %}
 
+
+            </div>
 
         </div>
-
-
     </main>
     <!--END-MAIN-->
+
 {% endblock %}
 
 {% block title %}
@@ -104,6 +110,16 @@
 
 {% block customstyle %}
     <style>
+        .alert-dismissible {
+            padding-right: 1.25rem !important;
+            padding-left: 4rem !important;
+        }
+
+        .alert-dismissible .close {
+            right: unset !important;
+            left: 0 !important;
+        }
+
         .category-table-row {
 
             margin-bottom: 0;
@@ -130,5 +146,52 @@
             width: 45%;
             vertical-align: top;
         }
+
+        .category-table {
+            display: table;
+            width: 100%;
+        }
+
+        .category-table-row {
+            display: table-row;
+        }
+
+        .category-table-colm {
+            display: table-column;
+        }
+
+        .product-category-selector ul li {
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-category-selector ul li p {
+            margin-bottom: 0;
+        }
+
+        .product-category-selector ul li > p:nth-child(2) {
+            float: left;
+            margin: 5px 10px;
+        }
+
+        .product-category-selector ul li > p:nth-child(3) {
+            float: left;
+            margin: 5px 10px;
+        }
+
+        .product-category-selector ul li > p:nth-child(4) {
+            float: left;
+            margin: 5px 10px;
+        }
+
+        .clear-fix {
+            clear: both;
+        }
+
+        .product-category-selector ul {
+            margin: 0;
+            padding-right: 10px;
+
+        }
+
     </style>
 {% endblock %}

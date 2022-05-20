@@ -119,25 +119,33 @@ def category_create_view(request):
     category = Category.objects.all()
 
     context['category'] = category
-    context['json_categories'] = serializers.serialize('json', category)
+
     return render(request, "customadmin/edit-category.html", context=context)
 
 
-class CategoryCreateView(CreateView):
-    model = Category
-    fields = ['name', 'parent', 'slug', 'icon_class']
-    template_name = 'customadmin/edit-category.html'
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def category_edit_view(request, pk):
+    context = dict()
+    category = Category.objects.all()
+    context['category'] = category
+    context['current_category'] = current_category = category.get(pk=pk)
+    if request.method == "POST":
+        form = request.POST
+        if current_category.slug != form.get('slug') and Category.objects.filter(slug=form.get('slug')).exists():
+            context['rise_error'] = 'اسلاگ برای دسته بندیه دیگری استفاده شده'
+        else:
+            if slug_unicode_re.match(form.get('slug')):
+                current_category.name = form.get('name')
+                current_category.parent = category.get(pk=form.get('parent'))
+                current_category.slug = form.get('slug')
+                current_category.icon_class = form.get('icon-class')
+                current_category.save()
+            else:
+                context['rise_error'] = 'اسلاگ غیر معتبر'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        category = Category.objects.all()
-        context['categories'] = category
-        context['json_categories'] = serializers.serialize('json', category)
-        return context
-
-    @method_decorator(login_required, user_passes_test(check_is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+    return render(request, "customadmin/edit-category.html", context=context)
 
 
 class CategoryUpdateView(UpdateView):
@@ -148,7 +156,7 @@ class CategoryUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = Category.objects.all()
-        context['categories'] = category
+        context['category'] = category
         context['json_categories'] = serializers.serialize('json', category)
         return context
 
@@ -166,7 +174,7 @@ class CategoryDeleteView(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = Category.objects.all()
-        context['categories'] = category
+        context['category'] = category
         context['json_categories'] = serializers.serialize('json', category)
         return context
 
