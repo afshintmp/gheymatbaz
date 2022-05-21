@@ -1,29 +1,26 @@
 {% extends 'admin-base.html' %}
 
 {% block content %}
+
     <main class="custom-admin-main container">
         <div class="row">
-            <div class="cat-block col-4">
+            <div class="col-4">
 
 
-                <h5 class="text-primary">
-                    ویرایش
-                    <b> {{ category_attribute_value }}</b>
-                </h5>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <div class="mb-2">
-                        <input type="text" class="form-control" name="attribute_value" placeholder="مقدار"
-                               value="{{ category_attribute_value }}">
-                    </div>
-                    <input type="submit" value="ذخیره" class="btn btn-success w-100">
+                <form method="post">{% csrf_token %}
+                    <h5 class="text-danger font-weight-bolder"> حذف {{ object }}</h5>
+                    <p> آیا مطمعن هستید ؟ </p>
+                    <input class="btb d-inline-block btn-danger w-100" type="submit" value="حذف">
                 </form>
             </div>
-            <div class="cat-block col-8">
-                <h5 class="mr-4 text-primary font-weight-bolder">
-                    مقادیر
+            <div class="col-8 ">
+
+                <h5 class="font-weight-bolder text-primary">
+                    ویژگی دسته بندی
                 </h5>
+
                 <ul class="list-style-none">
+
                     {% for obj in object_list %}
                         <li class="category-table">
                             <div class="category-table-row">
@@ -44,20 +41,36 @@
                         </li>
 
 
-
                     {% endfor %}
                 </ul>
 
+
             </div>
+
         </div>
     </main>
-
+    <!--END-MAIN-->
 
 {% endblock %}
 
+{% block title %}
+    test heed
+{% endblock %}
+
+
+{% block customjs %}
+    <script>
+
+
+    </script>
+{% endblock %}
 
 {% block customstyle %}
     <style>
+        .min-width-set {
+            min-width: 200px;
+        }
+
         .clear-fix {
             clear: both;
         }

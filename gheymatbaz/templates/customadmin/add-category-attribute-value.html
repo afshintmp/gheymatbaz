@@ -6,15 +6,17 @@
             <div class="cat-block col-4">
 
 
-                <h5 class="text-primary">
-                    ویرایش
-                    <b> {{ category_attribute_value }}</b>
+                <h5 class="text-primary">افزودن
+
+                    مقدار
+                    به
+                    <b> {{ category_attribute.name }}</b>
                 </h5>
                 <form action="" method="post">
                     {% csrf_token %}
                     <div class="mb-2">
                         <input type="text" class="form-control" name="attribute_value" placeholder="مقدار"
-                               value="{{ category_attribute_value }}">
+                               value="{{ category_attribute_value.name }}">
                     </div>
                     <input type="submit" value="ذخیره" class="btn btn-success w-100">
                 </form>

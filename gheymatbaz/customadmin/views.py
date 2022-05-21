@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core import serializers
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
@@ -572,18 +572,72 @@ def category_attribute_value(request, pk):
         c = CategoryAttributeValue(attribute_value=form['attribute_value'],
                                    category_attribute=category_attribute)
         c.save()
-        context = dict()
-        context['object_list'] = CategoryAttributeValue.objects.filter(category_attribute=pk)
-        context['form'] = CategoryAttributeValueForm({'parent_attribute_id': pk})
-        return render(request, 'customadmin/edit-category-attribute-value.html', context=context)
+
+    context = dict()
+    context['object_list'] = CategoryAttributeValue.objects.filter(category_attribute=pk)
+    context['category_attribute'] = CategoryAttribute.objects.get(pk=pk)
+    context['form'] = CategoryAttributeValueForm({'parent_attribute_id': pk})
+    return render(request, 'customadmin/edit-category-attribute-value.html', context=context)
 
 
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def category_attribute_value_add(request, pk):
+    if request.method == "POST":
+        form = request.POST
+        category_attribute = CategoryAttribute.objects.get(pk=pk)
+        c = CategoryAttributeValue(attribute_value=form.get('attribute_value'),
+                                   category_attribute=category_attribute)
+        c.save()
 
-    else:
+    context = dict()
+    context['object_list'] = CategoryAttributeValue.objects.filter(category_attribute=pk)
+    context['category_attribute'] = CategoryAttribute.objects.get(pk=pk)
 
-        context = dict()
-        context['object_list'] = CategoryAttributeValue.objects.filter(category_attribute=pk)
-        context['form'] = CategoryAttributeValueForm({'parent_attribute_id': pk})
-        return render(request, 'customadmin/edit-category-attribute-value.html', context=context)
+    return render(request, 'customadmin/add-category-attribute-value.html', context=context)
 
-# template_name = 'customadmin/edit-category-attribute-value.html'
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def category_attribute_value_edit(request, pk):
+    category_attribute_value = CategoryAttributeValue.objects.get(pk=pk)
+    parent = category_attribute_value.category_attribute.pk
+    if request.method == "POST":
+        form = request.POST
+
+        category_attribute_value.attribute_value = form.get('attribute_value')
+        category_attribute_value.save()
+
+        return redirect('category-attribute-value-add', pk=parent)
+
+    context = dict()
+    context['category_attribute_value'] = CategoryAttributeValue.objects.get(pk=pk)
+    context['object_list'] = CategoryAttributeValue.objects.filter(
+        category_attribute=category_attribute_value.category_attribute)
+    context['category_attribute'] = CategoryAttribute.objects.get(pk=category_attribute_value.category_attribute.pk)
+
+    return render(request, 'customadmin/edit-category-attribute-value.html', context=context)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def category_attribute_value_delete(request, pk):
+    category_attribute_value = CategoryAttributeValue.objects.get(pk=pk)
+    parent = category_attribute_value.category_attribute.pk
+    if request.method == "POST":
+        form = request.POST
+        category_attribute_value.delete()
+        return redirect('category-attribute-value-add', pk=parent)
+
+    context = dict()
+    context['category_attribute_value'] = CategoryAttributeValue.objects.get(pk=pk)
+    context['object_list'] = CategoryAttributeValue.objects.filter(
+        category_attribute=category_attribute_value.category_attribute)
+    context['category_attribute'] = CategoryAttribute.objects.get(pk=parent)
+
+    return render(request, 'customadmin/confirm-delete-category-attribute-value.html', context=context)
+
+
