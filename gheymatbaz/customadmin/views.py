@@ -13,7 +13,6 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeValueForm
 from customadmin.utils import check_is_superuser
-from gheymatbaz import settings
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue, \
     ProductCategoryAttributeValue, ProductRelation, ProductGallery, ProductKeyWord, ProductAttribute
 
@@ -478,7 +477,7 @@ def category_attribute_create_view(request, pk):
     context['all_category'] = all_category = Category.objects.filter(child_category_list__isnull=True)
     if request.method == "POST":
         form = request.POST
-        if CategoryAttribute.objects.filter(slug=form.get('slug')).exists():
+        if CategoryAttribute.objects.filter(slug=form.get('slug')).exists() and form.get('slug') is not None:
             context['rise_error'] = 'اسلاگ برای دسته بندیه دیگری استفاده شده'
         else:
             if slug_unicode_re.match(form.get('slug')):
@@ -501,37 +500,61 @@ def category_attribute_create_view(request, pk):
 def attribute_create_view(request):
     context = dict()
     context['category'] = Category.objects.filter(child_category_list__isnull=True)
+    if request.method == "POST":
+        form = request.POST
+        if CategoryAttribute.objects.filter(slug=form.get('slug')).exists() and form.get('slug') is not None:
+            context['rise_error'] = 'اسلاگ برای دسته بندیه دیگری استفاده شده'
+        else:
+            if slug_unicode_re.match(form.get('slug')):
+                ca = CategoryAttribute.objects.create(name=form.get('name')
+                                                      , category_id=form.get('category_id')
+                                                      , slug=form.get('slug'))
+                ca.save()
+            else:
+                context['rise_error'] = 'اسلاگ غیر معتبر'
+
     context['category_attribute'] = CategoryAttribute.objects.all()
     return render(request, 'customadmin/edit-attribute.html', context=context)
 
 
-class CategoryAttributeUpdateView(UpdateView):
-    model = CategoryAttribute
-    fields = ['name', 'category', 'slug']
-    template_name = 'customadmin/edit-category-attribute.html'
-    success_url = reverse_lazy('category-attribute-add')
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def attribute_update_view(request, pk):
+    context = dict()
+    context['category'] = Category.objects.filter(child_category_list__isnull=True)
+    context['category_attribute'] = category_attribute = CategoryAttribute.objects.all()
+    context['current_category_attribute'] = current_category_attribute = category_attribute.get(pk=pk)
+    if request.method == "POST":
+        form = request.POST
+        if CategoryAttribute.objects.filter(slug=form.get('slug')).exists() and \
+                form.get('slug') is not None and \
+                form.get('slug') != current_category_attribute.slug:
+            context['rise_error'] = 'اسلاگ برای دسته بندیه دیگری استفاده شده'
+        else:
+            if slug_unicode_re.match(form.get('slug')):
+                current_category_attribute.name = form.get('name')
+                current_category_attribute.category_id = form.get('category_id')
+                current_category_attribute.slug = form.get('slug')
+                current_category_attribute.save()
+            else:
+                context['rise_error'] = 'اسلاگ غیر معتبر'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        categoryattribute = CategoryAttribute.objects.all()
-        context['object_list'] = categoryattribute
-        return context
+    context['category_attribute'] = CategoryAttribute.objects.all()
 
-    @method_decorator(login_required, user_passes_test(check_is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+    return render(request, 'customadmin/update-attribute.html', context=context)
 
 
 class CategoryAttributeDeleteView(DeleteView):
     model = CategoryAttribute
-    success_url = reverse_lazy('category-attribute-add')
-    template_name = 'customadmin/confirm-delete-category.html'
+    success_url = reverse_lazy('attribute-add')
+    template_name = 'customadmin/confirm-delete-category-attribute.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category = Category.objects.all()
-        context['categories'] = category
-        context['json_categories'] = serializers.serialize('json', category)
+        category_attribute = CategoryAttribute.objects.all()
+        context['category_attribute'] = category_attribute
+        context['category'] = Category.objects.filter(child_category_list__isnull=True)
         return context
 
     @method_decorator(login_required, user_passes_test(check_is_superuser))

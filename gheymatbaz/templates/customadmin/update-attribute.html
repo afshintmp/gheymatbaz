@@ -7,7 +7,10 @@
 
 
                 <h5 class="font-weight-bolder text-primary">
-                    افزودن
+                    ویرایش
+                    ویژگی
+
+                    {{ current_category_attribute.name }}
                 </h5>
                 {% if rise_error %}
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -22,13 +25,15 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     <div class="mb-2">
-                        <input type="text" name="name" class="form-control" placeholder="عنوان">
+                        <input type="text" name="name" class="form-control" placeholder="عنوان"
+                               value="{{ current_category_attribute.name }}">
                     </div>
                     <div class="mb-2">
                         <select name="category_id" class="js-example-basic-single form-control" id="">
                             {% for cat in category %}
                                 {% if not cat.child_category_list.all %}
-                                    <option value="{{ cat.pk }}">
+                                    <option {% if  current_category_attribute.category_id == cat.pk %}
+                                        selected="selected" {% endif %} value="{{ cat.pk }}">
                                         {{ cat.name }}
                                     </option>
                                 {% endif %}
@@ -38,7 +43,8 @@
                         </select>
                     </div>
                     <div class="mb-2">
-                        <input type="text" class="form-control" name="slug" placeholder="slug">
+                        <input type="text" class="form-control" name="slug"
+                               value="{{ current_category_attribute.slug }}" placeholder="slug">
                     </div>
                     <input type="submit" class="btn btn-success w-100" value="ذخیره">
                 </form>

@@ -17,34 +17,7 @@
 
                 {% include 'partials/admin/category-category-selctor.html' %}
 
-                {% for category in categories %}
-                    {% if not category.parent %}
-                        <div class="category-table">
-                            <div class="category-table-row">
 
-                                <p class="category-table-colm">
-                                    {{ category.name }}
-                                </p>
-                                <p class="category-table-colm">
-                                <span onclick="showSubCat(this , {{ category.id }})">
-                                     <i class="fa-solid fa-angles-down"></i>
-                                </span>
-                                </p>
-                                <p class="category-table-colm">
-                                    <a href="{% url 'category-update' category.pk %}">ویرایش</a>
-                                </p>
-
-                                <p class="category-table-colm">
-                                    <a href="{% url 'category-delete' category.pk %}">حذف</a>
-                                </p>
-                            </div>
-
-                        </div>
-                    {% endif %}
-
-
-
-                {% endfor %}
 
 
             </div>

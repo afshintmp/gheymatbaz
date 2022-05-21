@@ -2,9 +2,9 @@ from django.urls import path, re_path
 from customadmin.views import edit_product, \
     CategoryDeleteView, BrandCreateView, BrandUpdateView, BrandDeleteView, ProductListView, \
     ProductCreateView, ProductUpdateView, product_advanced_update, \
-    CategoryAttributeUpdateView, CategoryAttributeDeleteView, category_attribute_value, admin_panel, admin_authenticate, \
+    CategoryAttributeDeleteView, category_attribute_value, admin_panel, admin_authenticate, \
     product_update, product_add, category_create_view, category_edit_view, category_advanced_view, \
-    category_attribute_create_view, attribute_create_view
+    category_attribute_create_view, attribute_create_view, attribute_update_view
 
 urlpatterns = [
     path('', admin_panel, name='admin-panel'),
@@ -30,7 +30,7 @@ urlpatterns = [
 
     path('category-attribute/add', attribute_create_view, name='attribute-add'),
     path('category/<int:pk>/category-attribute/add', category_attribute_create_view, name='category-attribute-add'),
-    path('category-attribute/<int:pk>', CategoryAttributeUpdateView.as_view(), name='category-attribute-update'),
+    path('category-attribute/<int:pk>', attribute_update_view, name='category-attribute-update'),
     path('category-attribute/<int:pk>/delete', CategoryAttributeDeleteView.as_view(),
          name='category-attribute-delete'),
 

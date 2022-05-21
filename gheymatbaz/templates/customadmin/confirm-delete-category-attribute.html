@@ -1,49 +1,19 @@
 {% extends 'admin-base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="row mt-2">
-            <div class="cat-block col-4">
+
+    <main class="custom-admin-main container">
+        <div class="row">
+            <div class="col-4">
 
 
-                <h5 class="font-weight-bolder text-primary">
-                    افزودن
-                </h5>
-                {% if rise_error %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <p class="mb-0 pb-0">{{ rise_error }}</p>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-
-                {% endif %}
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <div class="mb-2">
-                        <input type="text" name="name" class="form-control" placeholder="عنوان">
-                    </div>
-                    <div class="mb-2">
-                        <select name="category_id" class="js-example-basic-single form-control" id="">
-                            {% for cat in category %}
-                                {% if not cat.child_category_list.all %}
-                                    <option value="{{ cat.pk }}">
-                                        {{ cat.name }}
-                                    </option>
-                                {% endif %}
-                            {% endfor %}
-
-
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" name="slug" placeholder="slug">
-                    </div>
-                    <input type="submit" class="btn btn-success w-100" value="ذخیره">
+                <form method="post">{% csrf_token %}
+                    <h5 class="text-danger font-weight-bolder"> حذف {{ object }}</h5>
+                    <p> آیا مطمعن هستید ؟ </p>
+                    <input class="btb d-inline-block btn-danger w-100" type="submit" value="حذف">
                 </form>
             </div>
-            <div class="cat-block col-8">
+            <div class="col-8 ">
 
                 <h5 class="font-weight-bolder text-primary">
                     ویژگی دسته بندی
@@ -66,11 +36,12 @@
                        href="/gheymat-admin/category-attribute/add">اعمال</a>
                 </div>
                 <ul class="list-style-none">
+
                     {% for obj in category_attribute %}
                         <li class="category-table">
                             <div class="category-table-row">
                                 <p class="category-table-colm min-width-set">
-                                    {{ obj }}
+                                    {{ obj.name }}
                                 </p>
                                 <p class="category-table-colm">
                                     {{ obj.category }}
@@ -96,12 +67,33 @@
                     {% endfor %}
                 </ul>
 
+
             </div>
+
         </div>
-    </div>
+    </main>
+    <!--END-MAIN-->
 
 {% endblock %}
 
+{% block title %}
+    test heed
+{% endblock %}
+
+
+{% block customjs %}
+    <script>
+        $('.js-example-basic-single').select2();
+        $('.js-example-basic-single-two').select2();
+
+        function changeFilter() {
+
+            $('#filterlink').attr('href', '/gheymat-admin/category/' + $('#filter').val() + '/category-attribute/add')
+
+        }
+
+    </script>
+{% endblock %}
 
 {% block customstyle %}
     <style>
@@ -140,16 +132,4 @@
             vertical-align: top;
         }
     </style>
-{% endblock %}
-
-{% block customjs %}
-    <script>
-        $('.js-example-basic-single').select2();
-        $('.js-example-basic-single-two').select2();
-
-        function changeFilter() {
-
-            $('#filterlink').attr('href', '/gheymat-admin/category/' + $('#filter').val() + '/category-attribute/add')
-        }
-    </script>
 {% endblock %}
