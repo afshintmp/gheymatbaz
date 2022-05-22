@@ -39,7 +39,7 @@ def category_list(request, slug):
     context = dict()
     category = Category.objects.get(slug=slug)
     category_all = category_child = category.get_child()
-    category_all.append(category)
+    # category_all.append(category)
     products = Product.objects.filter(category__in=category_all)
     # brands = products.Brand.all()
     context['brand'] = products.values_list('brand', 'brand__name', 'brand__image', 'brand__slug').distinct()

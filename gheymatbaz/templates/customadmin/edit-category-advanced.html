@@ -6,12 +6,52 @@
     <main class="custom-admin-main container">
         <div class="row">
             <div class="col-4">
-                {{ category_attribute }}
+                <h5 class="text-primary">
+                    فیلتر
+                    <b>
+                        {{ current_category }}
+                    </b>
+                </h5>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <label for="">انتخاب فیلتر :</label>
 
+                        <select name="filter[]" class="select-multiple form-control" multiple id="0"
+                                data-mce-placeholder="انتخاب فیلتر">
+                            {% for foo in category_attribute %}
+                                <option {% if foo.pk|safe in category_meta_filter|safe %}selected="selected"{% endif %}
+                                        value="{{ foo.pk }}">
+                                    {{ foo }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <textarea name="description" id="mytextarea">{{ category_meta_description }}</textarea>
+                    </div>
+                    <input type="submit" value="ذخیره" class="btn btn-success w-100">
+                </form>
+                {#                {{ current_category }}#}
+                {##}
+                {#                --------------------------------#}
+                {#                {{ category_child_list }}#}
+                {#                --------------------------------#}
+                {#                {{ category_attribute }}#}
             </div>
             <div class="col-8 ">
+                <h5>فیلتر ها</h5>
+                <div>
+                    <ul>
+                        {% for foo in current_category_attribute %}
+                            <li>
+                                {{ foo }}
+                            </li>
+                        {% endfor %}
 
 
+                    </ul>
+                </div>
             </div>
     </main>
     <!--END-MAIN-->
@@ -25,12 +65,30 @@
 {% block customjs %}
     <script>
 
-
-        $('.js-example-basic-single').select2();
+        $('.select-multiple').select2()
+        tinymce.init({
+            selector: 'textarea#mytextarea',
+            height: 500,
+            menubar: false,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+            language: 'fa',
+            {#language_url: '/langs/fa_IR.js',#}
+            directionality: 'rtl'
+        });
     </script>
 {% endblock %}
 
 {% block customstyle %}
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
         .alert-dismissible {
             padding-right: 1.25rem !important;

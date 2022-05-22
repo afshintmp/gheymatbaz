@@ -1,6 +1,6 @@
 from django.contrib import admin
 from shop.models import Product, Category, Brand, CategoryAttribute, CategoryAttributeValue, ProductGallery, \
-    ProductKeyWord, ProductAttribute, ProductCategoryAttributeValue, ProductRelation
+    ProductKeyWord, ProductAttribute, ProductCategoryAttributeValue, ProductRelation, CategoryMeta
 
 
 # Register your models here.
@@ -65,11 +65,16 @@ class ProductKeyWordAdmin(admin.ModelAdmin):
     list_display = ['keyword', 'product_id']
 
 
+class ProductMetaAdmin(admin.ModelAdmin):
+    list_display = ['category', 'filter']
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Brand)
 admin.site.register(ProductKeyWord, ProductKeyWordAdmin)
 admin.site.register(ProductGallery)
+admin.site.register(CategoryMeta, ProductMetaAdmin)
 admin.site.register(ProductAttribute, ProductAttributeAdmin)
 admin.site.register(CategoryAttribute, CategoryAttributeAdmin)
 admin.site.register(ProductCategoryAttributeValue, ProductCategoryAttributeValueAdmin)

@@ -52,7 +52,7 @@ class Category(models.Model):
         return reverse('category-archive', args=[self.slug])
 
     def get_child(self):
-        a = list(chain(self, self.child_category_list.all()))
+        a = self.child_category_list.all()
         for cat in a:
             a = list(chain(a, cat.child_category_list.all()))
         for cat in a:
@@ -68,6 +68,15 @@ class Category(models.Model):
         for cat in a:
             a = list(chain(a, cat.child_category_list.all()))
         return set(a)
+
+
+class CategoryMeta(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, unique=True)
+    filter = models.JSONField(max_length=800, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.category.name
 
 
 class CategoryAttribute(models.Model):

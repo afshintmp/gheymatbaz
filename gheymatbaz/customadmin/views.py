@@ -1,3 +1,4 @@
+import json
 from django.core.validators import slug_unicode_re
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -14,7 +15,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from customadmin.forms import AddCategoryForm, EditeCategory, CategoryAttributeValueForm
 from customadmin.utils import check_is_superuser
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue, \
-    ProductCategoryAttributeValue, ProductRelation, ProductGallery, ProductKeyWord, ProductAttribute
+    ProductCategoryAttributeValue, ProductRelation, ProductGallery, ProductKeyWord, ProductAttribute, CategoryMeta
 
 
 # Create your views here.
@@ -152,10 +153,28 @@ def category_edit_view(request, pk):
 @user_passes_test(check_is_superuser)
 def category_advanced_view(request, pk):
     context = dict()
-    context['category'] = category = Category.objects.get(pk=pk)
-    context['category_child_list'] = category_child_list = Category.objects.get(pk=pk)
+    context['current_category'] = current_category = Category.objects.get(pk=pk)
+
+    context['category_child_list'] = category_child_list = current_category.get_child()
     context['category_attribute'] = category_attribute = CategoryAttribute.objects.filter(
-        category_id=category_child_list)
+        category__in=category_child_list)
+    if request.method == "POST":
+        form = request.POST
+        cat_filter = json.dumps(form.getlist('filter[]'))
+        description = form.get('description')
+        f = CategoryMeta.objects.update_or_create(
+            category=current_category,
+            defaults={'filter': cat_filter, 'description': description},
+        )
+        # f.save()
+    try:
+        category_meta = CategoryMeta.objects.get(category=current_category)
+        context['category_meta_filter'] = json.loads(category_meta.filter)
+        context['category_meta_description'] = category_meta.description
+        context['current_category_attribute'] = current_category_attribute = CategoryAttribute.objects.filter(
+            category__in=json.loads(category_meta.filter))
+    except:
+        category_meta = ''
     return render(request, 'customadmin/edit-category-advanced.html', context=context)
 
 
@@ -639,5 +658,3 @@ def category_attribute_value_delete(request, pk):
     context['category_attribute'] = CategoryAttribute.objects.get(pk=parent)
 
     return render(request, 'customadmin/confirm-delete-category-attribute-value.html', context=context)
-
-
