@@ -1,12 +1,11 @@
-from itertools import chain
-
+import json
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.decorators.http import require_http_methods
+
 
 from shop.models import Product, Category, ProductCategoryAttributeValue, CategoryAttribute, ProductRelation, \
-    ProductGallery, Brand
+    ProductGallery, Brand, CategoryMeta
 
 
 # @require_http_methods(request_method_list=['GET'])
@@ -39,12 +38,18 @@ def category_list(request, slug):
     context = dict()
     category = Category.objects.get(slug=slug)
     category_all = category_child = category.get_child()
-    # category_all.append(category)
     products = Product.objects.filter(category__in=category_all)
-    # brands = products.Brand.all()
     context['brand'] = products.values_list('brand', 'brand__name', 'brand__image', 'brand__slug').distinct()
     context['category'] = category
     context['products'] = products
+    try:
+        category_meta = CategoryMeta.objects.get(category=category)
+        context['category_meta_filter'] = json.loads(category_meta.filter)
+        context['category_meta_description'] = category_meta.description
+        context['current_category_attribute'] = current_category_attribute = CategoryAttribute.objects.filter(
+            category__in=json.loads(category_meta.filter))
+    except:
+        category_meta = ''
 
     return render(request, "shop/archive-product.html", context=context)
 

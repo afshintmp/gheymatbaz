@@ -5,9 +5,9 @@
 
     <main class="custom-admin-main container">
         <div class="row">
-            <div class="col-4">
+            <div class="col-8">
                 <h5 class="text-primary">
-                    فیلتر
+                    پیشرفته
                     <b>
                         {{ current_category }}
                     </b>
@@ -39,12 +39,12 @@
                 {#                --------------------------------#}
                 {#                {{ category_attribute }}#}
             </div>
-            <div class="col-8 ">
-                <h5>فیلتر ها</h5>
+            <div class="col-4">
+                <h5 class="text-primary">فیلتر ها</h5>
                 <div>
-                    <ul>
+                    <ul class="list-style-none">
                         {% for foo in current_category_attribute %}
-                            <li>
+                            <li class="border-bottom">
                                 {{ foo }}
                             </li>
                         {% endfor %}
