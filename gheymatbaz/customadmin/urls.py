@@ -1,7 +1,6 @@
 from django.urls import path, re_path
-from customadmin.views import edit_product, \
-    CategoryDeleteView, BrandCreateView, BrandUpdateView, BrandDeleteView, ProductListView, \
-    ProductCreateView, ProductUpdateView, product_advanced_update, \
+from customadmin.views import CategoryDeleteView, BrandCreateView, BrandUpdateView, BrandDeleteView, ProductListView, \
+    product_advanced_update, ProductDeleteView, \
     CategoryAttributeDeleteView, category_attribute_value, admin_panel, admin_authenticate, \
     product_update, product_add, category_create_view, category_edit_view, category_advanced_view, \
     category_attribute_create_view, attribute_create_view, attribute_update_view, category_attribute_value_add, \
@@ -10,9 +9,6 @@ from customadmin.views import edit_product, \
 urlpatterns = [
     path('', admin_panel, name='admin-panel'),
     path('authenticate', admin_authenticate),
-    # re_path('product/edit/(?P<slug>[-\w]+)/', edit_product),
-    # path('categories/all', all_category),
-    # path('category/edit/<int:pk>/', edit_category, name='edit-category'),
 
     path('category/add', category_create_view, name='category-add'),
     path('category/<int:pk>', category_edit_view, name='category-update'),
@@ -26,7 +22,7 @@ urlpatterns = [
     path('product/all', ProductListView.as_view(), name='product-all'),
     path('product/add', product_add, name='product-add'),
     path('product/<int:pk>', product_update, name='product-update'),
-    path('product/<int:pk>/old', ProductUpdateView.as_view(), name='product-update-old'),
+    path('product/<int:pk>/delete', ProductDeleteView.as_view(), name='product-delete'),
     path('product/<int:pk>/advanced', product_advanced_update, name='product-advanced-update'),
 
     path('category-attribute/add', attribute_create_view, name='attribute-add'),

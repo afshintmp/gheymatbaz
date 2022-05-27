@@ -5,11 +5,16 @@
 
     <!--START-MAIN-->
     <main>
-        <table style="width: 70%">
-
+        <table class="table" style="width: 100%">
+            <thead>
             <tr>
-                <th>عنوان</th>
+                <th scope="col">عنوان</th>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
             </tr>
+            </thead>
+            <tbody>
             {% for product in object_list %}
                 <tr>
                     <td>{{ product.title }}</td>
@@ -19,13 +24,17 @@
                     <td>
                         <a href="{% url 'product-advanced-update' product.pk %}">پیشرفته</a>
                     </td>
+                    <td>
+                        <a href="{% url 'product-delete' product.pk %}">حذف</a>
+                    </td>
                 </tr>
             {% endfor %}
+            </tbody>
         </table>
     </main>
     <!--END-MAIN-->
 {% endblock %}
 
 {% block title %}
-    test heed
+    محصولات
 {% endblock %}
