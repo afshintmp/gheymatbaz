@@ -17,7 +17,7 @@
                     <div class="mb-2">
                         <label for="">انتخاب فیلتر :</label>
 
-                        <select name="filter[]" class="select-multiple form-control" multiple id="0"
+                        <select name="filter[]" class="select-multiple-one form-control" multiple id="0"
                                 data-mce-placeholder="انتخاب فیلتر">
                             {% for foo in category_attribute %}
                                 <option {% if foo.pk|safe in category_meta_filter|safe %}selected="selected"{% endif %}
@@ -27,23 +27,45 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <div class="mb-2">
+                        <label for="">انتخاب برند های ویژه :</label>
+
+                        <select name="brands[]" class="select-multiple-two form-control" multiple id="1"
+                                data-mce-placeholder="انتخاب ">
+                            {% for foo in brand %}
+                                <option {% if foo.1|safe in current_category_special_brand|safe %}selected="selected"{% endif %}
+                                        value="{{ foo.0 }}">
+
+                                    {{ foo.1 }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div>
                         <textarea name="description" id="mytextarea">{{ category_meta_description }}</textarea>
                     </div>
                     <input type="submit" value="ذخیره" class="btn btn-success w-100">
                 </form>
-                {#                {{ current_category }}#}
-                {##}
-                {#                --------------------------------#}
-                {#                {{ category_child_list }}#}
-                {#                --------------------------------#}
-                {#                {{ category_attribute }}#}
+
             </div>
             <div class="col-4">
                 <h5 class="text-primary">فیلتر ها</h5>
                 <div>
                     <ul class="list-style-none">
                         {% for foo in current_category_attribute %}
+                            <li class="border-bottom">
+                                {{ foo }}
+                            </li>
+                        {% endfor %}
+
+
+                    </ul>
+                </div>
+
+                <h5 class="text-primary">برند های شاخص</h5>
+                <div>
+                    <ul class="list-style-none">
+                        {% for foo in current_category_special_brand %}
                             <li class="border-bottom">
                                 {{ foo }}
                             </li>
@@ -65,7 +87,10 @@
 {% block customjs %}
     <script>
 
-        $('.select-multiple').select2()
+        $('.select-multiple-one').select2();
+
+        $('.select-multiple-two').select2();
+
         tinymce.init({
             selector: 'textarea#mytextarea',
             height: 500,

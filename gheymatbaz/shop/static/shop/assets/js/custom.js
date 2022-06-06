@@ -98,7 +98,7 @@ var swipersearchresults = new Swiper('.swiper-search-results', {
 var swiperbrands = new Swiper('.swiper-brands', {
     spaceBetween: 15,
     slidesPerView: 'auto',
-    loop: true,
+    loop: false,
     freeMode:true,
     pagination: {
         el: '.swiper-pagination-brands',

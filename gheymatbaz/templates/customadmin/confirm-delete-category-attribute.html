@@ -5,64 +5,36 @@
     <main class="custom-admin-main container">
         <div class="row">
             <div class="col-4">
+                <h5></h5>
+                {% if product_list_id %}
+
+                    <p class="text-danger font-weight-bolder">این ویژگی برای محصولات رکورد شده , دسترسی برای حذف محدود
+                        شده</p>
 
 
-                <form method="post">{% csrf_token %}
-                    <h5 class="text-danger font-weight-bolder"> حذف {{ object }}</h5>
-                    <p> آیا مطمعن هستید ؟ </p>
-                    <input class="btb d-inline-block btn-danger w-100" type="submit" value="حذف">
-                </form>
+                {% else %}
+                    <form method="post">{% csrf_token %}
+                        <h5 class="text-danger font-weight-bolder"> حذف {{ object }}</h5>
+                        <p> آیا مطمعن هستید ؟ </p>
+                        <input class="btb d-inline-block btn-danger w-100" type="submit" value="حذف">
+                    </form>
+
+                {% endif %}
+
             </div>
             <div class="col-8 ">
 
                 <h5 class="font-weight-bolder text-primary">
-                    ویژگی دسته بندی
+                    محصولات مرتبط
                 </h5>
                 <div>
-                    <span>فیلتر</span>
-                    <select name="" class="js-example-basic-single-two" onchange="changeFilter()" id="filter">
-                        {% for cat in category %}
-                            <option selected value="">
-                                همه
-                            </option>
-                            {% if not cat.child_category_list.all %}
-                                <option value="{{ cat.pk }}">
-                                    {{ cat.name }}
-                                </option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    <a class="btn btn-outline-secondary btn-sm" id="filterlink"
-                       href="/gheymat-admin/category-attribute/add">اعمال</a>
+
                 </div>
                 <ul class="list-style-none">
-
-                    {% for obj in category_attribute %}
-                        <li class="category-table">
-                            <div class="category-table-row">
-                                <p class="category-table-colm min-width-set">
-                                    {{ obj.name }}
-                                </p>
-                                <p class="category-table-colm">
-                                    {{ obj.category }}
-                                </p>
-
-                                <p class="category-table-colm float-left">
-                                    <a href="{% url 'category-attribute-value-list' obj.pk %}">مقادیر</a>
-                                </p>
-                                <p class="category-table-colm float-left">
-                                    <a href="{% url 'category-attribute-update' obj.pk %}">ویرایش</a>
-                                </p>
-
-                                <p class="category-table-colm float-left">
-                                    <a href="{% url 'category-attribute-delete' obj.pk %}">حذف</a>
-                                </p>
-                                <div class="clear-fix"></div>
-                            </div>
-
+                    {% for product in products %}
+                        <li>
+                            {{ product.title }}
                         </li>
-
-
 
                     {% endfor %}
                 </ul>

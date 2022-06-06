@@ -224,12 +224,15 @@
                     </div>
 
                     <div class="brand-bar">
+
                         <div class="swiper-container swiper-brands">
                             <div class="swiper-wrapper">
-                                {% for br in brand %}
 
-                                    <a href="{% url 'archive-brand' br.3 %}" class="swiper-slide item">
-                                        <img src="/media/{{ br.2 }}" alt="{{ br.1 }}">
+                                {% for br in current_category_special_brand %}
+
+                                    <a href="" class="swiper-slide item">
+                                        <img src="{{ br.get_photo_url }}" alt="{{ br.name }}">
+
                                     </a>
                                 {% endfor %}
 

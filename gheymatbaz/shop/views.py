@@ -45,9 +45,12 @@ def category_list(request, slug):
     try:
         category_meta = CategoryMeta.objects.get(category=category)
         context['category_meta_filter'] = json.loads(category_meta.filter)
+        context['category_meta_special_brand'] = json.loads(category_meta.special_brand)
         context['category_meta_description'] = category_meta.description
         context['current_category_attribute'] = current_category_attribute = CategoryAttribute.objects.filter(
             category__in=json.loads(category_meta.filter))
+        context['current_category_special_brand'] = current_category_special_brand = Brand.objects.filter(
+            pk__in=json.loads(category_meta.special_brand))
     except:
         category_meta = ''
 

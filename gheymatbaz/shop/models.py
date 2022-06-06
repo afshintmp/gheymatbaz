@@ -73,6 +73,7 @@ class Category(models.Model):
 class CategoryMeta(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, unique=True)
     filter = models.JSONField(max_length=800, null=True, blank=True)
+    special_brand = models.JSONField(max_length=800, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):

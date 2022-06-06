@@ -4,7 +4,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core import serializers
 from django.core.validators import slug_unicode_re
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.datastructures import MultiValueDictKeyError
@@ -149,21 +149,28 @@ def category_advanced_view(request, pk):
     context['category_child_list'] = category_child_list = current_category.get_child()
     context['category_attribute'] = category_attribute = CategoryAttribute.objects.filter(
         category__in=category_child_list)
+
+    context['brand'] = brand = Product.objects.values_list('brand', 'brand__name', 'brand__image',
+                                                           'brand__slug').distinct()
     if request.method == "POST":
         form = request.POST
         cat_filter = json.dumps(form.getlist('filter[]'))
+        spe_brand = json.dumps(form.getlist('brands[]'))
         description = form.get('description')
         f = CategoryMeta.objects.update_or_create(
             category=current_category,
-            defaults={'filter': cat_filter, 'description': description},
+            defaults={'filter': cat_filter, 'special_brand': spe_brand, 'description': description},
         )
-        # f.save()
+
     try:
         category_meta = CategoryMeta.objects.get(category=current_category)
         context['category_meta_filter'] = json.loads(category_meta.filter)
+        context['category_meta_special_brand'] = json.loads(category_meta.special_brand)
         context['category_meta_description'] = category_meta.description
         context['current_category_attribute'] = current_category_attribute = CategoryAttribute.objects.filter(
             category__in=json.loads(category_meta.filter))
+        context['current_category_special_brand'] = current_category_special_brand = Brand.objects.filter(
+            pk__in=json.loads(category_meta.special_brand))
     except:
         category_meta = ''
     return render(request, 'customadmin/edit-category-advanced.html', context=context)
@@ -547,6 +554,23 @@ def attribute_update_view(request, pk):
     context['category_attribute'] = CategoryAttribute.objects.all()
 
     return render(request, 'customadmin/update-attribute.html', context=context)
+
+
+def category_attribute_delete_view(request, pk):
+    context = dict()
+    context['product_list_id'] = product_list_id = ProductCategoryAttributeValue.objects.filter(
+        category_attribute=pk).values_list(
+        'product_id', flat=True)
+    context['products'] = Product.objects.filter(pk__in=product_list_id)
+    if request.method == "POST":
+        form = request.POST
+        category_attribute = CategoryAttribute.objects.get(pk=pk)
+        if category_attribute is not None:
+            category_attribute.delete()
+        response = redirect('/gheymat-admin/category-attribute/add')
+        return response
+
+    return render(request, 'customadmin/confirm-delete-category-attribute.html', context=context)
 
 
 class CategoryAttributeDeleteView(DeleteView):
