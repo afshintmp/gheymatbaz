@@ -44,6 +44,24 @@
                     <div>
                         <textarea name="description" id="mytextarea">{{ category_meta_description }}</textarea>
                     </div>
+                    <div class="seo-wrapper">
+                        <div>
+                            <label for="">متا تایتل</label>
+                            <input type="text" name="meta_title" class="form-control"
+                                   value="{{ meta_title }}">
+                        </div>
+
+                        <div>
+                            <label for="">متا دیسکرپشن</label>
+                            <input type="text" name="meta_description" class="form-control"
+                                   value="{{ meta_description }}">
+                        </div>
+                        <div>
+                            <input type="checkbox" name="noindex" value="on" {% if noindex %}checked{% endif %}>
+                            <label for="">no index</label>
+                        </div>
+
+                    </div>
                     <input type="submit" value="ذخیره" class="btn btn-success w-100">
                 </form>
 
@@ -94,11 +112,11 @@
         tinymce.init({
             selector: 'textarea#mytextarea',
             height: 500,
-            menubar: false,
+            menubar: true,
             plugins: [
                 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                 'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
             ],
             toolbar: 'undo redo | blocks | ' +
                 'bold italic backcolor | alignleft aligncenter ' +

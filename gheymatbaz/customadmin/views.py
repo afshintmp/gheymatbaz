@@ -157,9 +157,18 @@ def category_advanced_view(request, pk):
         cat_filter = json.dumps(form.getlist('filter[]'))
         spe_brand = json.dumps(form.getlist('brands[]'))
         description = form.get('description')
+        meta_title = form.get('meta_title')
+        meta_description = form.get('meta_description')
+        noindex = form.get('noindex')
+        if noindex is not None:
+            index_status = True
+        else:
+            index_status = False
+
         f = CategoryMeta.objects.update_or_create(
             category=current_category,
-            defaults={'filter': cat_filter, 'special_brand': spe_brand, 'description': description},
+            defaults={'filter': cat_filter, 'special_brand': spe_brand, 'description': description,
+                      'meta_title': meta_title, 'meta_description': meta_description, 'noindex': index_status},
         )
 
     try:
@@ -167,6 +176,9 @@ def category_advanced_view(request, pk):
         context['category_meta_filter'] = json.loads(category_meta.filter)
         context['category_meta_special_brand'] = json.loads(category_meta.special_brand)
         context['category_meta_description'] = category_meta.description
+        context['meta_title'] = category_meta.meta_title
+        context['meta_description'] = category_meta.meta_description
+        context['noindex'] = category_meta.noindex
         context['current_category_attribute'] = current_category_attribute = CategoryAttribute.objects.filter(
             category__in=json.loads(category_meta.filter))
         context['current_category_special_brand'] = current_category_special_brand = Brand.objects.filter(
@@ -667,3 +679,10 @@ def category_attribute_value_delete(request, pk):
     context['category_attribute'] = CategoryAttribute.objects.get(pk=parent)
 
     return render(request, 'customadmin/confirm-delete-category-attribute-value.html', context=context)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def global_attribute_add(request):
+    return render(request, 'customadmin/global-attribute.html', context={})

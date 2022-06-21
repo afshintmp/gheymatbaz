@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block meta %}
     {% if product.meta_title %}
         <title>{{ product.meta_title }}</title>
@@ -246,7 +247,7 @@
                             </div>
                             <!--END-CHANGE-->
                             <div class="d-flex align-items-center">
-                                <img src="assets/img/rate-orange.png" alt="">
+                                <img src="{% static 'shop/assets/img/rate-orange.png' %}" alt="">
                                 <span style="color: #b2b2b2">
               {{ product.rate_number }}
                از 5 از
@@ -292,13 +293,13 @@
               </span>
                             </div>
                             <a href="#t-chart" class="chart d-none d-lg-block">
-                                <img src="assets/img/chart-green.png" alt="">
+                                <img src="{% static 'shop/assets/img/chart-green.png' %}" alt="">
                                 نمودار قیمت
                             </a>
                         </div>
                         <div class="lists d-lg-flex d-none">
                             <a href="#" class="item">
-                                <img class="brand" src="assets/img/b-1.png" alt="">
+                                <img class="brand" src="{% static 'shop/assets/img/b-1.png' %}" alt="">
                                 <div>
                 <span class="p">
                 13.500.000 تومان
@@ -309,7 +310,7 @@
                                 </div>
                             </a>
                             <a href="#" class="item">
-                                <img class="brand" src="assets/img/b-2.png" alt="">
+                                <img class="brand" src="{% static 'shop/assets/img/b-2.png' %}" alt="">
                                 <div class="label-percent">
                                     %9
                                 </div>
@@ -326,7 +327,7 @@
                                 </div>
                             </a>
                             <a href="#" class="item">
-                                <img class="brand" src="assets/img/b-3.png" alt="">
+                                <img class="brand" src="{% static 'shop/assets/img/b-3.png' %}" alt="">
                                 <div>
                 <span class="p">
                 13.500.000 تومان
@@ -338,7 +339,7 @@
                             </a>
                             <a href="#" class="item red-item">
                                 <div class="clear-fix"></div>
-                                <img src="assets/img/logout.png" alt="">
+                                <img src="{% static 'shop/assets/img/logout.png' %}" alt="">
                                 <div class="update">
                                     موجود در 17 فروشگاه
                                 </div>
@@ -347,7 +348,7 @@
                     </div>
                     <div class="lists d-lg-none d-flex">
                         <div class="item">
-                            <img class="brand" src="assets/img/b-1.png" alt="">
+                            <img class="brand" src="{% static 'shop/assets/img/b-1.png' %}" alt="">
                             <div>
                 <span class="p">
                 13.500.000 تومان
@@ -358,7 +359,7 @@
                             </div>
                         </div>
                         <div class="item">
-                            <img class="brand" src="assets/img/b-2.png" alt="">
+                            <img class="brand" src="{% static 'shop/assets/img/b-2.png' %}" alt="">
                             <div class="label-percent">
                                 %9
                             </div>
@@ -375,7 +376,7 @@
                             </div>
                         </div>
                         <div class="item">
-                            <img class="brand" src="assets/img/b-3.png" alt="">
+                            <img class="brand" src="{% static 'shop/assets/img/b-3.png' %}" alt="">
                             <div>
                 <span class="p">
                 13.500.000 تومان
@@ -386,7 +387,7 @@
                             </div>
                         </div>
                         <div class="item">
-                            <img class="brand" src="assets/img/b-1.png" alt="">
+                            <img class="brand" src="{% static 'shop/assets/img/b-1.png' %}" alt="">
                             <div>
                 <span class="p">
                 13.500.000 تومان

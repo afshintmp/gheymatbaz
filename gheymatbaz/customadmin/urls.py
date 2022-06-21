@@ -4,7 +4,7 @@ from customadmin.views import CategoryDeleteView, BrandCreateView, BrandUpdateVi
     CategoryAttributeDeleteView, category_attribute_value, admin_panel, admin_authenticate, \
     product_update, product_add, category_create_view, category_edit_view, category_advanced_view, \
     category_attribute_create_view, attribute_create_view, attribute_update_view, category_attribute_value_add, \
-    category_attribute_value_delete, category_attribute_value_edit, category_attribute_delete_view
+    category_attribute_value_delete, category_attribute_value_edit, category_attribute_delete_view, global_attribute_add
 
 urlpatterns = [
     path('', admin_panel, name='admin-panel'),
@@ -37,4 +37,6 @@ urlpatterns = [
          name='category-attribute-value-edit'),
     path('category-attribute-value/delete/<int:pk>/', category_attribute_value_delete,
          name='category-attribute-value-delete'),
+
+    path('global-attribute/add', global_attribute_add, name='global_attribute_add')
 ]

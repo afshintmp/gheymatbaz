@@ -75,6 +75,7 @@ WSGI_APPLICATION = 'gheymatbaz.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
         'NAME': DB_NAME,
         'HOST': 'localhost',
         'USER': DB_USER,

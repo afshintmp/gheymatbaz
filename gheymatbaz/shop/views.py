@@ -51,6 +51,9 @@ def category_list(request, slug):
             category__in=json.loads(category_meta.filter))
         context['current_category_special_brand'] = current_category_special_brand = Brand.objects.filter(
             pk__in=json.loads(category_meta.special_brand))
+        context['meta_title'] = category_meta.meta_title
+        context['meta_description'] = category_meta.meta_description
+        context['noindex'] = category_meta.noindex
     except:
         category_meta = ''
 

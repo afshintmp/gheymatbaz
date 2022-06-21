@@ -75,6 +75,9 @@ class CategoryMeta(models.Model):
     filter = models.JSONField(max_length=800, null=True, blank=True)
     special_brand = models.JSONField(max_length=800, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    meta_title = models.CharField(max_length=200, null=True, blank=True)
+    meta_description = models.CharField(max_length=300, null=True, blank=True)
+    noindex = models.BooleanField(null=False, blank=True, default=False)
 
     def __str__(self):
         return self.category.name

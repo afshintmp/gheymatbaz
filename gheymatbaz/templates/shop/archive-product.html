@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+    {% if meta_title %}
+        <title>{{ meta_title }}</title>
+    {% endif %}
+    <meta name="description" content="{{ meta_description|default_if_none:"" }}">
 
+    {% if noindex %}
+
+        <meta name="robots" content="noindex">
+    {% endif %}
+{% endblock %}
 {% block content %}
     <!--START-MAIN-->
     <main>
