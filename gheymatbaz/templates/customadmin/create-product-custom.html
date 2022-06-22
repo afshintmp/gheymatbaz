@@ -1,4 +1,18 @@
 {% extends 'admin-base.html' %}
+{% block title %}
+
+    <title>
+        {% if product.title %}
+            ویرایش
+           {{ product.title }}
+        {% else %}
+            افزودن محصول
+        {% endif %}
+
+
+    </title>
+
+{% endblock %}
 {% load static %}
 {% block content %}
     <!--START-MAIN-->
@@ -14,7 +28,11 @@
                                value="{{ product.title }}"
                         >
                     </p>
-
+                    <p>
+                        <input class="form-control" name="en-title" type="text" placeholder="عنوان انگلیسی"
+                               value="{{ product.en_title|default_if_none:"" }}"
+                        >
+                    </p>
 
                     <p>
                         <textarea name="context" id="mytextarea">{{ product.description }}</textarea>

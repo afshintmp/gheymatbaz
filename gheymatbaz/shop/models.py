@@ -109,7 +109,7 @@ class Product(models.Model):
     )
 
     title = models.CharField(max_length=400, blank=False, null=False)
-
+    en_title = models.CharField(max_length=400, blank=True, null=True ,default='')
     published_at = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

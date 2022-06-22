@@ -312,6 +312,8 @@ def product_update(request, pk):
 
         form_file = request.FILES
         product.title = form['title']
+        product.en_title = form['en-title']
+
         product.description = form['context']
         product.meta_title = form['meta_title']
         product.meta_description = form['meta_description']
@@ -358,9 +360,10 @@ def product_update(request, pk):
 def product_add(request):
     if request.method == "POST":
         form = request.POST
-        # product = Product.objects.get(pk=pk)
+
 
         product = Product(title=form['title'],
+                          en_title=form['en-title'],
                           description=form['context'],
                           meta_title=form['meta_title'],
                           meta_description=form['meta_description'],
