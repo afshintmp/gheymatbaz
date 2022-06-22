@@ -172,6 +172,7 @@ class ProductAttribute(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     attribute = models.CharField(max_length=32)
     attribute_value = models.TextField()
+    in_header = models.BooleanField(blank=True, null=True, default=False)
 
     def __str__(self):
         return self.attribute

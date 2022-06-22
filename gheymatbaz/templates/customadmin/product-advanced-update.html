@@ -122,7 +122,7 @@
 
 
                     </div>
-                    <div>
+                    <div class="mt-5">
                         <div class="mb-2 border-bottom">
                             <p class="d-inline-block font-weight-bolder pt-2">
                                 ویژگی محصول
@@ -155,18 +155,29 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 {% for at in pro_attribute %}
                                     <tr>
                                         <td>
-                                            <input type="hidden" name="attr[][title]" readonly value="{{ at.attribute }}">
+                                            <input type="hidden" name="attr[][title]" readonly
+                                                   value="{{ at.attribute }}">
                                             {{ at.attribute }}
                                         </td>
                                         <td>
-                                            <input type="hidden" name="attr[][val]" readonly value="{{ at.attribute_value }}">
+                                            <input type="hidden" name="attr[][val]" readonly
+                                                   value="{{ at.attribute_value }}">
                                             {{ at.attribute_value }}
                                         </td>
+                                        <td>
+                                            <select class="form-select"  name="attr[][spe]" id="">
+                                                <option {% if not at.in_header %} selected {% endif %}
+                                                 value="false">معمولی</option>
+                                                <option {% if at.in_header %} selected {% endif %}
+                                                        value="true">ویژه</option>
+                                            </select>
 
+                                        </td>
                                         <td>
                                             <p onclick="deleteAtrr(this)" class="mb-0 pb-0">
                                                 <i class="fa-solid fa-trash cursor-pointer"></i>
@@ -281,7 +292,8 @@
                                 {% for keyword in product_keyword %}
                                     <tr>
                                         <td>
-                                            <input type="hidden" name="keyword[]" readonly value="{{ keyword.keyword }}">
+                                            <input type="hidden" name="keyword[]" readonly
+                                                   value="{{ keyword.keyword }}">
                                             {{ keyword.keyword }}
                                         </td>
 
@@ -411,6 +423,12 @@
                 myval +
                 '">' +
                 myval +
+                '</td>' +
+                '<td>' +
+                '<select class="form-select"  name="attr[][spe]" id="">' +
+                '<option value="false">معمولی</option>' +
+                '<option value="true">ویژه</option>' +
+                '</select>' +
                 '</td>' +
                 '<td>' +
                 '<p onclick="deleteAttr(this)" class="mb-0 pb-0">' +

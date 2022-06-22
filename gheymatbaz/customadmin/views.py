@@ -420,6 +420,7 @@ def product_advanced_update(request, pk):
 
         cats = form.getlist('attribute[]')
         rel_name = form.getlist('rel[][name]')
+
         if rel_name:
             product_relation.delete()
             rel_product = form.getlist('rel[][product]')
@@ -458,17 +459,25 @@ def product_advanced_update(request, pk):
                 p.save()
 
         pro_attr_name = form.getlist('attr[][title]')
+        special = form.getlist('attr[][spe]')
+
         ProductAttribute.objects.filter(product_id=product).delete()
         if pro_attr_name is not None:
 
             attr_dict = dict(zip(pro_attr_name, form.getlist('attr[][val]')))
+            i = 0
             for atr in attr_dict:
+                if special[i] == 'true':
+                    spe = True
+                else:
+                    spe = False
                 ata = ProductAttribute(product_id=product,
                                        attribute=atr,
-                                       attribute_value=attr_dict[atr])
+                                       attribute_value=attr_dict[atr],
+                                       in_header=spe)
 
                 ata.save()
-
+                i = i + 1
     context = dict()
 
     category = product.category.all()
