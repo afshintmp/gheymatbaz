@@ -43,12 +43,12 @@
                         <div>
                             <label for="">متا تایتل</label>
                             <input type="text" name="meta_title" class="form-control"
-                                   value="{{ product.meta_title }}">
+                                   value="{{ product.meta_title|default_if_none:"" }}">
                         </div>
                         <div>
                             <label for="">متا دیسکرپشن</label>
                             <input type="text" name="meta_description" class="form-control"
-                                   value="{{ product.meta_description }}">
+                                   value="{{ product.meta_description|default_if_none:"" }}">
                         </div>
                         <div>
                             <input type="checkbox" name="noindex" value="on" {% if product.noindex %}checked{% endif %}>
@@ -59,7 +59,7 @@
                                 پیوند یکتا
                             </label>
                             <input type="text" name="slug" class="form-control"
-                                   value="{{ product.slug }}"
+                                   value="{{ product.slug|default_if_none:"" }}"
                             >
                         </p>
                     </div>
@@ -113,7 +113,8 @@
 
                 </div>
 
-                <input type="submit" value="ذخیره" class="btn-success w-100">
+                <input type="submit" value="پیشرفته" class="btn-success w-100">
+
             </div>
         </main>
     </form>

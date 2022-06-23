@@ -170,11 +170,13 @@
                                             {{ at.attribute_value }}
                                         </td>
                                         <td>
-                                            <select class="form-select"  name="attr[][spe]" id="">
+                                            <select class="form-select" name="attr[][spe]" id="">
                                                 <option {% if not at.in_header %} selected {% endif %}
-                                                 value="false">معمولی</option>
+                                                                                  value="false">معمولی
+                                                </option>
                                                 <option {% if at.in_header %} selected {% endif %}
-                                                        value="true">ویژه</option>
+                                                                              value="true">ویژه
+                                                </option>
                                             </select>
 
                                         </td>
@@ -192,6 +194,13 @@
                     </div>
                 </div>
                 <div class="col-4">
+                    <div>
+                        <p class="d-inline-block font-weight-bolder pt-2">
+                            وضعیت
+                        </p>
+                        {{ product.status }}
+
+                    </div>
                     <div>
                         <div class="mb-2 border-bottom">
                             <p class="d-inline-block font-weight-bolder pt-2">
@@ -312,7 +321,7 @@
                 </div>
 
 
-                <input type="submit" value="ذخیره" class="btn btn-success w-100 mt-2">
+                <input type="submit" value="انتشار" class="btn btn-success w-100 mt-2">
             </div>
         </main>
     </form>

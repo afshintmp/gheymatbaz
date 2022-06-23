@@ -109,12 +109,12 @@ class Product(models.Model):
     )
 
     title = models.CharField(max_length=400, blank=False, null=False)
-    en_title = models.CharField(max_length=400, blank=True, null=True ,default='')
+    en_title = models.CharField(max_length=400, blank=True, null=True, default='')
     published_at = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
-                              default='published')
+                              default='draft')
 
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True, blank=True)
 
@@ -185,6 +185,7 @@ class ProductRelation(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class GlobalAttribute(models.Model):
     pass

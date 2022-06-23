@@ -346,6 +346,7 @@ def product_update(request, pk):
             product.noindex = False
 
         product.save()
+        return redirect(product_advanced_update, product.pk)
 
     context = dict()
     context['product'] = product
@@ -361,7 +362,6 @@ def product_add(request):
     if request.method == "POST":
         form = request.POST
 
-
         product = Product(title=form['title'],
                           en_title=form['en-title'],
                           description=form['context'],
@@ -373,7 +373,7 @@ def product_add(request):
 
         product.save()
 
-        return render(request, "customadmin/trace.html", context=form)
+        return redirect(product_advanced_update, product.pk)
 
     context = dict()
     context['category'] = Category.objects.all()
@@ -481,6 +481,9 @@ def product_advanced_update(request, pk):
 
                 ata.save()
                 i = i + 1
+        product.status = 'Published'
+        product.save()
+
     context = dict()
 
     category = product.category.all()
