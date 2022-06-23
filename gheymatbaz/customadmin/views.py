@@ -313,7 +313,7 @@ def product_update(request, pk):
         form_file = request.FILES
         product.title = form['title']
         product.en_title = form['en-title']
-
+        product.slug = form['slug']
         product.description = form['context']
         product.meta_title = form['meta_title']
         product.meta_description = form['meta_description']
@@ -481,7 +481,7 @@ def product_advanced_update(request, pk):
 
                 ata.save()
                 i = i + 1
-        product.status = 'Published'
+        product.status = form['status']
         product.save()
 
     context = dict()

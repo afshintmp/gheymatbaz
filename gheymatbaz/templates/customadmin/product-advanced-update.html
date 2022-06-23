@@ -198,7 +198,12 @@
                         <p class="d-inline-block font-weight-bolder pt-2">
                             وضعیت
                         </p>
-                        {{ product.status }}
+                        <select name="status" id="">
+                            <option {% if product.status == 'Draft'  %} selected{% endif %} value="Draft">پیش نویس</option>
+                            <option {% if product.status == 'Published'  %} selected{% endif %} value="Published">انتشار</option>
+
+                        </select>
+
 
                     </div>
                     <div>
