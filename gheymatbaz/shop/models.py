@@ -187,7 +187,7 @@ class GlobalAttribute(models.Model):
 
 
 class ProductGlobalAttribute(models.Model):
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE , unique=True)
     global_attribute = models.ManyToManyField(GlobalAttribute)
 
 

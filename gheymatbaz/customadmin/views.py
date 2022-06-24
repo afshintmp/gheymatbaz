@@ -16,7 +16,7 @@ from customadmin.forms import CategoryAttributeValueForm
 from customadmin.utils import check_is_superuser
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue, \
     ProductCategoryAttributeValue, ProductRelation, ProductGallery, ProductKeyWord, ProductAttribute, CategoryMeta, \
-    GlobalAttribute
+    GlobalAttribute, ProductGlobalAttribute
 
 
 # Create your views here.
@@ -380,12 +380,21 @@ def product_advanced_update(request, pk):
         product_id=product)
     product_relation = ProductRelation.objects.filter(product=product)
     product_keyword = ProductKeyWord.objects.filter(product_id=product)
+
+    product_global_attribute = ProductGlobalAttribute.objects.filter(product_id=product)
+
     if request.method == "POST":
         form = request.POST
         form_file = request.FILES
         alt_text = form.getlist('alt_text[]')
         alt_text_edit = form.getlist('alt_text_edit[]')
         keyword = form.getlist('keyword[]')
+        global_attribute = form.getlist('global_attr[]')
+        product_global_attribute.delete()
+        if global_attribute is not None:
+            ga = ProductGlobalAttribute.objects.create(product_id=product)
+            ga.global_attribute.set(global_attribute)
+            ga.save()
         product_keyword.delete()
         if keyword is not None:
 
@@ -493,6 +502,7 @@ def product_advanced_update(request, pk):
     context['product_keyword'] = ProductKeyWord.objects.filter(product_id=product)
     context['product_gallery'] = ProductGallery.objects.filter(product_id=product).order_by('id')
     context['pro_attribute'] = ProductAttribute.objects.filter(product_id=product)
+    context['global_attribute'] = GlobalAttribute.objects.all()
     return render(request, "customadmin/product-advanced-update.html", context=context)
 
 
@@ -722,7 +732,6 @@ def global_attribute_delete(request, pk):
 @require_http_methods(request_method_list=['GET', 'POST'])
 @user_passes_test(check_is_superuser)
 def global_attribute_update(request, pk):
-
     if request.method == "POST":
         form = request.POST
         name = form['name']
