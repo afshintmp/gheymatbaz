@@ -1,5 +1,10 @@
 {% extends 'admin-base.html' %}
-
+{% block title %}
+    <title>
+        حذف
+        {{ object }}
+    </title>
+{% endblock %}
 {% block content %}
 
     <main class="custom-admin-main container">
@@ -18,8 +23,6 @@
                 {% include 'partials/admin/category-category-selctor.html' %}
 
 
-
-
             </div>
 
         </div>
@@ -28,9 +31,6 @@
 
 {% endblock %}
 
-{% block title %}
-    test heed
-{% endblock %}
 
 
 {% block customjs %}
@@ -152,6 +152,11 @@
         }
 
         .product-category-selector ul li > p:nth-child(4) {
+            float: left;
+            margin: 5px 10px;
+        }
+
+        .product-category-selector ul li > p:nth-child(5) {
             float: left;
             margin: 5px 10px;
         }

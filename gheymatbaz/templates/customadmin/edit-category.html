@@ -1,5 +1,15 @@
 {% extends 'admin-base.html' %}
+{% block title %}
+    <title>
+        {% if current_category %}
+            ویرایش
+            {{ current_category.name }}
+        {% else %}
 
+            افزودن دسته بندی
+        {% endif %}
+    </title>
+{% endblock %}
 {% block content %}
     <!--START-MAIN-->
 
@@ -65,9 +75,7 @@
     <!--END-MAIN-->
 {% endblock %}
 
-{% block title %}
-    test heed
-{% endblock %}
+
 
 
 {% block customjs %}

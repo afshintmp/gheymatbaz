@@ -129,10 +129,15 @@ def category_edit_view(request, pk):
         else:
             if slug_unicode_re.match(form.get('slug')):
                 current_category.name = form.get('name')
-                current_category.parent = category.get(pk=form.get('parent'))
+                if form.get('parent') == '':
+                    pass
+                else:
+                    current_category.parent = category.get(pk=form.get('parent'))
+
                 current_category.slug = form.get('slug')
                 current_category.icon_class = form.get('icon-class')
                 current_category.save()
+                return redirect(category_create_view)
             else:
                 context['rise_error'] = 'اسلاگ غیر معتبر'
 
@@ -186,24 +191,6 @@ def category_advanced_view(request, pk):
     except:
         category_meta = ''
     return render(request, 'customadmin/edit-category-advanced.html', context=context)
-
-
-class CategoryUpdateView(UpdateView):
-    model = Category
-    fields = ['name', 'parent', 'slug', 'icon_class']
-    template_name = 'customadmin/edit-category.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        category = Category.objects.all()
-        context['category'] = category
-        context['json_categories'] = serializers.serialize('json', category)
-        return context
-
-    @method_decorator(login_required, user_passes_test(check_is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
 
 class CategoryDeleteView(DeleteView):
     model = Category
