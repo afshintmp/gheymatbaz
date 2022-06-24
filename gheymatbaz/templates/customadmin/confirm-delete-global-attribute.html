@@ -1,46 +1,33 @@
 {% extends 'admin-base.html' %}
 
+{% block title %}
+    <title> حذف
+        {{ object.title }}
+    </title>
+{% endblock %}
+
+
 {% block content %}
-    <div class="container">
-        <div class="row mt-2">
-            <div class="cat-block col-4">
+
+    <main class="custom-admin-main container">
+        <div class="row">
+            <div class="col-4">
 
 
-                <h5 class="font-weight-bolder text-primary">
-                    افزودن
-                </h5>
-                {% if rise_error %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <p class="mb-0 pb-0">{{ rise_error }}</p>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-
-                {% endif %}
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <div class="mb-2">
-                        <input type="text" name="name" class="form-control" placeholder="عنوان"
-                               value="{{ current_attribute.title }}">
-                    </div>
-
-                    <div class="mb-2">
-                        <input type="text" class="form-control" name="color-code" placeholder="کد رنگ"
-                               value="{{ current_attribute.color_code }}">
-                    </div>
-                    <input type="submit" class="btn btn-success w-100" value="ذخیره">
+                <form method="post">{% csrf_token %}
+                    <h5 class="text-danger font-weight-bolder"> حذف {{ object.title }}</h5>
+                    <p> آیا مطمعن هستید ؟ </p>
+                    <input class="btb d-inline-block btn-danger w-100" type="submit" value="حذف">
                 </form>
             </div>
-            <div class="cat-block col-8">
+     <div class="cat-block col-8">
 
                 <h5 class="font-weight-bolder text-primary">
                     ویژگی های گلوبال
                 </h5>
 
                 <ul class="list-style-none">
-                    {% for obj in object %}
+                    {% for obj in global_attribute %}
                         <li class="category-table">
                             <div class="category-table-row">
                                 <p class="category-table-colm min-width-set">
@@ -69,11 +56,21 @@
                 </ul>
 
             </div>
+
         </div>
-    </div>
+    </main>
+    <!--END-MAIN-->
 
 {% endblock %}
 
+
+
+{% block customjs %}
+    <script>
+
+
+    </script>
+{% endblock %}
 
 {% block customstyle %}
     <style>
@@ -112,16 +109,4 @@
             vertical-align: top;
         }
     </style>
-{% endblock %}
-
-{% block customjs %}
-    <script>
-        $('.js-example-basic-single').select2();
-        $('.js-example-basic-single-two').select2();
-
-        function changeFilter() {
-
-            $('#filterlink').attr('href', '/gheymat-admin/category/' + $('#filter').val() + '/category-attribute/add')
-        }
-    </script>
 {% endblock %}

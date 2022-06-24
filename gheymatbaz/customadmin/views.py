@@ -15,7 +15,8 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from customadmin.forms import CategoryAttributeValueForm
 from customadmin.utils import check_is_superuser
 from shop.models import Category, Product, Brand, CategoryAttribute, CategoryAttributeValue, \
-    ProductCategoryAttributeValue, ProductRelation, ProductGallery, ProductKeyWord, ProductAttribute, CategoryMeta
+    ProductCategoryAttributeValue, ProductRelation, ProductGallery, ProductKeyWord, ProductAttribute, CategoryMeta, \
+    GlobalAttribute
 
 
 # Create your views here.
@@ -191,6 +192,7 @@ def category_advanced_view(request, pk):
     except:
         category_meta = ''
     return render(request, 'customadmin/edit-category-advanced.html', context=context)
+
 
 class CategoryDeleteView(DeleteView):
     model = Category
@@ -687,4 +689,50 @@ def category_attribute_value_delete(request, pk):
 @require_http_methods(request_method_list=['GET', 'POST'])
 @user_passes_test(check_is_superuser)
 def global_attribute_add(request):
-    return render(request, 'customadmin/global-attribute.html', context={})
+    if request.method == "POST":
+        form = request.POST
+        name = form['name']
+        color_code = form['color-code']
+        ga = GlobalAttribute.objects.create(title=name
+                                            , color_code=color_code
+                                            )
+        ga.save()
+    context = dict()
+    context['object'] = GlobalAttribute.objects.all()
+    return render(request, 'customadmin/global-attribute.html', context=context)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def global_attribute_delete(request, pk):
+    if request.method == "POST":
+        form = request.POST
+
+        ga = GlobalAttribute.objects.get(pk=pk)
+        ga.delete()
+        return redirect('global-attribute-add')
+    context = dict()
+    context['object'] = GlobalAttribute.objects.get(pk=pk)
+    context['global_attribute'] = GlobalAttribute.objects.all()
+    return render(request, 'customadmin/confirm-delete-global-attribute.html', context=context)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def global_attribute_update(request, pk):
+
+    if request.method == "POST":
+        form = request.POST
+        name = form['name']
+        color_code = form['color-code']
+        ga = GlobalAttribute.objects.get(pk=pk)
+        ga.title = name
+        ga.color_code = color_code
+        ga.save()
+        return redirect('global-attribute-add')
+    context = dict()
+    context['current_attribute'] = GlobalAttribute.objects.get(pk=pk)
+    context['object'] = GlobalAttribute.objects.all()
+    return render(request, 'customadmin/global-attribute.html', context=context)

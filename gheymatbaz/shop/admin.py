@@ -1,6 +1,7 @@
 from django.contrib import admin
 from shop.models import Product, Category, Brand, CategoryAttribute, CategoryAttributeValue, ProductGallery, \
-    ProductKeyWord, ProductAttribute, ProductCategoryAttributeValue, ProductRelation, CategoryMeta
+    ProductKeyWord, ProductAttribute, ProductCategoryAttributeValue, ProductRelation, CategoryMeta, GlobalAttribute, \
+    ProductGlobalAttribute
 
 
 # Register your models here.
@@ -79,3 +80,5 @@ admin.site.register(ProductAttribute, ProductAttributeAdmin)
 admin.site.register(CategoryAttribute, CategoryAttributeAdmin)
 admin.site.register(ProductCategoryAttributeValue, ProductCategoryAttributeValueAdmin)
 admin.site.register(ProductRelation, ProductRelationAdmin)
+admin.site.register(GlobalAttribute)
+admin.site.register(ProductGlobalAttribute)

@@ -178,6 +178,19 @@ class ProductAttribute(models.Model):
         return self.attribute
 
 
+class GlobalAttribute(models.Model):
+    title = models.CharField(max_length=200, blank=False, null=False)
+    color_code = models.CharField(max_length=200, blank=False, null=False)
+
+    def __str__(self):
+        return self.title
+
+
+class ProductGlobalAttribute(models.Model):
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    global_attribute = models.ManyToManyField(GlobalAttribute)
+
+
 class ProductRelation(models.Model):
     title = models.CharField(max_length=200, blank=False, null=False)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -185,7 +198,3 @@ class ProductRelation(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class GlobalAttribute(models.Model):
-    pass
