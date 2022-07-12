@@ -5,7 +5,7 @@ from customadmin.views import CategoryDeleteView, BrandCreateView, BrandUpdateVi
     product_update, product_add, category_create_view, category_edit_view, category_advanced_view, \
     category_attribute_create_view, attribute_create_view, attribute_update_view, category_attribute_value_add, \
     category_attribute_value_delete, category_attribute_value_edit, category_attribute_delete_view, \
-    global_attribute_add, global_attribute_delete, global_attribute_update
+    global_attribute_add, global_attribute_delete, global_attribute_update, brand_add_view, brand_update_view
 
 urlpatterns = [
     path('', admin_panel, name='admin-panel'),
@@ -15,9 +15,9 @@ urlpatterns = [
     path('category/<int:pk>', category_edit_view, name='category-update'),
     path('category/<int:pk>/advaced', category_advanced_view, name='category-advanced'),
     path('category/<int:pk>/delete', CategoryDeleteView.as_view(), name='category-delete'),
-
-    path('brand/add', BrandCreateView.as_view(), name='brand-add'),
-    path('brand/<int:pk>', BrandUpdateView.as_view(), name='brand-update'),
+    path('brand/add', brand_add_view, name='brand-add'),
+    # path('brand/add', BrandCreateView.as_view(), name='brand-add'),
+    path('brand/<int:pk>', brand_update_view, name='brand-update'),
     path('brand/<int:pk>/delete', BrandDeleteView.as_view(), name='brand-delete'),
 
     path('product/all', ProductListView.as_view(), name='product-all'),

@@ -229,6 +229,59 @@ class BrandCreateView(CreateView):
         return super().dispatch(*args, **kwargs)
 
 
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def brand_add_view(request):
+    context = dict()
+    if request.method == "POST":
+        form = request.POST
+        form_file = request.FILES
+        if Brand.objects.filter(slug=form.get('slug')).exists():
+            context['rise_error'] = 'اسلاگ برای برند دیگری استفاده شده'
+        else:
+            if slug_unicode_re.match(form.get('slug')):
+                c = Brand(name=form.get('title'),
+
+                          slug=form.get('slug'),
+                          image=form_file.get('pic'))
+                c.save()
+                return redirect(brand_add_view)
+            else:
+                context['rise_error'] = 'اسلاگ غیر معتبر'
+
+    brand = Brand.objects.all()
+    context['brands'] = brand
+    return render(request, "customadmin/edit-brand.html", context=context)
+
+
+@login_required(login_url='/admin/login')
+@require_http_methods(request_method_list=['GET', 'POST'])
+@user_passes_test(check_is_superuser)
+def brand_update_view(request, pk):
+    context = dict()
+    context['current_brand'] = current_brand = Brand.objects.get(pk=pk)
+    if request.method == "POST":
+        form = request.POST
+        form_file = request.FILES
+        if current_brand.slug != form.get('slug') and Brand.objects.filter(slug=form.get('slug')).exists():
+            context['rise_error'] = 'اسلاگ برای برند دیگری استفاده شده'
+        else:
+            if slug_unicode_re.match(form.get('slug')):
+                current_brand.name = form.get('title')
+                current_brand.slug = form.get('slug')
+                if form_file.get('pic') is not None:
+                    current_brand.image = form_file.get('pic')
+                current_brand.save()
+                return redirect(brand_add_view)
+            else:
+                context['rise_error'] = 'اسلاگ غیر معتبر'
+
+    brand = Brand.objects.all()
+    context['brands'] = brand
+    return render(request, "customadmin/edit-brand.html", context=context)
+
+
 class BrandUpdateView(UpdateView):
     model = Brand
     fields = ['name', 'slug', 'image']
@@ -250,14 +303,14 @@ class BrandUpdateView(UpdateView):
 class BrandDeleteView(DeleteView):
     model = Brand
     success_url = reverse_lazy('author-list')
-    template_name = 'customadmin/confirm-delete-category.html'
+    template_name = 'customadmin/confirm-delete-brand.html'
     success_url = reverse_lazy('category-add')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category = Category.objects.all()
-        context['categories'] = category
-        context['json_categories'] = serializers.serialize('json', category)
+        brand = Brand.objects.all()
+        context['brands'] = brand
+
         return context
 
     @method_decorator(login_required, user_passes_test(check_is_superuser))

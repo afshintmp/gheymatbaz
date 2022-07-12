@@ -1,65 +1,101 @@
 {% extends 'admin-base.html' %}
 
+{% block title %}
+    <title>
+        افزودن برند
+    </title>
+{% endblock %}
+
+
+
 {% block content %}
     <!--START-MAIN-->
 
-    <main class="custom-admin-main">
+    <main class="custom-admin-main container">
+        <div class="row">
+            <div class="cat-block col-6">
 
-        <div class="cat-block">
 
-
-            <h4>ویرایش
-                <b> {{ current_category.name }}</b>
-            </h4>
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit">
-            </form>
-        </div>
-        <div class="cat-block">
-            {% for brand in brands %}
-
-                <div class="category-table">
-                    <div class="category-table-row">
-                        <p class="category-table-colm">
-                            {{ brand.id }}
-                        </p>
-                        <p class="category-table-colm">
-                            {{ brand.name }}
-                        </p>
-                        <p class="category-table-colm">
-                            {% if brand.get_photo_url %}
-                                <img width="100px" src="{{ brand.get_photo_url }}" alt="">
-                            {% endif %}
-                        </p>
-
-                        <p class="category-table-colm">
-                            <a href="{% url 'brand-update' brand.pk %}">ویرایش</a>
-                        </p>
-
-                        <p class="category-table-colm">
-                            <a href="{% url 'brand-delete' brand.pk %}">حذف</a>
-                        </p>
+                <h5 class="text-primary">ویرایش
+                    <b> {{ current_category.name }}</b>
+                </h5>
+                {% if rise_error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <p class="mb-0 pb-0">{{ rise_error }}</p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
-                </div>
+
+                {% endif %}
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mt-2">
+
+                        <input type="text" class="form-control" name="title" placeholder="عنوان"
+                               value="{{ current_brand.name }}">
+                    </div>
+                    <div class="mt-2">
+
+                        <input type="text" class="form-control" name="slug" required placeholder="ادرس اینترنتی"
+                               value="{{ current_brand.slug }}">
+                    </div>
+                    <div class="mt-2">
+
+                        <label for="" style="display: inline-block"> عکس شاخص</label>
+
+                        <input type="file" name="pic" style="display: inline-block">
+                        {% if current_brand.get_photo_url %}
+                            <img width="100px" src="{{ current_brand.get_photo_url }}" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="mt-2">
+                        <input type="submit" class="btn btn-success w-100" value="ذخیره">
+                    </div>
+                </form>
+            </div>
+            <div class="cat-block col-6">
+                {% for brand in brands %}
+
+                    <div class="category-table">
+                        <div class="category-table-row">
+                            <p class="category-table-colm">
+                                {{ brand.id }}
+                            </p>
+                            <p class="category-table-colm">
+                                {{ brand.name }}
+                            </p>
+                            <p class="category-table-colm">
+                                {% if brand.get_photo_url %}
+                                    <img width="100px" src="{{ brand.get_photo_url }}" alt="">
+                                {% endif %}
+                            </p>
+
+                            <p class="category-table-colm">
+                                <a href="{% url 'brand-update' brand.pk %}">ویرایش</a>
+                            </p>
+
+                            <p class="category-table-colm">
+                                <a href="{% url 'brand-delete' brand.pk %}">حذف</a>
+                            </p>
+                        </div>
+
+                    </div>
 
 
 
-            {% endfor %}
+                {% endfor %}
 
 
-        </div>
+            </div>
 
 
     </main>
     <!--END-MAIN-->
 {% endblock %}
 
-{% block title %}
-    test heed
-{% endblock %}
+
 
 
 {% block customjs %}
