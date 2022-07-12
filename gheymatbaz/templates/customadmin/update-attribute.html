@@ -1,5 +1,13 @@
 {% extends 'admin-base.html' %}
+{% block title %}
+    <title>
+   ویرایش
+                    ویژگی
 
+                    {{ current_category_attribute.name }}
+
+    </title>
+{% endblock %}
 {% block content %}
     <div class="container">
         <div class="row mt-2">
@@ -83,7 +91,7 @@
                                 </p>
 
                                 <p class="category-table-colm float-left">
-                                    <a href="{% url 'category-attribute-value-list' obj.pk %}">مقادیر</a>
+                                       <a href="{% url 'category-attribute-value-add' obj.pk %}">مقادیر</a>
                                 </p>
                                 <p class="category-table-colm float-left">
                                     <a href="{% url 'category-attribute-update' obj.pk %}">ویرایش</a>

@@ -1,225 +1,222 @@
 {% extends 'admin-base.html' %}
 
 {% block content %}
-    <!--START-MAIN-->
+<!--START-MAIN-->
 
-    <main class="custom-admin-main container">
-        <div class="row">
-            <div class="col-8">
-                <h5 class="text-primary">
-                    پیشرفته
-                    <b>
-                        {{ current_category }}
-                    </b>
-                </h5>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <div class="mb-2">
-                        <label for="">انتخاب فیلتر :</label>
+<main class="custom-admin-main container">
+    <div class="row">
+        <div class="col-8">
+            <h5 class="text-primary">
+                پیشرفته
+                <b>
+                    {{ current_category }}
+                </b>
+            </h5>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="">انتخاب فیلتر :</label>
 
-                        <select name="filter[]" class="select-multiple-one form-control" multiple id="0"
-                                data-mce-placeholder="انتخاب فیلتر">
-                            {% for foo in category_attribute %}
-                                <option {% if foo.pk|safe in category_meta_filter|safe %}selected="selected"{% endif %}
-                                        value="{{ foo.pk }}">
-                                    {{ foo }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label for="">انتخاب برند های ویژه :</label>
-
-                        <select name="brands[]" class="select-multiple-two form-control" multiple id="1"
-                                data-mce-placeholder="انتخاب ">
-                            {% for foo in brand %}
-                                <option {% if foo.1|safe in current_category_special_brand|safe %}selected="selected"{% endif %}
-                                        value="{{ foo.0 }}">
-
-                                    {{ foo.1 }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <textarea name="description" id="mytextarea">{{ category_meta_description }}</textarea>
-                    </div>
-                    <div class="seo-wrapper">
-                        <div>
-                            <label for="">متا تایتل</label>
-                            <input type="text" name="meta_title" class="form-control"
-                                   value="{{ meta_title }}">
-                        </div>
-
-                        <div>
-                            <label for="">متا دیسکرپشن</label>
-                            <input type="text" name="meta_description" class="form-control"
-                                   value="{{ meta_description }}">
-                        </div>
-                        <div>
-                            <input type="checkbox" name="noindex" value="on" {% if noindex %}checked{% endif %}>
-                            <label for="">no index</label>
-                        </div>
-
-                    </div>
-                    <input type="submit" value="ذخیره" class="btn btn-success w-100">
-                </form>
-
-            </div>
-            <div class="col-4">
-                <h5 class="text-primary">فیلتر ها</h5>
-                <div>
-                    <ul class="list-style-none">
-                        {% for foo in current_category_attribute %}
-                            <li class="border-bottom">
-                                {{ foo }}
-                            </li>
+                    <select name="filter[]" class="select-multiple-one form-control" multiple id="0"
+                            data-mce-placeholder="انتخاب فیلتر">
+                        {% for foo in category_attribute %}
+                        <option {% if foo.pk|safe in category_meta_filter|safe %}selected="selected" {% endif %}
+                                value="{{ foo.pk }}">
+                            {{ foo }}
+                        </option>
                         {% endfor %}
-
-
-                    </ul>
+                    </select>
                 </div>
+                <div class="mb-2">
+                    <label for="">انتخاب برند های ویژه :</label>
 
-                <h5 class="text-primary">برند های شاخص</h5>
-                <div>
-                    <ul class="list-style-none">
-                        {% for foo in current_category_special_brand %}
-                            <li class="border-bottom">
-                                {{ foo }}
-                            </li>
+                    <select name="brands[]" class="select-multiple-two form-control" multiple id="1"
+                            data-mce-placeholder="انتخاب ">
+                        {% for foo in brand %}
+                        <option
+                                {% if foo.1|safe in current_category_special_brand|safe %}
+                                selected="selected"
+                                {% endif %}
+                                value="{{ foo.0 }}">
+
+                            {{ foo.1 }}
+                        </option>
                         {% endfor %}
-
-
-                    </ul>
+                    </select>
                 </div>
+                <div>
+                    <textarea name="description" id="mytextarea">{{ category_meta_description }}</textarea>
+                </div>
+                <div class="seo-wrapper">
+                    <div class="mt-2">
+                        <label for="meta_title" class="mb-0">متا تایتل</label>
+                        <input type="text" name="meta_title" id="meta_title" class="form-control"
+                               value="{{ meta_title|default_if_none:'' }}">
+                    </div>
+
+                    <div class="mt-2">
+                        <label for="meta_description" class="mb-0">متا دیسکرپشن</label>
+                        <input type="text" name="meta_description" id="meta_description" class="form-control"
+                               value="{{ meta_description|default_if_none:'' }}">
+                    </div>
+                    <div class="mt-2">
+                        <input type="checkbox" id="noindex" name="noindex" value="on" {% if noindex %}checked{% endif %}>
+                        <label for="noindex">no index</label>
+                    </div>
+
+                </div>
+                <input type="submit" value="ذخیره" class="btn btn-success w-100">
+            </form>
+
+        </div>
+        <div class="col-4">
+            <h5 class="text-primary">فیلتر ها</h5>
+            <div>
+                <ul class="list-style-none">
+                    {% for foo in current_category_attribute %}
+                    <li class="border-bottom">
+                        {{ foo }}
+                    </li>
+                    {% endfor %}
+
+
+                </ul>
             </div>
-    </main>
-    <!--END-MAIN-->
+
+            <h5 class="text-primary">برند های شاخص</h5>
+            <div>
+                <ul class="list-style-none">
+                    {% for foo in current_category_special_brand %}
+                    <li class="border-bottom">
+                        {{ foo }}
+                    </li>
+                    {% endfor %}
+
+
+                </ul>
+            </div>
+        </div>
+</main>
+<!--END-MAIN-->
 {% endblock %}
 
 {% block title %}
-    test heed
+<title>
+    ویرایش پیشرفته
+    {{ current_category }}
+</title>
 {% endblock %}
 
 
 {% block customjs %}
-    <script>
+<script>
 
-        $('.select-multiple-one').select2();
+    $('.select-multiple-one').select2();
 
-        $('.select-multiple-two').select2();
+    $('.select-multiple-two').select2();
 
-        tinymce.init({
-            selector: 'textarea#mytextarea',
-            height: 500,
-            menubar: true,
-            plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'help', 'wordcount'
-            ],
-            toolbar: 'undo redo | blocks | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
-            language: 'fa',
-            {#language_url: '/langs/fa_IR.js',#}
-            directionality: 'rtl'
-        });
-    </script>
+    tinymce.init({
+        selector: 'textarea#mytextarea',
+        height: 500,
+        menubar: true,
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+        language: 'fa',
+        directionality: 'rtl'
+    });
+</script>
 {% endblock %}
 
 {% block customstyle %}
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <style>
-        .alert-dismissible {
-            padding-right: 1.25rem !important;
-            padding-left: 4rem !important;
-        }
+<script src="https://cdn.tiny.cloud/1/shs0oz7xad4g45se9odan6zjxsxnh8nay7yl9n7gqj3ju6gd/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+<style>
+    .alert-dismissible {
+        padding-right: 1.25rem !important;
+        padding-left: 4rem !important;
+    }
 
-        .alert-dismissible .close {
-            right: unset !important;
-            left: 0 !important;
-        }
+    .alert-dismissible .close {
+        right: unset !important;
+        left: 0 !important;
+    }
 
-        .category-table-row {
+    .category-table-row {
 
-            margin-bottom: 0;
-            padding: 0px 15px;
-            border-bottom: 1px solid #eee;
-        }
+        margin-bottom: 0;
+        padding: 0px 15px;
+        border-bottom: 1px solid #eee;
+    }
 
-        .sub-category-table-row {
-            margin-right: 25px;
-        }
+    .sub-category-table-row {
+        margin-right: 25px;
+    }
 
-        .category-table-colm {
-            display: inline-block;
-            margin-bottom: 0;
-            padding: 8px 15px;
-        }
+    .category-table-colm {
+        display: inline-block;
+        margin-bottom: 0;
+        padding: 8px 15px;
+    }
 
-        .custom-admin-main {
-            padding: 20px;
-        }
+    .custom-admin-main {
+        padding: 20px;
+    }
 
-        .cat-block {
-            display: inline-block;
-            width: 45%;
-            vertical-align: top;
-        }
+    .cat-block {
+        display: inline-block;
+        width: 45%;
+        vertical-align: top;
+    }
 
-        .category-table {
-            display: table;
-            width: 100%;
-        }
+    .category-table {
+        display: table;
+        width: 100%;
+    }
 
-        .category-table-row {
-            display: table-row;
-        }
+    .category-table-row {
+        display: table-row;
+    }
 
-        .category-table-colm {
-            display: table-column;
-        }
+    .category-table-colm {
+        display: table-column;
+    }
 
-        .product-category-selector ul li {
-            border-bottom: 1px solid #eee;
-        }
+    .product-category-selector ul li {
+        border-bottom: 1px solid #eee;
+    }
 
-        .product-category-selector ul li p {
-            margin-bottom: 0;
-        }
+    .product-category-selector ul li p {
+        margin-bottom: 0;
+    }
 
-        .product-category-selector ul li > p:nth-child(2) {
-            float: left;
-            margin: 5px 10px;
-        }
+    .product-category-selector ul li > p:nth-child(2) {
+        float: left;
+        margin: 5px 10px;
+    }
 
-        .product-category-selector ul li > p:nth-child(3) {
-            float: left;
-            margin: 5px 10px;
-        }
+    .product-category-selector ul li > p:nth-child(3) {
+        float: left;
+        margin: 5px 10px;
+    }
 
-        .product-category-selector ul li > p:nth-child(4) {
-            float: left;
-            margin: 5px 10px;
-        }
+    .product-category-selector ul li > p:nth-child(4) {
+        float: left;
+        margin: 5px 10px;
+    }
 
-        .product-category-selector ul li > p:nth-child(5) {
-            float: left;
-            margin: 5px 10px;
-        }
+    .product-category-selector ul li > p:nth-child(5) {
+        float: left;
+        margin: 5px 10px;
+    }
 
-        .clear-fix {
-            clear: both;
-        }
+    .clear-fix {
+        clear: both;
+    }
 
-        .product-category-selector ul {
-            margin: 0;
-            padding-right: 10px;
+    .product-category-selector ul {
+        margin: 0;
+        padding-right: 10px;
 
-        }
+    }
 
-    </style>
+</style>
 {% endblock %}

@@ -176,7 +176,7 @@ def category_advanced_view(request, pk):
             defaults={'filter': cat_filter, 'special_brand': spe_brand, 'description': description,
                       'meta_title': meta_title, 'meta_description': meta_description, 'noindex': index_status},
         )
-
+        return redirect('category-add')
     try:
         category_meta = CategoryMeta.objects.get(category=current_category)
         context['category_meta_filter'] = json.loads(category_meta.filter)
@@ -231,7 +231,7 @@ class BrandCreateView(CreateView):
 
 class BrandUpdateView(UpdateView):
     model = Brand
-    fields = ['name', 'slug', 'image', 'brand', 'category']
+    fields = ['name', 'slug', 'image']
     template_name = 'customadmin/edit-brand.html'
     success_url = reverse_lazy('brand-add')
 
