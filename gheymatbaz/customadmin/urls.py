@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from customadmin.views import CategoryDeleteView, BrandCreateView, BrandUpdateView, BrandDeleteView, ProductListView, \
+from customadmin.views import CategoryDeleteView, BrandDeleteView, ProductListView, \
     product_advanced_update, ProductDeleteView, \
     CategoryAttributeDeleteView, category_attribute_value, admin_panel, admin_authenticate, \
     product_update, product_add, category_create_view, category_edit_view, category_advanced_view, \

@@ -212,22 +212,6 @@ class CategoryDeleteView(DeleteView):
         return super().dispatch(*args, **kwargs)
 
 
-class BrandCreateView(CreateView):
-    model = Brand
-    fields = ['name', 'slug', 'image']
-    template_name = 'customadmin/edit-brand.html'
-    success_url = reverse_lazy('brand-add')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        brand = Brand.objects.all()
-        context['brands'] = brand
-        return context
-
-    @method_decorator(login_required, user_passes_test(check_is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
 
 @login_required(login_url='/admin/login')
 @require_http_methods(request_method_list=['GET', 'POST'])
@@ -252,6 +236,7 @@ def brand_add_view(request):
 
     brand = Brand.objects.all()
     context['brands'] = brand
+    context['is_new'] = True
     return render(request, "customadmin/edit-brand.html", context=context)
 
 
@@ -282,22 +267,7 @@ def brand_update_view(request, pk):
     return render(request, "customadmin/edit-brand.html", context=context)
 
 
-class BrandUpdateView(UpdateView):
-    model = Brand
-    fields = ['name', 'slug', 'image']
-    template_name = 'customadmin/edit-brand.html'
-    success_url = reverse_lazy('brand-add')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        brand = Brand.objects.all()
-        context['brands'] = brand
-
-        return context
-
-    @method_decorator(login_required, user_passes_test(check_is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
 
 class BrandDeleteView(DeleteView):

@@ -2,7 +2,16 @@
 
 {% block title %}
     <title>
-        افزودن برند
+        {% if is_new %}
+            افزودن
+            برند
+        {% else %}
+
+            ویرایش
+             {{ current_brand.name }}
+
+        {% endif %}
+
     </title>
 {% endblock %}
 
@@ -13,11 +22,19 @@
 
     <main class="custom-admin-main container">
         <div class="row">
-            <div class="cat-block col-6">
+            <div class="cat-block col-6 mt-4">
 
 
-                <h5 class="text-primary">ویرایش
-                    <b> {{ current_category.name }}</b>
+                <h5 class="text-primary">
+                    {% if is_new %}
+                        افزودن
+
+                    {% else %}
+
+                        ویرایش
+                        <b> {{ current_brand.name }}</b>
+
+                    {% endif %}
                 </h5>
                 {% if rise_error %}
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -55,40 +72,55 @@
                     </div>
                 </form>
             </div>
-            <div class="cat-block col-6">
-                {% for brand in brands %}
+            <div class="cat-block col-6 mt-4">
+                <table>
+                    <tr>
 
-                    <div class="category-table">
-                        <div class="category-table-row">
-                            <p class="category-table-colm">
-                                {{ brand.id }}
-                            </p>
-                            <p class="category-table-colm">
+                        <th>
+                            <b>دسته بندی</b>
+                        </th>
+                        <th>
+                            <b>عکس شاخص</b>
+                        </th>
+                        <th>
+                            <b>#</b>
+                        </th>
+                        <th>
+                            <b>#</b>
+                        </th>
+                    </tr>
+
+
+                    {% for brand in brands %}
+
+                        <tr>
+
+
+                            <td>
                                 {{ brand.name }}
-                            </p>
-                            <p class="category-table-colm">
+                            </td>
+                            <td>
                                 {% if brand.get_photo_url %}
-                                    <img width="100px" src="{{ brand.get_photo_url }}" alt="">
+                                    <img style="max-width: 100px;max-height: 50px" src="{{ brand.get_photo_url }}"
+                                         alt="">
                                 {% endif %}
-                            </p>
-
-                            <p class="category-table-colm">
+                            </td>
+                            <td>
                                 <a href="{% url 'brand-update' brand.pk %}">ویرایش</a>
-                            </p>
-
-                            <p class="category-table-colm">
+                            </td>
+                            <td>
                                 <a href="{% url 'brand-delete' brand.pk %}">حذف</a>
-                            </p>
-                        </div>
-
-                    </div>
+                            </td>
 
 
+                        </tr>
 
-                {% endfor %}
 
 
-            </div>
+                    {% endfor %}
+
+
+                </table>
 
 
     </main>
@@ -104,31 +136,27 @@
 
 {% block customstyle %}
     <style>
-        .category-table-row {
+        table {
+            width: 100%;
 
-            margin-bottom: 0;
-            padding: 0px 15px;
+        }
+
+        table tr {
             border-bottom: 1px solid #eee;
         }
 
-        .sub-category-table-row {
-            margin-right: 25px;
+        table tr > td {
+            padding: 10px;
         }
 
-        .category-table-colm {
-            display: inline-block;
-            margin-bottom: 0;
-            padding: 8px 15px;
+        table tr > td:nth-child(3) {
         }
 
-        .custom-admin-main {
-            padding: 20px;
+        table tr > td:nth-child(4) {
         }
 
-        .cat-block {
-            display: inline-block;
-            width: 45%;
-            vertical-align: top;
+        table tr > th {
+            padding: 10px;
         }
     </style>
 {% endblock %}
